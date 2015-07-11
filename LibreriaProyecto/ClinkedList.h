@@ -14,6 +14,7 @@ private:
 
 	int cmp(const T&, const T&) const;
 	Node<T>* findNode(Predicate) const;
+	void check(const char*) const;
 	Node<T>* last() const;
 	Node<T>* dirBefore(Predicate) const;
 	Node<T>* dirIndex(unsigned) const;
@@ -51,7 +52,12 @@ public:
 	//template<typename E>friend std::ostream &operator<<(std::ostream &, const List<E>&);
 
 };
-
+template<typename T>
+void  ClinkedList<T>::check(const char* msg) const
+{
+	if (index >= length())
+		throw new std::out_of_range(msg);
+}
 
 template<typename T>
 int ClinkedList<T>::cmp(const T& e, const T& o) const
@@ -272,9 +278,7 @@ T& ClinkedList<T>::operator[] (std::size_t index)
 template<typename T>
 T& ClinkedList<T>::getData(unsigned index) const
 {
-	if (index >= length())
-		throw new std::out_of_range("index out of range");
-
+	check("index out of range");
 	return dirIndex(index)->data;
 }
 
@@ -287,8 +291,7 @@ const T& ClinkedList<T>::operator[] (std::size_t index) const
 template<typename T>
 T ClinkedList<T>::set(unsigned index, const T& e)
 {
-	if (index >= length())
-		throw new std::out_of_range("index out of range");
+	check("index out of range");
 
 	Node<T> *node = dirIndex(index);
 	T oldData = node->getData();

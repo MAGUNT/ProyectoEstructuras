@@ -12,7 +12,7 @@ private:
 	Node<T>* next;
 	Node<T>* prev;
 
-	//esto puede ser indefinido para build in types buscar solucion.
+	//T puede ser indefinido para build in types.
 	Node() = default;
 	Node(const T&);
 	Node(const T& e, Node<T>* pprev, Node<T>* pnext);
