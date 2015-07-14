@@ -35,7 +35,7 @@ namespace Comparators
 	template<typename T>
 	int comparar(std::shared_ptr<T> a, std::shared_ptr<T> b)
 	{
-		return comparar(*a, *b, func);
+		return comparar(*a, *b);
 	}
 
 }
