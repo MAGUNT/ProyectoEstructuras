@@ -2,21 +2,25 @@
 #include "List.h"
 #include "Node.h"
 #include "Comparators.h"
+#include <SDKDDKVer.h>
+#include <stdexcept>
 
-template<typename T>
-class ClinkedList final :
-	public List<T>
+
+template<class T, class Func = DefaultComparator<T>>
+class ClinkedList final
+	:public List<T> 
 {
 
+
 private:
+	typedef void(ClinkedList<T,Func>::*AddNode)(Node<T>*, Node<T>*);
+
 	unsigned size;
 	Node<T> *sentinel;
-
-	int cmp(const T&, const T&) const;
+	Func cmp;
+	
 	Node<T>* findNode(Predicate) const;
-	void check(const char*) const;
-	Node<T>* last() const;
-	Node<T>* dirBefore(Predicate) const;
+	void check(unsigned,const char*) const;
 	Node<T>* dirIndex(unsigned) const;
 
 	T& getData(unsigned index) const;
@@ -24,202 +28,263 @@ private:
 	void addNodeAfter(Node<T> *, Node<T>*);
 	void addNodeBefore(Node<T>*, Node<T>*);
 	void deleteNode(Node<T>*);
-	bool addAcenDecen(const T&, int f);
 	
+	template<typename E>
+	bool genericAddAcenDecen(E&&, int f);
+	
+	template<typename E> 
+	T genericSet(unsigned, E&&);
+	
+	template<typename E>
+	void genericAdd(unsigned, E&&);
+	
+	template<typename E>
+	bool genericAddAB(AddNode, E&&, Predicate);
+
+	bool findTightBoundary(int,T, Node<T>*&) const;
 
 
 public:
 	ClinkedList();
-	ClinkedList(std::initializer_list<T>);
+	ClinkedList(const std::initializer_list<T>&);
+	ClinkedList(const Func&);
+
 	~ClinkedList();
-	void addFist(const T&) override;
-	void addLast(const T&) override;
-	bool add(unsigned, const T&) override;
-	bool addBefore(const T&, Predicate) override;
-	bool addAfter(const T&, Predicate) override;
-	bool addAscendent(const T&) override;
-	bool addDescendent(const T&) override;
-	bool remove(Predicate predicate) override;
-	bool remove(unsigned) override;
-	void clear() override;
+	void addFist(const T&)override;
+	void addFist(T&&)override;
+	
+	void addLast(const T&)override;
+	void addLast(T&&)override;
+
+	void add(unsigned, const T&)override;
+	void add(unsigned, T&&)override;
+
+	bool addBefore(const T&, Predicate)override;
+	bool addBefore(T&&, Predicate)override;
+
+	bool addAfter(const T&, Predicate)override;
+	bool addAfter(T&&, Predicate)override;
+
+	bool addAscendent(const T&)override;
+	bool addDescendent(const T&)override;
+
+	bool remove(Predicate predicate)override;
+	void remove(unsigned)override;
+
+	void clear()override;
 	bool isEmpty() const override;
 	bool find(Predicate, T&) const override;
-	T& operator[] (std::size_t index) override;
+	T& operator[] (std::size_t index)override;
 	const T& operator[] (std::size_t index) const override;
-	T set(unsigned, const T&) override;
+	T set(unsigned, const T&)override;
+	T set(unsigned, T&&)override;
 	unsigned length() const override;
 	
-	//template<typename E>friend std::ostream &operator<<(std::ostream &, const List<E>&);
+
 
 };
-template<typename T>
-void  ClinkedList<T>::check(const char* msg) const
+
+
+
+template<typename T, typename F>
+void  ClinkedList<T,F>::check(unsigned index,const char* msg) const
 {
 	if (index >= length())
 		throw new std::out_of_range(msg);
 }
-
-template<typename T>
-int ClinkedList<T>::cmp(const T& e, const T& o) const
+template<typename T, typename F >
+Node<T>* ClinkedList<T,F>::findNode(Predicate pre) const
 {
-	return Comparators::comparar(e, o);
-}
-
-template<typename T>
-Node<T>* ClinkedList<T>::findNode(Predicate pre) const
-{
-	Node<T> *node = sentinel->getNext();
-
-	for (unsigned i = 0; i < length(); ++i){
-
-		if (pre(node->getData()))
-			return node;
-		node = node->getNext();
+	Node<T> *node = sentinel->next;
+	for (unsigned i = 0; i < length(); ++i, node = node->next)
+	{
+		if (pre(node->data)) return node;
 	}
 	return sentinel;
 }
-template<typename T>
-Node<T> * ClinkedList<T>::last() const
-{
-	return sentinel->getPrev();
-}
-template<typename T>
-Node<T> * ClinkedList<T>::dirBefore(Predicate predicate) const
-{
-	Node<T> *node = findNode(predicate);
-	return sentinel->getPrev();
-}
-template<typename T>
-Node<T> * ClinkedList<T>::dirIndex(unsigned index) const
+
+template<typename T, typename F>
+Node<T> * ClinkedList<T,F>::dirIndex(unsigned index) const
 {
 	Node<T> *nodo = sentinel;
-	if ((length() / 2) >= index + 1)
+	if ((length() / 2) > index)
 	{	
 		for (unsigned i = 0; i != index + 1; ++i)
-			nodo = nodo->getNext();
+			nodo = nodo->next;
 	}
 	else
 	{
 		for (unsigned i = length(); i != index; --i)
-			nodo = nodo->getPrev();
+			nodo = nodo->prev;
 	}
 	return nodo;
 }
-template<typename T>
-void ClinkedList<T>::addNodeAfter(Node<T> *nodo, Node<T>* newNode)
+template<typename T, typename F>
+void ClinkedList<T,F>::addNodeAfter(Node<T> *nodo, Node<T>* newNode)
 {
-	newNode->setPrev(nodo);
-	newNode->setNext(nodo->getNext());
-	nodo->getNext()->setPrev(newNode);
-	nodo->setNext(newNode);
+	newNode->prev = nodo;
+	newNode->next = nodo->next;
+	nodo->next->prev= newNode;
+	nodo->next = newNode;
 	++size;
 }
-template<typename T>
-void ClinkedList<T>::addNodeBefore(Node<T> *nodo, Node<T>* newNode)
+template<typename T, typename F>
+void ClinkedList<T,F>::addNodeBefore(Node<T> *nodo, Node<T>* newNode)
 {
-	newNode->setNext(nodo);
-	newNode->setPrev(nodo->getPrev());
-	nodo->getPrev()->setNext(newNode);
-	nodo->setPrev(newNode);
+	newNode->next = nodo;
+	newNode->prev = nodo->prev;
+	nodo->prev->next = newNode;
+	nodo->prev = newNode;
 	++size;
 }
-template<typename T>
-void ClinkedList<T>::deleteNode(Node<T>* node)
+template<typename T, typename F>
+void ClinkedList<T,F>::deleteNode(Node<T>* node)
 {
-	node->getPrev()->setNext(node->getNext());
-	node->getNext()->setPrev(node->getPrev());
+	node->prev->next = node->next;
+	node->next->prev = node->prev;
 	delete node;
 	--size;
 }
-template<typename T>
-ClinkedList<T>::ClinkedList() : sentinel(new Node<T>()), size(0)
-{
-	sentinel->setNext(sentinel);
-	sentinel->setPrev(sentinel);
-}
+template<typename T, typename F>
+ClinkedList<T, F>::ClinkedList() :ClinkedList(F()){}
 
-template<typename T>
-ClinkedList<T>::ClinkedList(std::initializer_list<T> list) : ClinkedList()
+template<typename T, typename F>
+ClinkedList<T, F>::ClinkedList(const F& pcmp) : sentinel(new Node<T>()), size(0), cmp(pcmp)
 {
-	for (T e : list) 
+	sentinel->next = sentinel;
+	sentinel->prev = sentinel;
+}
+template<typename T, typename F>
+ClinkedList<T,F>::ClinkedList(const std::initializer_list<T>& list) : ClinkedList()
+{
+	for (const T& e : list)
 		addLast(e);
 }
 
-template<typename T>
-ClinkedList<T>::~ClinkedList()
+template<typename T, typename F>
+ClinkedList<T,F>::~ClinkedList()
 {
 	clear();
 }
-template<typename T>
-void ClinkedList<T>::addFist(const T& e)
+template<typename T, typename F>
+void ClinkedList<T,F>::addFist(const T& e)
 {
 	addNodeAfter(sentinel, new Node<T>(e));
 }
-template<typename T>
-void ClinkedList<T>::addLast(const T& e)
+
+template<typename T, typename F>
+void ClinkedList<T,F>::addFist(T&& e)
+{
+	addNodeAfter(sentinel, new Node<T>(std::move(e)));
+}
+template<typename T, typename F>
+void ClinkedList<T,F>::addLast(const T& e)
 {
 	addNodeBefore(sentinel, new Node<T>(e));
 }
-template<typename T>
-bool ClinkedList<T>::add(unsigned index, const T& e)
+template<typename T, typename F>
+void ClinkedList<T,F>::addLast(T&& e)
 {
-	bool inRange = index <= length();
-	if (inRange)
-		addNodeBefore(dirIndex(index), new Node<T>(e));
-	return inRange;
+	addNodeBefore(sentinel, new Node<T>(std::move(e)));
+}
+template<typename T, typename F>
+void ClinkedList<T,F>::add(unsigned index, const T& e)
+{
+	genericAdd(index, e);
 }
 
-//unir esta dos en una unica funcion
-template<typename T>
-bool ClinkedList<T>::addBefore(const T& e, Predicate pre)
+template<typename T, typename F>
+void ClinkedList<T,F>::add(unsigned index, T&& e)
+{
+	genericAdd(index, std::move(e));
+}
+
+template<typename T, typename F>
+template<typename E>
+void ClinkedList<T,F>::genericAdd(unsigned index, E&& e)
+{
+	if (index > length())
+		throw new std::out_of_range("Index out of range");
+
+	addNodeBefore(dirIndex(index), new Node<T>(std::forward<E>(e)));
+}
+
+
+
+template<typename T, typename F>
+bool ClinkedList<T,F>::addBefore(const T& e, Predicate pre)
+{
+	return genericAddAB(&ClinkedList<T,F>::addNodeBefore, e, pre);
+}
+
+template<typename T, typename F>
+bool ClinkedList<T,F>::addBefore(T&& e, Predicate pre)
+{
+	return genericAddAB(&ClinkedList<T,F>::addNodeBefore, std::move(e), pre);
+}
+
+template<typename T, typename F>
+bool ClinkedList<T,F>::addAfter(const T& e, Predicate pre)
+{
+	return genericAddAB(&ClinkedList<T,F>::addNodeAfter, e, pre);
+}
+
+template<typename T, typename F>
+bool ClinkedList<T,F>::addAfter(T&& e, Predicate pre)
+{
+	return genericAddAB(&ClinkedList<T,F>::addNodeAfter, std::move(e), pre);
+}
+template<typename T, typename F>
+template<typename E>
+bool ClinkedList<T,F>::genericAddAB(AddNode f, E&& e, Predicate pre)
 {
 	Node<T> *node = findNode(pre);
 	bool isFound = node != sentinel;
-	if (isFound)
-		addNodeBefore(node, new Node<T>(e));
 
-	return isFound;
-
-}
-template<typename T>
-bool ClinkedList<T>::addAfter(const T& e, Predicate pre)
-{
-	Node<T> *node = findNode(pre);
-	bool isFound = node != sentinel;
 	if (isFound)
-		addNodeAfter(node, new Node<T>(e));
+		((*this).*f)(node, new Node<T>(std::forward<E>(e)));
 
 	return isFound;
 }
 
-template<typename T>
-bool ClinkedList<T>::addAcenDecen(const T& e, int f)
+
+template<typename T, typename F>
+template<typename E>
+bool ClinkedList<T,F>::genericAddAcenDecen(E&& e, int f)
 {
-	Node<T> *node = sentinel->getNext();
-	int isRep = 1;
+	Node<T> *node = nullptr;
+	bool isRep = findTightBoundary(f,e, node);
+
+	if (isRep)
+		addNodeBefore(node, new Node<T>(std::forward<E>(e)));
 	
-	while (node != sentinel && (isRep = cmp(e, node->data)*f) < 0)
-		node = node->getNext();
-
-	bool isAdded = isRep != 0;
-	if (isAdded)
-		addNodeBefore(node, new Node<T>(e));
-
-	return isAdded;
+	return isRep;
 }
 
-template<typename T>
-bool ClinkedList<T>::addAscendent(const T& e)
+template<typename T, typename F>
+bool ClinkedList<T,F>::findTightBoundary(int f,T e, Node<T>*& node) const
 {
-	return addAcenDecen(e, 1);
+	int c = 1;
+
+	node = sentinel->next;
+	while (node != sentinel && (c = cmp(e, node->data)*f) < 0)
+		node = node->next;
+
+	return c != 0;
 }
-template<typename T>
-bool ClinkedList<T>::addDescendent(const T& e)
+
+template<typename T, typename F>
+bool ClinkedList<T,F>::addAscendent(const T& e)
 {
-	return addAcenDecen(e, -1);
+	return genericAddAcenDecen(e, 1);
 }
-template<typename T>
-bool ClinkedList<T>::remove(Predicate pre)
+template<typename T, typename F>
+bool ClinkedList<T,F>::addDescendent(const T& e)
+{
+	return genericAddAcenDecen(e, -1);
+}
+template<typename T, typename F>
+bool ClinkedList<T,F>::remove(Predicate pre)
 {
 	Node<T> *node = findNode(pre);
 	bool isFound = node != sentinel;
@@ -229,78 +294,87 @@ bool ClinkedList<T>::remove(Predicate pre)
 
 	return isFound;
 }
-template<typename T>
-bool ClinkedList<T>::remove(unsigned index)
+template<typename T, typename F>
+void ClinkedList<T,F>::remove(unsigned index)
 {
-	bool inRange = index < length();
-	if (inRange)
-		deleteNode(dirIndex(index));
-
-	return inRange;
-
+	check(index,"Index out of range");
+	deleteNode(dirIndex(index));
 }
-template<typename T>
-void ClinkedList<T>::clear()
+template<typename T, typename F>
+void ClinkedList<T,F>::clear()
 {
-	Node<T> *node = sentinel->getNext();
+	Node<T> *node = sentinel->next;
 	while (size != 0)
 	{
 		Node<T> *deleted = node;
-		node = node->getNext();
+		node = node->next;
 		delete deleted;
 		--size;
 	}
 }
-template<typename T>
-bool ClinkedList<T>::isEmpty() const
+template<typename T, typename F>
+bool ClinkedList<T,F>::isEmpty() const
 {
 	return length() == 0;
 }
 
 
-template<typename T>
-bool ClinkedList<T>::find(Predicate pre, T& out) const
+template<typename T, typename F>
+bool ClinkedList<T,F>::find(Predicate pre, T& out) const
 {
 	Node<T> *node = findNode(pre);
 	bool isFound = node != sentinel;
 	if (isFound)
-		out = node->getData();
+		out = node->data;
 	
 	return isFound;
 }
 
-template<typename T>
-T& ClinkedList<T>::operator[] (std::size_t index)
+template<typename T, typename F>
+T& ClinkedList<T,F>::operator[] (std::size_t index)
 {
 	return getData(index);
 
 }
-template<typename T>
-T& ClinkedList<T>::getData(unsigned index) const
+template<typename T, typename F>
+T& ClinkedList<T,F>::getData(unsigned index) const
 {
-	check("index out of range");
+	check(index,"index out of range");
 	return dirIndex(index)->data;
 }
 
-template<typename T>
-const T& ClinkedList<T>::operator[] (std::size_t index) const
+template<typename T, typename F>
+const T& ClinkedList<T,F>::operator[] (std::size_t index) const
 {
 	return getData(index);
 }
 
-template<typename T>
-T ClinkedList<T>::set(unsigned index, const T& e)
+template<typename T, typename F>
+T ClinkedList<T,F>::set(unsigned index, const T& e)
 {
-	check("index out of range");
+	return genericSet(index, e);
+}
 
+template<typename T, typename F>
+T ClinkedList<T,F>::set(unsigned index, T&& e)
+{
+	return genericSet(index, std::move(e));
+}
+
+template<typename T, typename F>
+template<typename E> 
+T ClinkedList<T,F>::genericSet(unsigned index, E&& e)
+{
+	check(index,"index out of range");
 	Node<T> *node = dirIndex(index);
-	T oldData = node->getData();
-	node->setData(e);
+	T oldData = std::move(node->data);
+	node->data = std::forward<E>(e);
 
 	return oldData;
 }
-template<typename T>
-unsigned ClinkedList<T>::length() const
+
+template<typename T, typename F>
+unsigned ClinkedList<T,F>::length() const
 {
 	return size;
 }

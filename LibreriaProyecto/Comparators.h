@@ -1,41 +1,41 @@
 #pragma once
 #include <memory>
 
-namespace Comparators
+
+template<typename T>
+struct DefaultComparator
 {
+	int operator()(const T&, const T&)const;
+private:
+	int compare(const T &, const T &)const;
+	int compare(T*, T*)const;
+	int compare(std::shared_ptr<T> a, std::shared_ptr<T> b)const;
+};
 
-	template<typename T> int comparar(const T &, const T &);
-	template<typename T>  int comparar(const T* , const T* );
-	template<typename T>  int comparar(T* , T* );
-	template<typename T>  int comparar(std::shared_ptr<T> a, std::shared_ptr<T> b);
-	
-
-	template<typename T>
-	int comparar(const T &a, const T &b)
-	{
-		std::less<T> func;
-
-		if (func(a, b)) return -1;
-		if (func(b, a)) return 1;
-		return 0;
-	}
-
-	template<typename T>
-	int comparar(const T* a, const T* b)
-	{
-		return comparar(*a, *b);
-	}
-
-	template<typename T>
-	int comparar(T* a, T* b)
-	{
-		return comparar(*a, *b);
-	}
-
-	template<typename T>
-	int comparar(std::shared_ptr<T> a, std::shared_ptr<T> b)
-	{
-		return comparar(*a, *b);
-	}
-
+template<typename T>
+int DefaultComparator<T>::operator()(const T& a, const T& b) const
+{
+	return compare(a, b);
 }
+
+template<typename T>
+int DefaultComparator<T>::compare(const T &a, const T &b)const
+{
+	std::less<T> func;
+	if (func(a, b)) return -1;
+	if (func(b, a)) return 1;
+	return 0;
+}
+template<typename T>
+int DefaultComparator<T>::compare(T* a, T* b)const
+{
+	return compare(*a, *b);
+}
+
+template<typename T>
+int DefaultComparator<T>::compare(std::shared_ptr<T> a, std::shared_ptr<T> b)const
+{
+	return compare(*a, *b);
+}
+
+
