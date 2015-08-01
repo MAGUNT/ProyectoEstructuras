@@ -35,14 +35,14 @@ public:
 	virtual void add(unsigned, const T&) = 0;
 	virtual void add(unsigned, T&&) = 0;
 	
-	//agrega el dato antes del dato que cumpla el predicado. 
+	//agrega el dato antes del primer dato que cumpla el predicado. 
 	//Ejemplo:
 	// Para T= int, esto agrega el numero 33 antes del primer 3 que encuentre.
 	//list.addBefore(33, [](int x){ return x == 3; });
 	virtual bool addBefore(const T&, Predicate) = 0;
 	virtual bool addBefore(T&&, Predicate) = 0;
 
-	//agrega el dato antes del dato que cumpla el predicado. 
+	//agrega el dato antes del primer dato que cumpla el predicado. 
 	//Ejemplo:
 	// Para T= int, esto agrega el numero 33 despues del primer 3 que encuentre.
 	//list.After(33, [](int x){ return x == 3; });
