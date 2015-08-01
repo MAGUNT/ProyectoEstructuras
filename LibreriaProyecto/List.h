@@ -13,7 +13,7 @@ public:
 	//Formato: [//capturas](//parametros)->//tipo de retorno{ //cuerpo}
 	//El tipo de retorno es opcional para la mayoria de los 
 	//casos por lo tanto se puede escribir: [//capturas](//parametros){ //cuerpo}
-	// Capturas: para capturar una variable que este en el scope en el que creo el callback
+	// Capturas: para capturar una variable que este en el scope en el cual creo el callback
 	//Ejemplo:
 	//int numero = 10;
 	//[numero](int x){ x==numero;} o [=](int x){ x==numero;} 
