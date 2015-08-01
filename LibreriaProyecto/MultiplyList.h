@@ -7,18 +7,51 @@ class MultiplyList
 {
 
 public:
-	using Comparator = std::function < int(const T&, const T&)>;
 
+
+	//Se le llama un comparator a una 
+	//funcion que retorne 1 si el primer parametro deberia estar estar despues del segundo
+	//-1 si el primero deberia estar entes del segundo y cero si son iguales.
+	//Esto asumiendo un orden acedente.
+	using Comparator = std::function < int(const T&, const T&)>;
+	
+	//Esto permite inicializar a lista de esta manera 
+	/*
+	
+	MultiplyList<int> list =
+	{
+		[](int x, int y){return y-x;},
+		[](int x, int y){return x-y;}
+	};
+
+	O su contra parte dinamica
+	MultiplyList<int> list = new MultiList<int>
+	({
+		[](int x, int y){return y-x;},
+		[](int x, int y){return x-y;}
+	});
+	*/
 	MultiplyList(std::initializer_list<Comparator>);
 	~MultiplyList();
 
+	//agrega el dato acendentemente para todos los creterios
+	//especificados en el constructor.
 	bool add(const T &); //override T&&
 	
+	//basicamente lo mismo que el remove de la lista normal ver List.h
 	template<typename Predicate>
 	bool remove(const Predicate&); 
+	
+	//si esta vacia
 	bool empty() const;
 	unsigned length() const;
 
+	//Se pasa un callback con la operacion que se quiere hacer sobre cada dato de la lista 
+	//y por cual criterio se desea recorrer.
+	//Nota: El numero de criterio depende del orden en el cual se ingresaron en el constructor
+	//Ejemplo:
+	// Para T= int, esto imprime todos los datos en consola
+	//list.foreach(0,[](int x){std::cout << x << std::endl;});
 	template<typename Func>
 	void foreach(unsigned,Func);
 private:

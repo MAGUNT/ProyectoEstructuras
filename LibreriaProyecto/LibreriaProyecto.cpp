@@ -15,9 +15,6 @@ void pruebaListaMultiply()
 
 	using str = std::tuple < int, char, std::string >;
 	std::tuple<int, char, std::string> foo(10, 'x', "hola");
-
-
-
 	MultiplyList<str> list =
 	{
 
