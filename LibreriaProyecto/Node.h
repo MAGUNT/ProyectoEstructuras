@@ -5,7 +5,7 @@ template <typename, typename> class ClinkedList;
 template<typename T> class Node
 {
 //modificarlo para registringir la amistad a solo T-T
-template<typename T, typename E> friend class ClinkedList; 
+template<typename F, typename E> friend class ClinkedList; 
 
 private:
 	T data;
