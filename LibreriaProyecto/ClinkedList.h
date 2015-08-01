@@ -6,6 +6,7 @@
 #include <stdexcept>
 
 
+
 template<class T, class Func = DefaultComparator<T>>
 class ClinkedList final
 	:public List<T> 
@@ -41,7 +42,7 @@ private:
 	template<typename E>
 	bool genericAddAB(AddNode, E&&, Predicate);
 
-	bool findTightBoundary(int,T, Node<T>*&) const;
+	bool findTightBoundary(int, const T&, Node<T>*&) const;
 
 
 public:
@@ -262,12 +263,11 @@ bool ClinkedList<T,F>::genericAddAcenDecen(E&& e, int f)
 }
 
 template<typename T, typename F>
-bool ClinkedList<T,F>::findTightBoundary(int f,T e, Node<T>*& node) const
+bool ClinkedList<T,F>::findTightBoundary(int f, const T& e, Node<T>*& node) const
 {
 	int c = 1;
-
 	node = sentinel->next;
-	while (node != sentinel && (c = cmp(e, node->data)*f) < 0)
+	while (node != sentinel && (c = cmp(e, node->data)*f) > 0)
 		node = node->next;
 
 	return c != 0;

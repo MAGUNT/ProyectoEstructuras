@@ -40,10 +40,9 @@ public:
 	virtual T set(unsigned, const T&)=0;
 	virtual T set(unsigned, T&&) = 0;
 	//falta cbegin, begin , cend, end
-	template<typename E>friend std::ostream &operator<<(std::ostream&os, const List<E>& list)
+	template<typename E>friend std::ostream &operator<<(std::ostream &os, const List<E> &list)
 	{
-		for (const E& e : list)
-			os << e << ",";
 	}
+	
 };
 

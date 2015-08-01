@@ -13,7 +13,7 @@ private:
 	Node<T>* prev;
 
 	Node();
-	Node(const T&);
+	Node(const T&); //sobrecargar para T&&
 };
 
 template <typename T>
