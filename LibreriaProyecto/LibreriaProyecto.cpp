@@ -108,6 +108,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	list.addFist(1000);
 	list.addFist(1000);
 
+	
+
 	list.foreach([](int x){std::cout << x<<", "; });
 	std::cout << std::endl;
 
