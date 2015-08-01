@@ -19,7 +19,7 @@ public:
 	//[numero](int x){ x==numero;} o [=](int x){ x==numero;} 
 	//(El igual le dice que capture todo lo que vea por valor).
 	//Equivalente de javascript function(){} (algo asi era :/)
-	using Predicate = const std::function<bool(const T&)>&;
+	typedef const std::function<bool(const T&)>& Predicate;
 
 	virtual ~List(){}
 
