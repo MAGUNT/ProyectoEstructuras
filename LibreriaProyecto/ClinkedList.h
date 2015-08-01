@@ -25,7 +25,8 @@ private:
 	Node<T>* dirIndex(unsigned) const;
 
 	T& getData(unsigned index) const;
-
+	
+	void resetSentinel();
 	void addNodeAfter(Node<T> *, Node<T>*);
 	void addNodeBefore(Node<T>*, Node<T>*);
 	void deleteNode(Node<T>*);
@@ -74,18 +75,35 @@ public:
 
 	void clear()override;
 	bool isEmpty() const override;
+	//pendiente de probar
 	bool find(Predicate, T&) const override;
 	T& operator[] (std::size_t index)override;
 	const T& operator[] (std::size_t index) const override;
+	
+	//pendiente probar
 	T set(unsigned, const T&)override;
 	T set(unsigned, T&&)override;
 	unsigned length() const override;
 	
-
+	void foreach(std::function<void(const T&)> f)
+	{
+		Node<T> *node = sentinel->next;
+		while (node != sentinel)
+		{
+			f(node->data);
+			node = node->next;
+		}
+	
+	}
 
 };
 
-
+template<typename T, typename F>
+void ClinkedList<T, F>::resetSentinel()
+{
+	sentinel->next = sentinel;
+	sentinel->prev = sentinel;
+}
 
 template<typename T, typename F>
 void  ClinkedList<T,F>::check(unsigned index,const char* msg) const
@@ -152,8 +170,7 @@ ClinkedList<T, F>::ClinkedList() :ClinkedList(F()){}
 template<typename T, typename F>
 ClinkedList<T, F>::ClinkedList(const F& pcmp) : sentinel(new Node<T>()), size(0), cmp(pcmp)
 {
-	sentinel->next = sentinel;
-	sentinel->prev = sentinel;
+	resetSentinel();
 }
 template<typename T, typename F>
 ClinkedList<T,F>::ClinkedList(const std::initializer_list<T>& list) : ClinkedList()
@@ -311,6 +328,7 @@ void ClinkedList<T,F>::clear()
 		delete deleted;
 		--size;
 	}
+	resetSentinel();
 }
 template<typename T, typename F>
 bool ClinkedList<T,F>::isEmpty() const

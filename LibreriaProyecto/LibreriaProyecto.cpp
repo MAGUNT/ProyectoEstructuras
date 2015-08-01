@@ -9,14 +9,14 @@
 #include <algorithm>
 #include <iostream>
 
-int _tmain(int argc, _TCHAR* argv[])
-{
-	
 
-	using str = std::tuple < int, char, std::string > ;
+void pruebaListaMultiply()
+{
+
+	using str = std::tuple < int, char, std::string >;
 	std::tuple<int, char, std::string> foo(10, 'x', "hola");
 
-	
+
 
 	MultiplyList<str> list =
 	{
@@ -40,7 +40,7 @@ int _tmain(int argc, _TCHAR* argv[])
 			return 0;
 		}
 
-		
+
 	};
 
 	std::vector<std::string> vecS = { "dfsf", "atsdfds", "ggg", "hhh", "qqq", "sdad", "asdda", "dsfdsf", "dsffsf" };
@@ -89,17 +89,33 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	system("pause");
 
-	/*
+}
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+	
+
+
+	
 	ClinkedList<int> list;
+	list.addFist(1000);
+	for (unsigned i = 0; i < 20; ++i)
+	{
+		list.addDescendent(std::rand()%50);
+	}
 
-	list.add(4, 5);
-	list.addAfter(10,[](int r){return true; });
-	list.addAscendent(200);
+	std::cout << list.addDescendent(1);
+	list.addFist(1000);
+	list.addFist(1000);
 
-	list[2] = 4;
-	list[4] = list[2];
+	list.foreach([](int x){std::cout << x<<", "; });
+	std::cout << std::endl;
 
-	*/
+
+	list.clear();
+	list.foreach([](int x){std::cout << x << ", "; });
+	std::cout << std::endl;
+	system("pause");
 
 
 }
