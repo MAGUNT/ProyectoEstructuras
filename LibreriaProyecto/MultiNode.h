@@ -9,7 +9,7 @@ template
 class MultiNode
 {
 
-	template <typename T> friend class MultiplyList;
+	template <typename E> friend class MultiplyList;
 
 private:
 	
