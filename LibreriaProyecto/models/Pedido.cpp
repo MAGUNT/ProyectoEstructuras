@@ -14,5 +14,5 @@ Pedido::Pedido(): nombre(), articulos() {}
 Pedido::~Pedido() {}
 
 void Pedido::agregarArticulo(Articulo* articulo) {
-	std::cout << "Whaddup" << std::endl;
+	std::cout << "*En agregarArticulo de Pedido*" << std::endl;
 }

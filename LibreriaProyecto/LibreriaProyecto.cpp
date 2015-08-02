@@ -88,11 +88,13 @@ void pruebaListaMultiply()
 
 }
 
-void testArticulos() {
+void testArticulos()
+{
 	Articulo* x = new Articulo();
 	Pedido* p = new Pedido();
 
 	p->agregarArticulo(x);
+	std::cout << x << std::endl;
 
 }
 
