@@ -2,9 +2,7 @@
 #include <functional>
 
 template 
-<
-	class T
-> 
+<class T>
 class List
 {
 public:
@@ -87,7 +85,7 @@ public:
 	virtual T& operator[] (std::size_t index) = 0;
 	virtual const T& operator[] (std::size_t index) const = 0;
 	
-	//Tamaño de la lista
+	//Tamaï¿½o de la lista
 	virtual unsigned length() const = 0;
 	
 	//Agrega el dato al index especificado y retorna el valor anterior
@@ -95,10 +93,11 @@ public:
 	virtual T set(unsigned, T&&) = 0;
 	
 	
-	//falta cbegin, begin , cend, end
+	/*falta cbegin, begin , cend, end
 	template<typename E>friend std::ostream &operator<<(std::ostream &os, const List<E> &list)
 	{
 	}
+	*/
 	
 };
 

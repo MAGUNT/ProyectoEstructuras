@@ -1,7 +1,7 @@
 #pragma once
 #include "List.h"
-#include "Node.h"
-#include "Comparators.h"
+#include "../utils/Node.h"
+#include "../utils/Comparators.h"
 #include <stdexcept>
 
 

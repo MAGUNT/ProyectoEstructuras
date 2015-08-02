@@ -1,13 +1,14 @@
-// LibreriaProyecto.cpp: define el punto de entrada de la aplicación de consola.
+// LibreriaProyecto.cpp: define el punto de entrada de la aplicaciï¿½n de consola.
 //
-#include "Comparators.h"
-#include "ClinkedList.h"
 #include <tuple>
-#include "MultiplyList.h"
 #include <vector>
 #include <algorithm>
 #include <iostream>
-
+#include "utils/Comparators.h"
+#include "lists/ClinkedList.h"
+#include "lists/MultiplyList.h"
+#include "models/Articulo.h"
+#include "models/Pedido.h"
 
 void pruebaListaMultiply()
 {
@@ -87,8 +88,19 @@ void pruebaListaMultiply()
 
 }
 
+void testArticulos() {
+	Articulo* x = new Articulo();
+	Pedido* p = new Pedido();
+
+	p->agregarArticulo(x);
+
+}
+
 int main()
 {
+
+	testArticulos();
+
 	ClinkedList<int> list;
 	list.addFist(1000);
 	for (unsigned i = 0; i < 20; ++i)

@@ -1,6 +1,6 @@
 #pragma once
 #include <functional>
-#include "MultiNode.h"
+#include "../utils/MultiNode.h"
 
 template<typename T>
 class MultiplyList
