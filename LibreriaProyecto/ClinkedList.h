@@ -2,7 +2,6 @@
 #include "List.h"
 #include "Node.h"
 #include "Comparators.h"
-#include <SDKDDKVer.h>
 #include <stdexcept>
 
 

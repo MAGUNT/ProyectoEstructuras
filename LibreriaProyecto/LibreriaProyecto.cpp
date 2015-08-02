@@ -2,7 +2,6 @@
 //
 #include "Comparators.h"
 #include "ClinkedList.h"
-#include <tchar.h>
 #include <tuple>
 #include "MultiplyList.h"
 #include <vector>
@@ -88,12 +87,8 @@ void pruebaListaMultiply()
 
 }
 
-int _tmain(int argc, _TCHAR* argv[])
+int main()
 {
-	
-
-
-	
 	ClinkedList<int> list;
 	list.addFist(1000);
 	for (unsigned i = 0; i < 20; ++i)
@@ -116,7 +111,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	std::cout << std::endl;
 	system("pause");
 
-
+	return 0;
 }
 
 
