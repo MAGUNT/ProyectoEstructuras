@@ -17,7 +17,8 @@ class Pedido {
 
 private:
 	std::string nombre;
-	ClinkedList<Articulo*> articulos;
+	ClinkedList<Articulo*>* articulos;
+	bool pagado;
 
 
 public:
@@ -25,6 +26,9 @@ public:
 	virtual ~Pedido();
 
 	void agregarArticulo(Articulo* articulo);
+	void comprarPedido();
+	double precioTotal();
+	void verArticulos();
 };
 
 
