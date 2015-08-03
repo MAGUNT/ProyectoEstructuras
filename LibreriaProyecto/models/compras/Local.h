@@ -13,7 +13,7 @@
 
 class Local {
 private:
-	ClinkedList<LineaGeneral> lineasGenerales;
+	ClinkedList<LineaGeneral*> lineasGenerales;
 
 public:
 	Local();

@@ -55,4 +55,8 @@ std::ostream& operator <<(std::ostream& os, Articulo& articulo) {
 };
 
 
+bool operator<(Articulo& x, Articulo& y) {
+	return x.getCodigo() < y.getCodigo();
+}
+
 

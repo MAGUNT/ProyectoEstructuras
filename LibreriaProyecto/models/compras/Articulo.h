@@ -32,6 +32,7 @@ public:
 	void setMarca(std::string marca);
 
 	friend std::ostream& operator <<(std::ostream& os, Articulo& articulo);
+	friend bool operator<(Articulo& x, Articulo& y);
 };
 
 #endif /* LIBRERIAPROYECTO_MODELS_ARTICULO_H_ */

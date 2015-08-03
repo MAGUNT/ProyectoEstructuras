@@ -92,13 +92,20 @@ void pruebaListaMultiply()
 void testArticulos(Inventario* inv)
 {
 	Pedido* p = new Pedido();
+	Articulo* x = new Articulo();
+	x->setCodigo(10);
+	x->setPrecio(500);
+	x->setNombre("stuff");
+	x->setMarca("thing");
 
 	inv->agregarArticulo(1,100,"Popi", "No se");
 	inv->agregarArticulo(1,100,"Popi", "No se");
 	inv->agregarArticulo(1,100,"Popi", "No se");
 	inv->agregarArticulo(1,100,"Popi", "No se");
 
-	p->agregarArticulo(inv->getArticulo(1));
+	std::cout << "New Article is: " << *x << std::endl;
+
+	p->agregarArticulo(x);
 	p->verArticulos();
 
 	delete p;

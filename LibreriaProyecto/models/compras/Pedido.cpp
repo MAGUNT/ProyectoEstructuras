@@ -20,7 +20,8 @@ Pedido::~Pedido() {
 void Pedido::agregarArticulo(Articulo* articulo) {
 	if(!this->pagado) {
 		std::cout << "Agregando articulo" << std::endl;
-		articulos->addAscendent(articulo);
+		articulos->addLast(articulo);
+		std::cout << articulos[0] << std::endl;
 	} else {
 		std::cout << "Este pedido ya ha sido comprado" << std::endl;
 	}
