@@ -83,16 +83,28 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ClinkedList.h" />
-    <ClInclude Include="Comparators.h" />
-    <ClInclude Include="List.h" />
-    <ClInclude Include="MultiNode.h" />
-    <ClInclude Include="MultiplyList.h" />
-    <ClInclude Include="Node.h" />
+    <ClInclude Include="lists\ClinkedList.h" />
+    <ClInclude Include="lists\List.h" />
+    <ClInclude Include="lists\MultiplyList.h" />
+    <ClInclude Include="models\compras\Articulo.h" />
+    <ClInclude Include="models\compras\Inventario.h" />
+    <ClInclude Include="models\compras\LineaEspecifica.h" />
+    <ClInclude Include="models\compras\LineaGeneral.h" />
+    <ClInclude Include="models\compras\Local.h" />
+    <ClInclude Include="models\compras\Pedido.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="utils\Comparators.h" />
+    <ClInclude Include="utils\MultiNode.h" />
+    <ClInclude Include="utils\Node.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LibreriaProyecto.cpp" />
+    <ClCompile Include="models\compras\Articulo.cpp" />
+    <ClCompile Include="models\compras\Inventario.cpp" />
+    <ClCompile Include="models\compras\LineaEspecifica.cpp" />
+    <ClCompile Include="models\compras\LineaGeneral.cpp" />
+    <ClCompile Include="models\compras\Local.cpp" />
+    <ClCompile Include="models\compras\Pedido.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

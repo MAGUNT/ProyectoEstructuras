@@ -12,7 +12,7 @@ Articulo::Articulo()
 
 Articulo::~Articulo() {}
 
-int Articulo::getCodigo() {
+int Articulo::getCodigo() const {
 	return this->codigo;
 }
 
@@ -20,7 +20,7 @@ void Articulo::setCodigo(int codigo) {
 	this->codigo = codigo;
 }
 
-int Articulo::getPrecio() {
+int Articulo::getPrecio()const {
 	return this->precio;
 }
 
@@ -28,7 +28,7 @@ void Articulo::setPrecio(int codigo) {
 	this->codigo = codigo;
 }
 
-std::string Articulo::getNombre() {
+std::string Articulo::getNombre() const{
 	return this->nombre;
 }
 
@@ -36,7 +36,7 @@ void Articulo::setNombre(std::string nombre) {
 	this->nombre = nombre;
 }
 
-std::string Articulo::getMarca() {
+std::string Articulo::getMarca()const {
 	return this->marca;
 }
 
@@ -44,19 +44,5 @@ void Articulo::setMarca(std::string marca) {
 	this->marca = marca;
 }
 
-std::ostream& operator <<(std::ostream& os, Articulo& articulo) {
-	os << "["
-			<< articulo.codigo << ", "
-			<< articulo.nombre << ", "
-			<< articulo.marca << ", "
-			<< articulo.precio << "]" << std::endl;
-
-	return os;
-};
-
-
-bool operator<(Articulo& x, Articulo& y) {
-	return x.getCodigo() < y.getCodigo();
-}
 
 
