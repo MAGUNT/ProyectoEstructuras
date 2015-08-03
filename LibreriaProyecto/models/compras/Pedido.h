@@ -9,7 +9,7 @@
 #define LIBRERIAPROYECTO_MODELS_PEDIDO_H_
 
 #include <string>
-#include "../lists/ClinkedList.h"
+#include "../../lists/ClinkedList.h"
 #include "Articulo.h"
 
 

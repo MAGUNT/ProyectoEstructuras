@@ -8,7 +8,7 @@
 #ifndef LIBRERIAPROYECTO_MODELS_INVENTARIO_H_
 #define LIBRERIAPROYECTO_MODELS_INVENTARIO_H_
 
-#include "../lists/ClinkedList.h"
+#include "../../lists/ClinkedList.h"
 #include "Articulo.h"
 
 class Inventario {

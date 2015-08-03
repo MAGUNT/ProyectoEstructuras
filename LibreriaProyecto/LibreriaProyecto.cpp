@@ -7,9 +7,9 @@
 #include "utils/Comparators.h"
 #include "lists/ClinkedList.h"
 #include "lists/MultiplyList.h"
-#include "models/Articulo.h"
-#include "models/Pedido.h"
-#include "models/Inventario.h"
+#include "models/compras/Articulo.h"
+#include "models/compras/Pedido.h"
+#include "models/compras/Inventario.h"
 
 void pruebaListaMultiply()
 {
