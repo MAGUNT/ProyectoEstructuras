@@ -7,12 +7,26 @@
 
 #include "LineaGeneral.h"
 
-LineaGeneral::LineaGeneral() {
-	// TODO Auto-generated constructor stub
-
+LineaGeneral::LineaGeneral(int _codigo, std::string _nombre): codigo(_codigo), nombre(_nombre) {
+	this->lineasEspecificas = new ClinkedList<LineaEspecifica*>();
 }
 
 LineaGeneral::~LineaGeneral() {
-	// TODO Auto-generated destructor stub
+	delete this->lineasEspecificas;
 }
 
+int LineaGeneral::getCodigo() const {
+	return codigo;
+}
+
+const std::string& LineaGeneral::getNombre() const {
+	return nombre;
+}
+
+void LineaGeneral::setNombre(const std::string& nombre) {
+	this->nombre = nombre;
+}
+
+ClinkedList<LineaEspecifica*>* LineaGeneral::getLineasEspecificas() {
+	return lineasEspecificas;
+}

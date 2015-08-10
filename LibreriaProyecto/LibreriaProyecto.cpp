@@ -11,6 +11,8 @@
 #include "models/compras/Pedido.h"
 #include "models/compras/Inventario.h"
 
+#include "tests/UITest.h"
+
 void pruebaListaMultiply()
 {
 
@@ -89,62 +91,13 @@ void pruebaListaMultiply()
 
 }
 
-void testArticulos(Inventario* inv)
-{
-	Pedido* p = new Pedido();
-	Articulo* x = new Articulo();
-	x->setCodigo(10);
-	x->setPrecio(500);
-	x->setNombre("stuff");
-	x->setMarca("thing");
-
-	inv->agregarArticulo(1,100,"Popi", "No se");
-	inv->agregarArticulo(1,100,"Popi", "No se");
-	inv->agregarArticulo(1,100,"Popi", "No se");
-	inv->agregarArticulo(1,100,"Popi", "No se");
-
-	std::cout << "New Article is: " << *x << std::endl;
-
-	p->agregarArticulo(x);
-	p->verArticulos();
-
-	delete p;
-
-	std::cout << "Saliendo de testArticulos" << std::endl;
-}
 
 int main()
 {
-	Inventario* inv = new Inventario();
-	testArticulos(inv);
-	delete inv;
-/*
- * 	Todas las pruebas que hagamos, que vayan en funciones diferentes
- * 	para no tener el main lleno de codigo y solo llamado a funciones
- *
-	ClinkedList<int> list;
-	list.addFist(1000);
-	for (unsigned i = 0; i < 20; ++i)
-	{
-		list.addDescendent(std::rand()%50);
-	}
+	UITest* uitest = new UITest();
+	uitest->testUI();
 
-	std::cout << list.addDescendent(1);
-	list.addFist(1000);
-	list.addFist(1000);
-
-	
-
-	list.foreach([](int x){std::cout << x <<", "; });
-	std::cout << std::endl;
-
-
-	list.clear();
-	list.foreach([](int x){std::cout << x << ", "; });
-	std::cout << std::endl;
-*/
-	system("pause");
-
+	delete uitest;
 	return 0;
 }
 

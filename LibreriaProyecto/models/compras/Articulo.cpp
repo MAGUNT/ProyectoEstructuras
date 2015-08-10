@@ -7,8 +7,8 @@
 
 #include "Articulo.h"
 
-Articulo::Articulo()
-	: codigo(-1), precio(0), nombre("nulo"), marca("nulo"){}
+Articulo::Articulo(int _codigo, std::string _nombre)
+	: codigo(_codigo), precio(0), nombre(_nombre), marca("nulo"){}
 
 Articulo::~Articulo() {}
 

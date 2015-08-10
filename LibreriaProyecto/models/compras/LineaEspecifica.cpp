@@ -7,12 +7,30 @@
 
 #include "LineaEspecifica.h"
 
-LineaEspecifica::LineaEspecifica() {
-	// TODO Auto-generated constructor stub
-
+LineaEspecifica::LineaEspecifica(int _codigo, std::string _nombre): codigo(_codigo), nombre(_nombre) {
+	articulos = new ClinkedList<Articulo*>();
 }
 
 LineaEspecifica::~LineaEspecifica() {
-	// TODO Auto-generated destructor stub
+	delete articulos;
 }
 
+int LineaEspecifica::getCodigo() const {
+	return codigo;
+}
+
+void LineaEspecifica::setCodigo(int codigo) {
+	this->codigo = codigo;
+}
+
+const std::string& LineaEspecifica::getNombre() const {
+	return nombre;
+}
+
+void LineaEspecifica::setNombre(const std::string& nombre) {
+	this->nombre = nombre;
+}
+
+ClinkedList<Articulo*>* LineaEspecifica::getArticulos() {
+	return articulos;
+}

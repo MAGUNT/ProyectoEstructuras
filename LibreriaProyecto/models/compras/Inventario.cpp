@@ -26,15 +26,7 @@ void Inventario::modificarArticulo(int codigo, Articulo articuloNuevo){}
 void Inventario::agregarArticulo(int codigo, int precio,
 		std::string nombre, std::string marca) {
 
-	Articulo* nuevoArticulo = new Articulo();
-	/*Checkear si el codigo no es repetido
-	 * y todos los demas datos sean validos.
-	 */
-	nuevoArticulo->setCodigo(codigo);
-	nuevoArticulo->setPrecio(precio);
-	nuevoArticulo->setNombre(nombre);
-	nuevoArticulo->setMarca(marca);
-	this->articulos->addAscendent(nuevoArticulo);
+
 }
 
 Articulo* Inventario::getArticulo(int codigo){

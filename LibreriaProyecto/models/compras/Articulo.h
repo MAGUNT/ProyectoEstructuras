@@ -19,7 +19,7 @@ private:
 	std::string marca;
 
 public:
-	Articulo();
+	Articulo(int _codigo, std::string _nombre);
 	virtual ~Articulo();
 
 	int getCodigo() const;

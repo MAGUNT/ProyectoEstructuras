@@ -27,9 +27,7 @@ void Pedido::agregarArticulo(Articulo* articulo) {
 	}
 }
 
-/*
- * Operador superscript no funciona..
- */
+
 void Pedido::verArticulos() {
 	if(!articulos->isEmpty()) {
 		//Articulo* x = articulos[0];
