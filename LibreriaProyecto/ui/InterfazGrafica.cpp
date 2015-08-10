@@ -11,6 +11,8 @@
 
 InterfazGrafica::InterfazGrafica(Local& local) {
 	this->local = local;
+	this->carrito = new Carrito();
+	carrito->setNombre("Carrito para testear");
 
 	this->opcionesCliente = {
 			"1. Ver articulos.",
@@ -30,7 +32,6 @@ InterfazGrafica::InterfazGrafica(Local& local) {
 			"2. Modificar articulo.",
 			"3. Eliminar articulo."
 	};
-
 }
 
 InterfazGrafica::~InterfazGrafica() {}
@@ -74,7 +75,7 @@ void InterfazGrafica::ejecutarOpcionCliente(int opcion, string_vect menuDefault)
 		case 3:
 			std::cout << " " << std::endl;
 			std::cout << "----->Mostrando carritos" << std::endl;
-
+			mostrarCarritos();
 			break;
 		case 4:
 			std::cout << " " << std::endl;
@@ -119,7 +120,7 @@ void InterfazGrafica::comprar() {
 				std::cout << "Linea Especifica seleccionada: " << lineaE->getNombre() << std::endl;
 				Articulo* articulo = seleccionarArticulo(lineaE);
 				if(articulo != 0) {
-					std::cout << "Articulo: " << articulo->getNombre() << std::endl;
+					comprarArticulo(articulo);
 				}else {
 					std::cout << "****Linea Especifica no tiene Articulos disponibles****" << std::endl;
 				}
@@ -132,6 +133,43 @@ void InterfazGrafica::comprar() {
 	} else {
 		std::cout << "****Categoria no existe****" << std::endl;
 	}
+}
+
+void InterfazGrafica::comprarArticulo(Articulo* articulo) {
+	int opcion = 0;
+	int cantidad = 0;
+
+	std::cout << "" << std::endl;
+	std::cout << "Articulo seleccionado: " << *articulo << std::endl;
+	std::cout << "Comprar este articulo? 1. Si / 2. No" << std::endl;
+
+	opcion = capturarOpcion();
+	if(opcion == 1 || opcion == 0) {
+		if(opcion == 1) {
+			std::cout << "Introduzca la cantidad que desea de este producto" << std::endl;
+			cantidad = capturarOpcion();
+			if(cantidad < 0) {
+				carrito->agregarArticulo(articulo, cantidad);
+				std::cout << cantidad << " " << articulo->getNombre() <<
+						" agregado a " << carrito->getNombre() << std::endl;
+			}
+		}
+	} else {
+		std::cout << "Opcion invalida" << std::endl;
+	}
+}
+
+/*
+ * 	Este metodo debe interactuar con el usuario directamente
+ */
+void InterfazGrafica::mostrarCarritos() {
+	for(unsigned i = 0; i < carrito->getProductos()->length(); i++) {
+		std::cout << (*carrito->getProductos())[i]->getCantidad() <<
+			" " <<  (*carrito->getProductos())[0]->getArticulo()->getNombre() <<
+			std::endl;
+	}
+	std::cout << "--------------------------------------" << std::endl;
+	std::cout << "Total: " << carrito->precio() << std::endl;
 }
 
 //	Metodos Publicos

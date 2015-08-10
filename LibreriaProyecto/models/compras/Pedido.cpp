@@ -9,46 +9,26 @@
 #include <iostream>
 #include <typeinfo>
 
-Pedido::Pedido(): nombre(), pagado() {
-	this->articulos = new ClinkedList<Articulo*>();
+Pedido::Pedido(Articulo* _articulo, int _cantidad): articulo(_articulo), cantidad(_cantidad) {}
+
+Pedido::~Pedido() {}
+
+const Articulo* Pedido::getArticulo() const {
+	return articulo;
 }
 
-Pedido::~Pedido() {
-	delete this->articulos;
+void Pedido::setArticulo(Articulo* articulo) {
+	this->articulo = articulo;
 }
 
-void Pedido::agregarArticulo(Articulo* articulo) {
-	if(!this->pagado) {
-		std::cout << "Agregando articulo" << std::endl;
-		articulos->addLast(articulo);
-		std::cout << (*articulos)[0] << std::endl;
-	} else {
-		std::cout << "Este pedido ya ha sido comprado" << std::endl;
-	}
+int Pedido::getCantidad() const {
+	return cantidad;
 }
 
-
-void Pedido::verArticulos() {
-	if(!articulos->isEmpty()) {
-		//Articulo* x = articulos[0];
-		//std::cout << *x << std::endl;
-	} else {
-		std::cout << "articulos esta vacia" << std::endl;
-	}
-
+void Pedido::setCantidad(int cantidad) {
+	this->cantidad = cantidad;
 }
 
-void Pedido::comprarPedido() {
-	if(!this->pagado) {
-		std::cout << "El pedido " << this->nombre << " ha sido comprado" << std::endl;
-	} else {
-		std::cout << "El pedidpagadoo ya ha sido comprado" << std::endl;
-	}
+double Pedido::precio() {
+	return articulo->getPrecio() * cantidad;
 }
-
-double Pedido::precioTotal() {
-	return 1.0;
-}
-
-
-

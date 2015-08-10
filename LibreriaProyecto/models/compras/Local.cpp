@@ -173,9 +173,6 @@ LineaGeneral* Local::getLineaGeneral(int codigo) {
  * 	Codigo en realidad es el indice de la posicion de la LineaEspecifica en la lista
  */
 LineaEspecifica* Local::getLineaEspecifica(LineaGeneral* lineaGeneral, int codigo) {
-	std::cout << "codigo es: " << codigo << std::endl;
-	std::cout << "largo de la lista es: " << lineaGeneral->getLineasEspecificas()->length() << std::endl;
-
 	if(codigo > 0 && codigo <= lineaGeneral->getLineasEspecificas()->length()) {
 		return (*lineaGeneral->getLineasEspecificas())[codigo-1];
 	} else {

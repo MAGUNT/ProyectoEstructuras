@@ -16,19 +16,17 @@
 class Pedido {
 
 private:
-	std::string nombre;
-	ClinkedList<Articulo*>* articulos;
-	bool pagado;
-
+	Articulo* articulo;
+	int cantidad;
 
 public:
-	Pedido();
+	Pedido(Articulo* _articulo, int _cantidad);
 	virtual ~Pedido();
-
-	void agregarArticulo(Articulo* articulo);
-	void comprarPedido();
-	double precioTotal();
-	void verArticulos();
+	const Articulo* getArticulo() const;
+	void setArticulo(Articulo* articulo);
+	int getCantidad() const;
+	void setCantidad(int cantidad);
+	double precio();
 };
 
 
