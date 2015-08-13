@@ -161,8 +161,11 @@ void Local::imprimirEstructura() {
 /*
  * 	Codigo en realidad es el indice de la posicion de la LineaGeneral en la lista
  */
-LineaGeneral* Local::getLineaGeneral(int codigo) {
-	if(codigo > 0 && codigo <= lineasGenerales->length()) {
+LineaGeneral* Local::getLineaGeneral(int codigo, int categoria) {
+	ClinkedList<LineaGeneral*>* lineas = this->getLineasGenerales(categoria);
+
+
+	if(codigo > 0 && codigo <= lineas->length()) {
 		return (*lineasGenerales)[codigo-1];
 	} else {
 		return 0;

@@ -19,6 +19,7 @@ class Carrito {
 
 public:
 	Carrito();
+	Carrito(std::string _nombre);
 	virtual ~Carrito();
 	bool isEstaPago() const;
 	void setEstaPago(bool estaPago);

@@ -31,7 +31,7 @@ public:
 	virtual ~Local();
 
 	const std::vector<std::string> getCategorias();
-	LineaGeneral* getLineaGeneral(int codigo);
+	LineaGeneral* getLineaGeneral(int codigo, int categoria);
 	LineaEspecifica* getLineaEspecifica(LineaGeneral* lineaGeneral, int codigo);
 	Articulo* getArticulo(LineaEspecifica* lineaEspecifica, int codigo);
 	ClinkedList<LineaGeneral*>* getLineasGenerales(int categoria);

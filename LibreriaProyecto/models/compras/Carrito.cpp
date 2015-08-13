@@ -12,6 +12,10 @@ Carrito::Carrito() : nombre(), estaPago()  {
 	productos = new ClinkedList<Pedido*>();
 }
 
+Carrito::Carrito(std::string _nombre) : nombre(_nombre), estaPago()  {
+	productos = new ClinkedList<Pedido*>();
+}
+
 Carrito::~Carrito() {}
 
 bool Carrito::isEstaPago() const {

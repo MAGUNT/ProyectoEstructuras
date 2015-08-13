@@ -22,21 +22,33 @@ class InterfazGrafica {
 	string_vect opcionesAdmin;
 	//Solo para testear, pero no deberia estar aqui
 	Carrito* carrito;
+	//Usuario* usuario.
 
+	// 	Metodos Generales
 	int capturarOpcion();
-	void ejecutarOpcionCliente(int opcion, string_vect menuDefault);
 	void mostrarMenu(string_vect menu);
+
+	//	Metodos para Cliente
+	void ejecutarOpcionCliente(int opcion);
 	void verArticulos();
 	void mostrarCategorias();
 	void comprar();
 	void comprarArticulo(Articulo* articulo);
 	void mostrarCarritos();
-
-	//	Seleccion de articulos
+	void pagarCarrito();
+	Carrito* getCarrito();
+	void modificarCarrito();
 	int seleccionarCategoria();
 	LineaGeneral* seleccionarLineaGeneral(int categoria);
 	LineaEspecifica* seleccionarLineaEspecifica(LineaGeneral* lineaGeneral);
 	Articulo* seleccionarArticulo(LineaEspecifica* lineaEspecifica);
+
+	//	Metodos para Dependiente
+	void ejecutarOpcionDependiente(int opcion);
+	void entregarCarrito();
+
+	//	Metodos para Admin
+	void ejecutarOpcionAdmin(int opcion);
 
 public:
 	InterfazGrafica(Local &local);

@@ -28,15 +28,16 @@ InterfazGrafica::InterfazGrafica(Local& local) {
 	};
 
 	this->opcionesAdmin = {
-			"1. Agregar articulo.",
-			"2. Modificar articulo.",
-			"3. Eliminar articulo."
+			"1. Ver articulos.",
+			"2. Agregar articulo.",
+			"3. Modificar articulo.",
+			"4. Eliminar articulo."
 	};
 }
 
 InterfazGrafica::~InterfazGrafica() {}
 
-//	Metodos Privados.
+//	Metodos Generales.
 
 int InterfazGrafica::capturarOpcion(){
 	std::string opcion;
@@ -59,7 +60,20 @@ int InterfazGrafica::capturarOpcion(){
 	return numero;
 }
 
-void InterfazGrafica::ejecutarOpcionCliente(int opcion, string_vect menuDefault) {
+void InterfazGrafica::mostrarMenu(string_vect menu) {
+	std::cout << " " << std::endl;
+	std::cout << "*-----------------------------------------*" << std::endl;
+	for (unsigned i = 0; i < menu.size(); i++) {
+		std::cout << menu[i] << std::endl;
+	}
+	std::cout << "*-----------------------------------------*" << std::endl;
+	std::cout << " " << std::endl;
+}
+
+
+//	Metodos Clientes
+
+void InterfazGrafica::ejecutarOpcionCliente(int opcion) {
 
 	switch (opcion) {
 		case 1:
@@ -80,10 +94,12 @@ void InterfazGrafica::ejecutarOpcionCliente(int opcion, string_vect menuDefault)
 		case 4:
 			std::cout << " " << std::endl;
 			std::cout << "----->Modificando carrito" << std::endl;
+			modificarCarrito();
 			break;
 		case 5:
 			std::cout << " " << std::endl;
 			std::cout << "----->Pagando carrito" << std::endl;
+			pagarCarrito();
 			break;
 		default:
 			std::cout << " " << std::endl;
@@ -91,17 +107,7 @@ void InterfazGrafica::ejecutarOpcionCliente(int opcion, string_vect menuDefault)
 			break;
 	}
 
-	this->inicializar();
-}
-
-void InterfazGrafica::mostrarMenu(string_vect menu) {
-	std::cout << " " << std::endl;
-	std::cout << "*-----------------------------------------*" << std::endl;
-	for (unsigned i = 0; i < menu.size(); i++) {
-		std::cout << menu[i] << std::endl;
-	}
-	std::cout << "*-----------------------------------------*" << std::endl;
-	std::cout << " " << std::endl;
+	inicializar();
 }
 
 void InterfazGrafica::verArticulos() {
@@ -122,16 +128,16 @@ void InterfazGrafica::comprar() {
 				if(articulo != 0) {
 					comprarArticulo(articulo);
 				}else {
-					std::cout << "****Linea Especifica no tiene Articulos disponibles****" << std::endl;
+					std::cout << "****Linea Especifica invalida****" << std::endl;
 				}
 			}else {
-				std::cout << "****Linea General no tiene Lineas Especificas aun****" << std::endl;
+				std::cout << "****Linea General invalida****" << std::endl;
 			}
 		}else {
-			std::cout << "****Categoria no tiene Lineas Generales aun****" << std::endl;
+			std::cout << "****Linea general invalida****" << std::endl;
 		}
 	} else {
-		std::cout << "****Categoria no existe****" << std::endl;
+		std::cout << "****Categoria invalida****" << std::endl;
 	}
 }
 
@@ -148,15 +154,64 @@ void InterfazGrafica::comprarArticulo(Articulo* articulo) {
 		if(opcion == 1) {
 			std::cout << "Introduzca la cantidad que desea de este producto" << std::endl;
 			cantidad = capturarOpcion();
-			if(cantidad < 0) {
+			if(cantidad == 1) {
+				// getCarrito()
 				carrito->agregarArticulo(articulo, cantidad);
 				std::cout << cantidad << " " << articulo->getNombre() <<
 						" agregado a " << carrito->getNombre() << std::endl;
+			} else if(cantidad == 2) {
+				std::cout << "Volviendo al menu inicial" << std::endl;
 			}
 		}
 	} else {
 		std::cout << "Opcion invalida" << std::endl;
 	}
+}
+
+Carrito* InterfazGrafica::getCarrito() {
+	int opcion = capturarOpcion();
+	std::cout << "1. Crear un nuevo carrito, 2. Usar uno existente" << std::endl;
+
+	if(opcion == 1) {
+		std::string nombre = "";
+		std::cout << "Ingrese el nombre del carrito:" << std::endl;
+		std::getline(std::cin, nombre);
+		Carrito* nuevoCarrito = new Carrito(nombre);
+		//Usuario getCarritos()->addLast(nuevoCarrito);
+		return nuevoCarrito;
+	} else if(opcion == 2){
+		std::cout << "Mis carritos:" << std::endl;
+		//Imprimir carritos y elejir el fucking carrito
+		// return carrito;
+	}
+
+	return 0;
+}
+
+void InterfazGrafica::pagarCarrito() {
+	std::cout << "Elija el carrito que desea pagar" << std::endl;
+
+	/*
+	 *  Mostrar los carritos del cliente que no hayan sido comprados
+	 *  int opcion = obtenerOpcion();
+	 */
+
+	std::cout << "El carrito que usd va a pagar es: " << carrito->getNombre() << std::endl;
+	carrito->setEstaPago(true);
+	std::cout << "La transaccion ha sido realizada exitosamente" << std::endl;
+}
+
+void InterfazGrafica::modificarCarrito() {
+	std::cout << "Elija el carrito:" << std::endl;
+	 //Mostrar los carritos y verificar que no este pago
+
+	std::cout << "1. Cambiar el nombre del carrito" << std::endl;
+	std::cout << "2. Eliminar un articulo" << std::endl;
+	std::cout << "3. Eliminar carrito" << std::endl;
+
+	/*
+	 *  DO SOME SHIT HERE
+	 */
 }
 
 /*
@@ -172,14 +227,16 @@ void InterfazGrafica::mostrarCarritos() {
 	std::cout << "Total: " << carrito->precio() << std::endl;
 }
 
-//	Metodos Publicos
-
+/*
+ * 	Este metodo tiene que modificarse para que ejecute la accion
+ * 	de cada tipo de usuario.
+ */
 void InterfazGrafica::inicializar() {
 	int opcion;
 
 	this->mostrarMenu(this->opcionesCliente);
 	opcion = this->capturarOpcion();
-	this->ejecutarOpcionCliente(opcion, this->opcionesCliente);
+	this->ejecutarOpcionCliente(opcion);
 }
 
 void InterfazGrafica::mostrarCategorias() {
@@ -195,7 +252,7 @@ int InterfazGrafica::seleccionarCategoria() {
 	mostrarCategorias();
 	categoria = capturarOpcion();
 
-	if(categoria > 0 && categoria < local.getCategorias().size()) {
+	if(categoria > 0 && categoria <= local.getCategorias().size()) {
 		return categoria;
 	} else {
 		return 0;
@@ -212,7 +269,7 @@ LineaGeneral* InterfazGrafica::seleccionarLineaGeneral(int categoria) {
 	}
 	opcion = capturarOpcion();
 
-	return local.getLineaGeneral(opcion);
+	return local.getLineaGeneral(opcion, categoria);
 }
 
 LineaEspecifica* InterfazGrafica::seleccionarLineaEspecifica(LineaGeneral* lineaGeneral) {
@@ -238,6 +295,76 @@ Articulo* InterfazGrafica::seleccionarArticulo(LineaEspecifica* lineaEspecifica)
 
 	return local.getArticulo(lineaEspecifica, opcion);
 }
+
+//	Metodos Dependiente
+
+void InterfazGrafica::ejecutarOpcionDependiente(int opcion) {
+	switch (opcion) {
+		case 1:
+			std::cout << " " << std::endl;
+			std::cout << "----->Ver Pedidos pendientes" << std::endl;
+			break;
+		case 2:
+			std::cout << " " << std::endl;
+			std::cout << "----->Entregando Pedido" << std::endl;
+			break;
+		default:
+			std::cout << " " << std::endl;
+			std::cout << "----->Opcion invalida. Volviendo al menu inicial" << std::endl;
+			break;
+	}
+
+}
+
+void InterfazGrafica::entregarCarrito() {
+	std::cout << "Elija el carrito que desea entregar" << std::endl;
+	/*
+	 *  Mostrar pedidos pendientes.
+	 */
+}
+
+
+//	Metodos Admin
+
+void InterfazGrafica::ejecutarOpcionAdmin(int opcion) {
+	switch (opcion) {
+		case 1:
+			std::cout << " " << std::endl;
+			std::cout << "----->Mostrando Articulos" << std::endl;
+			verArticulos();
+			break;
+		case 2:
+			std::cout << " " << std::endl;
+			std::cout << "----->Agregando Articulo" << std::endl;
+			comprar();
+			break;
+		case 3:
+			std::cout << " " << std::endl;
+			std::cout << "----->Modificando Articulo" << std::endl;
+			mostrarCarritos();
+			break;
+		case 4:
+			std::cout << " " << std::endl;
+			std::cout << "----->Eliminando Articulo" << std::endl;
+			modificarCarrito();
+			break;
+		default:
+			std::cout << " " << std::endl;
+			std::cout << "----->Opcion invalida. Volviendo al menu inicial" << std::endl;
+			break;
+	}
+
+
+
+}
+
+
+
+
+
+
+
+
 
 
 
