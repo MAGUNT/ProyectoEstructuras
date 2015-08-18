@@ -13,23 +13,21 @@
 #include <string>
 
 class Carrito {
-	ClinkedList<Pedido*>* productos;
+	ClinkedList<Pedido*> productos;
 	std::string nombre;
-	bool estaPago;
 
 public:
 	Carrito();
 	Carrito(std::string _nombre);
-	virtual ~Carrito();
-	bool isEstaPago() const;
-	void setEstaPago(bool estaPago);
 	const std::string& getNombre() const;
 	void setNombre(const std::string& nombre);
-	ClinkedList<Pedido*>* getProductos() const;
-
-	double precio();
+	const ClinkedList<Pedido*>& getProductos() const;
+	long double precio()const;
 	void agregarArticulo(Articulo* articulo, int cantidad);
-	void pagarCarrito();
+	Pedido* buscarPorCodigo(int) const;
+	Pedido* buscarPorMarca(const std::string&) const;
+	Pedido* buscarPorNombre(const std::string&) const;
+
 };
 
 #endif /* LIBRERIAPROYECTO_MODELS_COMPRAS_CARRITO_H_ */

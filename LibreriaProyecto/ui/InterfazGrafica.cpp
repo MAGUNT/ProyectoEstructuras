@@ -197,7 +197,7 @@ void InterfazGrafica::pagarCarrito() {
 	 */
 
 	std::cout << "El carrito que usd va a pagar es: " << carrito->getNombre() << std::endl;
-	carrito->setEstaPago(true);
+//	carrito->setEstaPago(true);
 	std::cout << "La transaccion ha sido realizada exitosamente" << std::endl;
 }
 
@@ -218,6 +218,8 @@ void InterfazGrafica::modificarCarrito() {
  * 	Este metodo debe interactuar con el usuario directamente
  */
 void InterfazGrafica::mostrarCarritos() {
+	
+	/*
 	for(unsigned i = 0; i < carrito->getProductos()->length(); i++) {
 		std::cout << (*carrito->getProductos())[i]->getCantidad() <<
 			" " <<  (*carrito->getProductos())[0]->getArticulo()->getNombre() <<
@@ -225,6 +227,8 @@ void InterfazGrafica::mostrarCarritos() {
 	}
 	std::cout << "--------------------------------------" << std::endl;
 	std::cout << "Total: " << carrito->precio() << std::endl;
+
+	*/
 }
 
 /*
@@ -273,11 +277,13 @@ LineaGeneral* InterfazGrafica::seleccionarLineaGeneral(int categoria) {
 }
 
 LineaEspecifica* InterfazGrafica::seleccionarLineaEspecifica(LineaGeneral* lineaGeneral) {
+	
+	
 	int opcion = 0;
 
 	std::cout << "Lineas Especificas en esta Linea General: " << std::endl;
-	for(unsigned i = 0; i < lineaGeneral->getLineasEspecificas()->length(); i++) {
-		std::cout << i+1 << ". " << (*lineaGeneral->getLineasEspecificas())[i]->getNombre() << std::endl;
+	for(unsigned i = 0; i < lineaGeneral->getLineasEspecificas().length(); i++) {
+		std::cout << i+1 << ". " << (lineaGeneral->getLineasEspecificas())[i]->getNombre() << std::endl;
 	}
 	opcion = capturarOpcion();
 
@@ -288,8 +294,8 @@ Articulo* InterfazGrafica::seleccionarArticulo(LineaEspecifica* lineaEspecifica)
 	int opcion = 0;
 
 	std::cout << "Articulos en esta Linea Especifica: " << std::endl;
-	for(unsigned i = 0; i < lineaEspecifica->getArticulos()->length(); i++) {
-		std::cout << i+1 << ". " << *(*lineaEspecifica->getArticulos())[i] << std::endl;
+	for(unsigned i = 0; i < lineaEspecifica->getArticulos().length(); i++) {
+		std::cout << i+1 << ". " << *(lineaEspecifica->getArticulos())[i] << std::endl;
 	}
 	opcion = capturarOpcion();
 

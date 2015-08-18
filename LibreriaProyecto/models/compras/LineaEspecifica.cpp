@@ -7,12 +7,9 @@
 
 #include "LineaEspecifica.h"
 
-LineaEspecifica::LineaEspecifica(int _codigo, std::string _nombre): codigo(_codigo), nombre(_nombre) {
-	articulos = new ClinkedList<Articulo*>();
-}
+LineaEspecifica::LineaEspecifica(int _codigo, std::string _nombre)
+	: codigo(_codigo), nombre(_nombre), articulos(ClinkedList<Articulo*>()) {
 
-LineaEspecifica::~LineaEspecifica() {
-	delete articulos;
 }
 
 int LineaEspecifica::getCodigo() const {
@@ -31,6 +28,52 @@ void LineaEspecifica::setNombre(const std::string& nombre) {
 	this->nombre = nombre;
 }
 
-ClinkedList<Articulo*>* LineaEspecifica::getArticulos() {
+const ClinkedList<Articulo*>& LineaEspecifica::getArticulos() {
 	return articulos;
+}
+
+void LineaEspecifica::agregarArticulo(Articulo* articulo)
+{
+	articulos.addAscendent(articulo);
+}
+Articulo* LineaEspecifica::buscarPorCodigo(int codigo) const
+{
+	Articulo* articulo = nullptr;
+
+	articulos.find([=](Articulo* a)
+	{
+		return a->getCodigo() == codigo; 
+	}, articulo);
+
+	return articulo;
+}
+Articulo* LineaEspecifica::buscarPorMarca(const std::string& marca) const
+{
+	Articulo* articulo = nullptr;
+
+	articulos.find([&](Articulo* a)
+	{
+		return a->getMarca() == marca;
+	}, articulo);
+
+	return articulo;
+}
+Articulo* LineaEspecifica::buscarPorNombre(const std::string& nombre) const
+{
+	Articulo* articulo = nullptr;
+
+	articulos.find([&](Articulo* a)
+	{
+		return a->getNombre() == nombre;
+	}, articulo);
+
+	return articulo;
+}
+
+bool LineaEspecifica::removerArticulo(int codigo)
+{
+	return articulos.remove([=](Articulo* a)
+	{ 
+		return a->getCodigo() == codigo; 
+	});
 }

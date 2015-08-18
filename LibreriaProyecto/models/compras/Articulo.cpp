@@ -7,10 +7,12 @@
 
 #include "Articulo.h"
 
-Articulo::Articulo(int _codigo, std::string _nombre)
-	: codigo(_codigo), precio(0), nombre(_nombre), marca("nulo"){}
+Articulo::Articulo(int _codigo, const std::string& _nombre)
+	: Articulo(_codigo, _nombre, "", 0.0 ){}
 
-Articulo::~Articulo() {}
+Articulo::Articulo(int _codigo, const std::string& _nombre,
+    const std::string& _marca, long double _precio) 
+    : codigo(_codigo), precio(_precio), nombre(_nombre), marca(_marca){}
 
 int Articulo::getCodigo() const {
 	return this->codigo;
@@ -20,7 +22,7 @@ void Articulo::setCodigo(int codigo) {
 	this->codigo = codigo;
 }
 
-int Articulo::getPrecio()const {
+long double Articulo::getPrecio()const {
 	return this->precio;
 }
 
@@ -28,11 +30,11 @@ void Articulo::setPrecio(int codigo) {
 	this->codigo = codigo;
 }
 
-std::string Articulo::getNombre() const{
+const std::string& Articulo::getNombre() const{
 	return this->nombre;
 }
 
-void Articulo::setNombre(std::string nombre) {
+void Articulo::setNombre(const std::string& nombre) {
 	this->nombre = nombre;
 }
 
@@ -40,7 +42,7 @@ std::string Articulo::getMarca()const {
 	return this->marca;
 }
 
-void Articulo::setMarca(std::string marca) {
+void Articulo::setMarca(const std::string& marca) {
 	this->marca = marca;
 }
 

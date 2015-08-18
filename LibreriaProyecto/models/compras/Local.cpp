@@ -7,6 +7,7 @@
 
 #include "Local.h"
 
+
 Local::Local() {
 	this->lineasGenerales = new ClinkedList<LineaGeneral*>();
 	this->categorias = {
@@ -58,9 +59,10 @@ void Local::armarLineas() {
 
 	ClinkedList<LineaEspecifica*>* listLineasEspecificas = crearLineasEspecificas(lineaE1Abarrotes);
 
+	/*
 	lineaEspecifica = (*listLineasEspecificas)[0];
 	articulo = (*listArticulos1)[0];
-	lineaEspecifica->getArticulos()->addLast(articulo);
+	lineaEspecifica->getArticulos().addLast(articulo);
 	articulo = (*listArticulos1)[1];
 	lineaEspecifica->getArticulos()->addLast(articulo);
 	articulo = (*listArticulos1)[2];
@@ -83,7 +85,7 @@ void Local::armarLineas() {
 	lineaEspecifica->getArticulos()->addLast(articulo);
 	lineaG1->getLineasEspecificas()->addLast(lineaEspecifica);
 
-
+	*/
 	this->lineasGenerales->addLast(lineaG1);
 
 /*
@@ -143,12 +145,12 @@ void Local::imprimirEstructura() {
 		lineaGeneralTemp = (*lineasGenerales)[i];
 		std::cout << "	*Categoria " << this->categorias[i] << "*:  " << lineaGeneralTemp->getNombre() << " = { " << std::endl;
 
-		for (unsigned j = 0; j < lineaGeneralTemp->getLineasEspecificas()->length(); ++j) {
-			lineaEspecificaTemp = (*lineaGeneralTemp->getLineasEspecificas())[j];
+		for (unsigned j = 0; j < lineaGeneralTemp->getLineasEspecificas().length(); ++j) {
+			lineaEspecificaTemp = (lineaGeneralTemp->getLineasEspecificas())[j];
 			std::cout << "		" << lineaEspecificaTemp->getNombre() << " = { " << std::endl;
 
-			for (unsigned k = 0; k < lineaEspecificaTemp->getArticulos()->length(); ++k) {
-				articuloTemp = (*lineaEspecificaTemp->getArticulos())[k];
+			for (unsigned k = 0; k < lineaEspecificaTemp->getArticulos().length(); ++k) {
+				articuloTemp = (lineaEspecificaTemp->getArticulos())[k];
 				std::cout << "			" << *articuloTemp << std::endl;
 			}
 			std::cout << "		}" << std::endl;
@@ -162,7 +164,7 @@ void Local::imprimirEstructura() {
  * 	Codigo en realidad es el indice de la posicion de la LineaGeneral en la lista
  */
 LineaGeneral* Local::getLineaGeneral(int codigo, int categoria) {
-	ClinkedList<LineaGeneral*>* lineas = this->getLineasGenerales(categoria);
+	ClinkedList<LineaGeneral*>* lineas = getLineasGenerales(categoria);
 
 
 	if(codigo > 0 && codigo <= lineas->length()) {
@@ -176,19 +178,20 @@ LineaGeneral* Local::getLineaGeneral(int codigo, int categoria) {
  * 	Codigo en realidad es el indice de la posicion de la LineaEspecifica en la lista
  */
 LineaEspecifica* Local::getLineaEspecifica(LineaGeneral* lineaGeneral, int codigo) {
-	if(codigo > 0 && codigo <= lineaGeneral->getLineasEspecificas()->length()) {
-		return (*lineaGeneral->getLineasEspecificas())[codigo-1];
+	if(codigo > 0 && codigo <= lineaGeneral->getLineasEspecificas().length()) {
+		return (lineaGeneral->getLineasEspecificas())[codigo-1];
 	} else {
 		return 0;
 	}
 }
 
 Articulo* Local::getArticulo(LineaEspecifica* lineaEspecifica, int codigo) {
-	if(codigo > 0 && codigo <= lineaEspecifica->getArticulos()->length()) {
-		return (*lineaEspecifica->getArticulos())[codigo-1];
+	if(codigo > 0 && codigo <= lineaEspecifica->getArticulos().length()) {
+		return (lineaEspecifica->getArticulos())[codigo-1];
 	} else {
 		return 0;
 	}
+
 }
 
 /*
@@ -206,11 +209,11 @@ ClinkedList<LineaGeneral*>* Local::getLineasGenerales(int categoria) {
 	return lineas;
 }
 
-ClinkedList<LineaEspecifica*>* Local::getLineasEspecificas(LineaGeneral* lineaGeneral) {
+const ClinkedList<LineaEspecifica*>& Local::getLineasEspecificas(LineaGeneral* lineaGeneral) {
 	return lineaGeneral->getLineasEspecificas();
 }
 
-ClinkedList<Articulo*>* Local::getArticulos(LineaEspecifica* lineaEspecifica) {
+const ClinkedList<Articulo*>& Local::getArticulos(LineaEspecifica* lineaEspecifica) {
 	return lineaEspecifica->getArticulos();
 }
 

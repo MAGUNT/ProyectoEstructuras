@@ -35,8 +35,8 @@ public:
 	LineaEspecifica* getLineaEspecifica(LineaGeneral* lineaGeneral, int codigo);
 	Articulo* getArticulo(LineaEspecifica* lineaEspecifica, int codigo);
 	ClinkedList<LineaGeneral*>* getLineasGenerales(int categoria);
-	ClinkedList<LineaEspecifica*>* getLineasEspecificas(LineaGeneral* lineaGeneral);
-	ClinkedList<Articulo*>* getArticulos(LineaEspecifica* lineaEspecifica);
+	const ClinkedList<LineaEspecifica*>& getLineasEspecificas(LineaGeneral* lineaGeneral);
+	const ClinkedList<Articulo*>& getArticulos(LineaEspecifica* lineaEspecifica);
 	void imprimirEstructura();
 };
 

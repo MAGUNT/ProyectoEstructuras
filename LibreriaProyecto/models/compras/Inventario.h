@@ -13,11 +13,8 @@
 
 class Inventario {
 private:
-	ClinkedList<Articulo*>* articulos;
-
-	void eliminarArticulo(int codigo);
-	void modificarArticulo(int codigo, Articulo articuloNuevo);
-
+	ClinkedList<Articulo*> articulos;
+	std::function<bool(Articulo*)> createSLambda(int) const;
 public:
 	Inventario();
 	virtual ~Inventario();
@@ -25,9 +22,11 @@ public:
 	/* Para efectos de prueba, este metodo es publico
 	 * pero deberia ser privado.
 	 */
-	void agregarArticulo(int codigo, int precio,
-			std::string nombre, std::string marca);
-	Articulo* getArticulo(int codigo);
+	
+	bool eliminarArticulo(int codigo);
+	bool modificarArticulo(int codigo, Articulo* articuloNuevo);
+	bool agregarArticulo(int codigo, const std::string& nombre, const std::string& marca, long double precio);
+	Articulo* getArticulo(int codigo) const;
 };
 
 #endif /* LIBRERIAPROYECTO_MODELS_INVENTARIO_H_ */

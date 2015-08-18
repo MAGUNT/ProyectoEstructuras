@@ -11,7 +11,6 @@
 
 Pedido::Pedido(Articulo* _articulo, int _cantidad): articulo(_articulo), cantidad(_cantidad) {}
 
-Pedido::~Pedido() {}
 
 const Articulo* Pedido::getArticulo() const {
 	return articulo;
@@ -29,6 +28,6 @@ void Pedido::setCantidad(int cantidad) {
 	this->cantidad = cantidad;
 }
 
-double Pedido::precio() {
+long double Pedido::precio() const {
 	return articulo->getPrecio() * cantidad;
 }

@@ -8,22 +8,12 @@
 #include <iostream>
 #include "Carrito.h"
 
-Carrito::Carrito() : nombre(), estaPago()  {
-	productos = new ClinkedList<Pedido*>();
+Carrito::Carrito() 
+	: Carrito("")  {
 }
 
-Carrito::Carrito(std::string _nombre) : nombre(_nombre), estaPago()  {
-	productos = new ClinkedList<Pedido*>();
-}
-
-Carrito::~Carrito() {}
-
-bool Carrito::isEstaPago() const {
-	return estaPago;
-}
-
-void Carrito::setEstaPago(bool estaPago) {
-	this->estaPago = estaPago;
+Carrito::Carrito(std::string _nombre) 
+	: nombre(_nombre), productos(ClinkedList<Pedido*>())  {
 }
 
 const std::string& Carrito::getNombre() const {
@@ -34,34 +24,47 @@ void Carrito::setNombre(const std::string& nombre) {
 	this->nombre = nombre;
 }
 
-ClinkedList<Pedido*>* Carrito::getProductos() const {
-	return productos;
-}
-
-double Carrito::precio() {
+long double Carrito::precio() const{
 	double precio = 0;
-
-	for (int i = 0; i < productos->length(); i++) {
-		precio +=  (*productos)[0]->precio();
-	}
+	productos.foreach([&precio](Pedido* x)
+	{ 
+		precio += x->precio(); 
+	});
 
 	return precio;
 }
 
 void Carrito::agregarArticulo(Articulo* articulo, int cantidad) {
-	if(!estaPago) {
-		Pedido* nuevoPedido = new Pedido(articulo, cantidad);
-		this->productos->addLast(nuevoPedido);
-	} else {
-		std::cout << "Este pedido ya esta pago" << std::endl;
-	}
 
+	Pedido* nuevoPedido = new Pedido(articulo, cantidad);
+	productos.addLast(nuevoPedido);
 }
 
-void Carrito::pagarCarrito() {
-	if(!estaPago) {
-		estaPago = true;
-	} else {
-		std::cout << "Este pedido ya esta pago" << std::endl;
-	}
+Pedido* Carrito::buscarPorCodigo(int codigo) const
+{
+	Pedido* p = nullptr;
+	productos.find([=](Pedido* x)
+	{
+		return x->getArticulo()->getCodigo() == codigo; 
+	},p);
+	return p;
 }
+Pedido* Carrito::buscarPorMarca(const std::string& marca) const
+{
+	Pedido* p = nullptr;
+	productos.find([&](Pedido* x)
+	{
+		return x->getArticulo()->getMarca() == marca;
+	}, p);
+	return p;
+}
+Pedido* Carrito::buscarPorNombre(const std::string& nombre) const
+{
+	Pedido* p = nullptr;
+	productos.find([&](Pedido* x)
+	{
+		return x->getArticulo()->getNombre() == nombre;
+	}, p);
+	return p;
+}
+

@@ -47,6 +47,8 @@ public:
 	virtual bool addAfter(const T&, Predicate) = 0;
 	virtual bool addAfter(T&&, Predicate) = 0;
 
+
+	virtual bool replace(T&, Predicate)=0;
 	//Agrega acendentemente segun la sobrecarga de el operador <
 	virtual bool addAscendent(const T&) = 0;
 	//Agrega decendentemente segun la sobrecarga de el operador <
@@ -56,8 +58,8 @@ public:
 	//Ejemplo:
 	// Para T= int, esto remueve el primer 3 que encuentre
 	//list.addBefore([](int x){ return x == 3; });
-	virtual bool remove(Predicate predicate)=0;
-	
+	virtual bool remove(Predicate)=0;
+	virtual bool remove(Predicate, T&)=0;
 	//Remueve el elemento en el index especificado
 	virtual void remove(unsigned)=0;
 	//Vacia la lista

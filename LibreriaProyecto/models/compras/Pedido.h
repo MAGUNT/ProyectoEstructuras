@@ -21,12 +21,11 @@ private:
 
 public:
 	Pedido(Articulo* _articulo, int _cantidad);
-	virtual ~Pedido();
 	const Articulo* getArticulo() const;
 	void setArticulo(Articulo* articulo);
 	int getCantidad() const;
 	void setCantidad(int cantidad);
-	double precio();
+	long double precio() const;
 };
 
 

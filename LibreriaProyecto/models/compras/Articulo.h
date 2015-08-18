@@ -10,26 +10,31 @@
 
 #include <string>
 #include <iostream>
+/*
+	Si da tiempo agrego las sobrecargas T&& rvaluereference
+*/
 
 class Articulo {
 private:
 	int codigo;
-	int precio;
+	long double precio;
 	std::string nombre;
 	std::string marca;
 
 public:
-	Articulo(int _codigo, std::string _nombre);
-	virtual ~Articulo();
+	Articulo(int _codigo, const std::string& _nombre); 
+	Articulo(int _codigo, const std::string& _nombre, 
+		const std::string& _marca, long double _precio);
+
 
 	int getCodigo() const;
 	void setCodigo(int codigo);
-	int getPrecio() const;
+	long double getPrecio() const;
 	void setPrecio(int codigo);
-	std::string getNombre() const;
-	void setNombre(std::string nombre);
+	const std::string& getNombre() const;
+	void setNombre(const std::string& nombre);
 	std::string getMarca() const;
-	void setMarca(std::string marca);
+	void setMarca(const std::string& marca);
 
 	friend std::ostream& operator <<(std::ostream& os,  const Articulo& articulo) {
 		os << "["

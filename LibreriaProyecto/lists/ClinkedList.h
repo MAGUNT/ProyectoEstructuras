@@ -14,13 +14,13 @@ class ClinkedList final
 
 private:
 	typedef void(ClinkedList<T,Func>::*AddNode)(Node<T>*, Node<T>*);
-	typedef  typename List<T>::Predicate Predicate2;
+
 
 	unsigned size;
 	Node<T> *sentinel;
 	Func cmp;
 	
-	Node<T>* findNode(Predicate2) const;
+	Node<T>* findNode(Predicate) const;
 	void check(unsigned,const char*) const;
 	Node<T>* dirIndex(unsigned) const;
 
@@ -41,7 +41,7 @@ private:
 	void genericAdd(unsigned, E&&);
 	
 	template<typename E>
-	bool genericAddAB(AddNode, E&&, Predicate2);
+	bool genericAddAB(AddNode, E&&, Predicate);
 
 	bool findTightBoundary(int, const T&, Node<T>*&) const;
 
@@ -61,22 +61,24 @@ public:
 	void add(unsigned, const T&)override;
 	void add(unsigned, T&&)override;
 
-	bool addBefore(const T&, Predicate2)override;
-	bool addBefore(T&&, Predicate2)override;
+	bool addBefore(const T&, Predicate)override;
+	bool addBefore(T&&, Predicate)override;
 
-	bool addAfter(const T&, Predicate2)override;
-	bool addAfter(T&&, Predicate2)override;
+	bool addAfter(const T&, Predicate)override;
+	bool addAfter(T&&, Predicate)override;
 
 	bool addAscendent(const T&)override;
 	bool addDescendent(const T&)override;
 
-	bool remove(Predicate2 Predicate2)override;
+	bool remove(Predicate Predicate)override;
+	bool remove(Predicate Predicate, T&)override;
 	void remove(unsigned)override;
+	bool replace(T&, Predicate) override;
 
 	void clear()override;
 	bool isEmpty() const override;
 	//pendiente de probar
-	bool find(Predicate2, T&) const override;
+	bool find(Predicate, T&) const override;
 	T& operator[] (std::size_t index)override;
 	const T& operator[] (std::size_t index) const override;
 	
@@ -85,7 +87,7 @@ public:
 	T set(unsigned, T&&)override;
 	unsigned length() const override;
 	
-	void foreach(std::function<void(const T&)> f)
+	void foreach(std::function<void(const T&)> f) const
 	{
 		Node<T> *node = sentinel->next;
 		while (node != sentinel)
@@ -112,7 +114,7 @@ void  ClinkedList<T,F>::check(unsigned index,const char* msg) const
 		throw new std::out_of_range(msg);
 }
 template<typename T, typename F >
-Node<T>* ClinkedList<T,F>::findNode(Predicate2 pre) const
+Node<T>* ClinkedList<T,F>::findNode(Predicate pre) const
 {
 	Node<T> *node = sentinel->next;
 	for (unsigned i = 0; i < length(); ++i, node = node->next)
@@ -230,31 +232,31 @@ void ClinkedList<T,F>::genericAdd(unsigned index, E&& e)
 
 
 template<typename T, typename F>
-bool ClinkedList<T,F>::addBefore(const T& e, Predicate2 pre)
+bool ClinkedList<T,F>::addBefore(const T& e, Predicate pre)
 {
 	return genericAddAB(&ClinkedList<T,F>::addNodeBefore, e, pre);
 }
 
 template<typename T, typename F>
-bool ClinkedList<T,F>::addBefore(T&& e, Predicate2 pre)
+bool ClinkedList<T,F>::addBefore(T&& e, Predicate pre)
 {
 	return genericAddAB(&ClinkedList<T,F>::addNodeBefore, std::move(e), pre);
 }
 
 template<typename T, typename F>
-bool ClinkedList<T,F>::addAfter(const T& e, Predicate2 pre)
+bool ClinkedList<T,F>::addAfter(const T& e, Predicate pre)
 {
 	return genericAddAB(&ClinkedList<T,F>::addNodeAfter, e, pre);
 }
 
 template<typename T, typename F>
-bool ClinkedList<T,F>::addAfter(T&& e, Predicate2 pre)
+bool ClinkedList<T,F>::addAfter(T&& e, Predicate pre)
 {
 	return genericAddAB(&ClinkedList<T,F>::addNodeAfter, std::move(e), pre);
 }
 template<typename T, typename F>
 template<typename E>
-bool ClinkedList<T,F>::genericAddAB(AddNode f, E&& e, Predicate2 pre)
+bool ClinkedList<T,F>::genericAddAB(AddNode f, E&& e, Predicate pre)
 {
 	Node<T> *node = findNode(pre);
 	bool isFound = node != sentinel;
@@ -301,14 +303,22 @@ bool ClinkedList<T,F>::addDescendent(const T& e)
 	return genericAddAcenDecen(e, -1);
 }
 template<typename T, typename F>
-bool ClinkedList<T,F>::remove(Predicate2 pre)
+bool ClinkedList<T,F>::remove(Predicate pre)
+{	
+	T element;
+	return remove(pre, element);
+}
+template<typename T, typename F>
+bool ClinkedList<T, F>::remove(Predicate pre, T& removed)
 {
 	Node<T> *node = findNode(pre);
 	bool isFound = node != sentinel;
 
 	if (isFound)
+	{
+		removed = node->data;
 		deleteNode(node);
-
+	}
 	return isFound;
 }
 template<typename T, typename F>
@@ -338,7 +348,7 @@ bool ClinkedList<T,F>::isEmpty() const
 
 
 template<typename T, typename F>
-bool ClinkedList<T,F>::find(Predicate2 pre, T& out) const
+bool ClinkedList<T,F>::find(Predicate pre, T& out) const
 {
 	Node<T> *node = findNode(pre);
 	bool isFound = node != sentinel;
@@ -378,6 +388,19 @@ T ClinkedList<T,F>::set(unsigned index, T&& e)
 {
 	return genericSet(index, std::move(e));
 }
+template<typename T, typename F>
+bool ClinkedList<T, F>::replace(T& out, Predicate pre)
+{
+	Node<T>* node = findNode(pre);
+	bool exists = node != sentinel;
+
+	if (exists)
+	{
+		using std::swap;
+		swap(out, node->data);
+	}
+	return exists;
+}
 
 template<typename T, typename F>
 template<typename E> 
@@ -396,3 +419,4 @@ unsigned ClinkedList<T,F>::length() const
 {
 	return size;
 }
+
