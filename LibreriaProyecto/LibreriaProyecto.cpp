@@ -10,8 +10,9 @@
 #include "models/compras/Articulo.h"
 #include "models/compras/Pedido.h"
 #include "models/compras/Inventario.h"
-
 #include "tests/UITest.h"
+#include "repositorys\AbstractRepo.h"
+
 using str = std::tuple < int, char, std::string >;
 
 void pruebaListaMultiply(MultiplyList<str>* list)
@@ -165,6 +166,8 @@ void pruebaListaCircular3(ClinkedList<Articulo*,F>* list)
 
 int main()
 {
+	/*
+
 	auto func = [](Articulo* a, Articulo* b)
 	{
 		if (a->getNombre() < b->getNombre()) return  -1;
@@ -175,6 +178,7 @@ int main()
 	auto list = new ClinkedList<Articulo*, std::function<int(Articulo*, Articulo*)>>(func);
 
 	pruebaListaCircular2(list);
+	*/
 	/*
 	UITest* uitest = new UITest();
 	uitest->testUI();
@@ -182,6 +186,25 @@ int main()
 	delete uitest;
 	return 0;
 	*/
+
+	AbstractRepo<Articulo*> articulos("articulos");
+
+
+	articulos.save(&Articulo(34, "fuck youuuu","fuck face", 12.033));
+	articulos.save(&Articulo(1, "Buejajaja |buajaja hmm|", "shit shit", 66.45435));
+	articulos.save(&Articulo(42, "Buejajaja |buajaja hmm|", "shit shit", 66.45435));
+	articulos.save(&Articulo(43, "Buejajaja |buajaja hmm|", "shit shit", 66.45435));
+	articulos.save(&Articulo(44, "Buejajaja |buajaja hmm|", "shit shit", 66.45435));
+	articulos.save(&Articulo(45, "Buejajaja |buajaja hmm|", "shit shit", 66.45435));
+	articulos.save(&Articulo(46, "Buejajaja |buajaja hmm|", "shit shit", 66.45435));
+	articulos.save(&Articulo(47, "Buejajaja |buajaja hmm|", "shit shit", 66.45435));
+	articulos.save(&Articulo(48, "Buejajaja |buajaja hmm|", "shit shit", 66.45435));
+	articulos.save(&Articulo(49, "Buejajaja |buajaja hmm|", "shit shit", 66.45435));
+	articulos.save(&Articulo(10, "Buejajaja |buajaja hmm|", "shit shit", 66.45435));
+	ClinkedList<Articulo*>* list = articulos.readALL();
+
+	list->foreach([](Articulo* a){ std::cout << a << std::endl; });
+
 	system("pause");
 }
 

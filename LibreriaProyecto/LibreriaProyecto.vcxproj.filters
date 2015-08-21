@@ -66,6 +66,9 @@
     <ClInclude Include="utils\Node.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="repositorys\AbstractRepo.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LibreriaProyecto.cpp">

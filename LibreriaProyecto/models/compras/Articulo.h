@@ -21,7 +21,10 @@ private:
 	std::string nombre;
 	std::string marca;
 
+	const static char delimiter = 31;
+
 public:
+	Articulo();
 	Articulo(int _codigo, const std::string& _nombre); 
 	Articulo(int _codigo, const std::string& _nombre, 
 		const std::string& _marca, long double _precio);
@@ -36,16 +39,41 @@ public:
 	std::string getMarca() const;
 	void setMarca(const std::string& marca);
 
+	// Esto es para uso del sistema de archivos
 	friend std::ostream& operator <<(std::ostream& os,  const Articulo& articulo) {
-		os << "["
-			<< articulo.codigo << ", "
-			<< articulo.nombre << ", "
-			<< articulo.marca << ", "
-			<< articulo.precio << "]" << std::endl;
+		
+		return os << articulo.codigo 
+			<< delimiter << articulo.nombre
+			<< delimiter << articulo.marca
+			<< delimiter << articulo.precio;
+	}
 
-		return os;
-	};
+	friend std::ostream& operator <<(std::ostream& os, const Articulo* articulo) {
+		return os << *articulo;
+	}
 
+	friend std::istream& operator >>(std::istream& is, Articulo& articulo) {
+
+		std::string token;
+		getline(is, token, delimiter);
+		articulo.codigo = std::stoi(token);
+
+		getline(is, articulo.nombre, delimiter);
+		getline(is, articulo.marca, delimiter);
+		
+		getline(is, token, delimiter);
+		articulo.precio = std::stold(token);
+		
+		if (!is) articulo = Articulo();
+
+		return is;
+	}
+
+	friend std::istream& operator >>(std::istream& is, Articulo*& articulo) {
+
+		articulo = new Articulo();
+		return is >> *articulo;
+	}
 
 	friend bool operator<(const Articulo& x, const Articulo& y) {
 		return x.getCodigo() < y.getCodigo();

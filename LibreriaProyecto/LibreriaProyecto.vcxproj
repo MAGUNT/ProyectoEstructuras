@@ -83,6 +83,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="repositorys\AbstractRepo.h" />
     <ClInclude Include="lists\ClinkedList.h" />
     <ClInclude Include="lists\List.h" />
     <ClInclude Include="lists\MultiplyList.h" />

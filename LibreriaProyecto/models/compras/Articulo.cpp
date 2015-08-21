@@ -7,8 +7,10 @@
 
 #include "Articulo.h"
 
+Articulo::Articulo() :Articulo(0, "Anonimo"){}
+
 Articulo::Articulo(int _codigo, const std::string& _nombre)
-	: Articulo(_codigo, _nombre, "", 0.0 ){}
+	: Articulo(_codigo, _nombre, "pacholi", 0.0 ){}
 
 Articulo::Articulo(int _codigo, const std::string& _nombre,
     const std::string& _marca, long double _precio) 
