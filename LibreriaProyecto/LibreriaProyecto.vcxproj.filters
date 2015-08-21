@@ -30,15 +30,6 @@
     <ClInclude Include="lists\MultiplyList.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="utils\Comparators.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="utils\MultiNode.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="utils\Node.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="models\compras\Articulo.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
@@ -64,6 +55,15 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="ui\InterfazGrafica.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\Comparators.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\MultiNode.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\Node.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

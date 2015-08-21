@@ -25,7 +25,7 @@ public:
 	
 	bool eliminarArticulo(int codigo);
 	bool modificarArticulo(int codigo, Articulo* articuloNuevo);
-	bool agregarArticulo(int codigo, const std::string& nombre, const std::string& marca, long double precio);
+	bool agregarArticulo(Articulo*);
 	Articulo* getArticulo(int codigo) const;
 };
 

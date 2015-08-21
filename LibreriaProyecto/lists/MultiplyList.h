@@ -36,7 +36,7 @@ public:
 
 	//agrega el dato acendentemente para todos los creterios
 	//especificados en el constructor.
-	bool add(const T &); //override T&&
+	void add(const T &); //override T&&
 	
 	//basicamente lo mismo que el remove de la lista normal ver List.h
 	template<typename Predicate>
@@ -54,6 +54,9 @@ public:
 	//list.foreach(0,[](int x){std::cout << x << std::endl;});
 	template<typename Func>
 	void foreach(unsigned,Func);
+	
+	void clear();
+
 private:
 	
 	Comparator* arrayCmp;
@@ -63,8 +66,10 @@ private:
 	unsigned size;
 
 	void addNodeBefore(unsigned, MultiNode<T>* newNode, MultiNode<T>* node);
-	bool findTightBoundary(unsigned, const T&, MultiNode<T>*&) const;
+	MultiNode<T>* findTightBoundary(unsigned, const T&) const;
 	void deleteNode(MultiNode<T>*);
+	void resetSentinel();
+	
 
 };
 
@@ -87,27 +92,24 @@ MultiplyList<T>::MultiplyList(std::initializer_list<Comparator> cmps)
 template<typename T>
 MultiplyList<T>::~MultiplyList()
 {
+	clear();
 	delete[] arrayCmp;
 	delete sentinel;
 }
 //O(sizeCmp*n)
 template<typename T>
-bool MultiplyList<T>::add(const T & e)
+void MultiplyList<T>::add(const T & e)
 {
-	MultiNode<T> *node = nullptr;
-	if (!findTightBoundary(0, e, node)) return false;
+	MultiNode<T> *node = nullptr, 
+		*newNode = new MultiNode<T>(sizeCmp, e);
 
-	MultiNode<T> *newNode = new MultiNode<T>(sizeCmp, e);
-	addNodeBefore(0, newNode, node);
-
-	for (unsigned i = 1; i < sizeCmp; ++i)
+	for (unsigned i = 0; i < sizeCmp; ++i)
 	{	
-		findTightBoundary(i, e, node);
+		node = findTightBoundary(i, e);
 		addNodeBefore(i, newNode, node);
 	}
 
 	++size;
-	return true;
 }
 
 //O(n)
@@ -115,15 +117,15 @@ template<typename T>
 template<typename Predicate>
 bool MultiplyList<T>::remove(const Predicate& pre)
 {
+	//escojer uno random
 	const unsigned path = 0;
 
-	MultiNode<T> *node= sentinel->getNext(path);
+	auto node= sentinel->getNext(path);
 	while (node != sentinel && !pre(node->data))
 		node = node->getNext(path);
 
 	bool exist = node != sentinel;	
-	if (exist)
-		deleteNode(node);
+	if (exist) deleteNode(node);
 	
 	return exist;
 }
@@ -143,7 +145,7 @@ template<typename T>
 template<typename Func>
 void MultiplyList<T>::foreach(unsigned cmpIndex, Func func)
 {
-	MultiNode<T> *node = sentinel->getNext(cmpIndex);
+	auto node = sentinel->getNext(cmpIndex);
 	while (node != sentinel)
 	{
 		func(node->data);
@@ -161,14 +163,13 @@ void MultiplyList<T>::addNodeBefore(unsigned cmpIndex, MultiNode<T>* newNode, Mu
 	node->setPrev(cmpIndex, newNode);
 }
 template<typename T>
-bool MultiplyList<T>::findTightBoundary(unsigned cmpIndex, const T& e, MultiNode<T>*& bound) const
+MultiNode<T>* MultiplyList<T>::findTightBoundary(unsigned cmpIndex, const T& e) const
 {
-	int c = 1;
-	bound = sentinel->getNext(cmpIndex);
-	while (bound != sentinel && (c = arrayCmp[cmpIndex](e, bound->data)) > 0)
+	auto bound = sentinel->getNext(cmpIndex);
+	while (bound != sentinel && arrayCmp[cmpIndex](e, bound->data) > 0)
 		bound = bound->getNext(cmpIndex);
 
-	return c != 0;
+	return bound;
 }
 
 template<typename T>
@@ -182,4 +183,28 @@ void MultiplyList<T>::deleteNode(MultiNode<T>* node)
 
 	delete node;
 	--size;
+}
+
+template<typename T>
+void MultiplyList<T>::clear()
+{
+	const unsigned path = 0;
+	auto node = sentinel->getNext(path);
+
+	while (node != sentinel)
+	{
+		auto borrar = node;
+		node = node->getNext(path);
+		delete borrar;
+	}
+	resetSentinel();
+}
+template <typename T>
+void  MultiplyList<T>::resetSentinel()
+{
+	for (unsigned i = 0; i<sizeCmp; ++i)
+	{
+		sentinel->setNext(i, sentinel);
+		sentinel->setPrev(i, sentinel);
+	}
 }

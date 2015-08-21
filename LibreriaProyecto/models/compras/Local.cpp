@@ -8,6 +8,7 @@
 #include "Local.h"
 
 
+
 Local::Local() {
 	this->lineasGenerales = new ClinkedList<LineaGeneral*>();
 	this->categorias = {
@@ -145,11 +146,13 @@ void Local::imprimirEstructura() {
 		lineaGeneralTemp = (*lineasGenerales)[i];
 		std::cout << "	*Categoria " << this->categorias[i] << "*:  " << lineaGeneralTemp->getNombre() << " = { " << std::endl;
 
-		for (unsigned j = 0; j < lineaGeneralTemp->getLineasEspecificas().length(); ++j) {
+		for (unsigned j = 0; j < lineaGeneralTemp->getLineasEspecificas().length(); ++j) 
+		{
 			lineaEspecificaTemp = (lineaGeneralTemp->getLineasEspecificas())[j];
 			std::cout << "		" << lineaEspecificaTemp->getNombre() << " = { " << std::endl;
 
-			for (unsigned k = 0; k < lineaEspecificaTemp->getArticulos().length(); ++k) {
+			for (unsigned k = 0; k < lineaEspecificaTemp->getArticulos().length(); ++k) 
+			{
 				articuloTemp = (lineaEspecificaTemp->getArticulos())[k];
 				std::cout << "			" << *articuloTemp << std::endl;
 			}

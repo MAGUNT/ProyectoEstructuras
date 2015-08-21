@@ -15,17 +15,16 @@
 #include "LineaEspecifica.h"
 #include "Articulo.h"
 
+
 typedef std::vector<std::string> string_vect;
 
 class Local {
 private:
-	std::vector<std::string> categorias;
 	ClinkedList<LineaGeneral*>* lineasGenerales;
-
 	ClinkedList<LineaEspecifica*>* crearLineasEspecificas(string_vect nombres);
 	ClinkedList<Articulo*>* crearArticulos(string_vect nombres);
 	void armarLineas();
-
+	std::vector<std::string> categorias;
 public:
 	Local();
 	virtual ~Local();

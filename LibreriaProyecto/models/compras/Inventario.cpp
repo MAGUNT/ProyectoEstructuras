@@ -33,10 +33,10 @@ bool Inventario::eliminarArticulo(int codigo)
 }
 bool Inventario::modificarArticulo(int codigo, Articulo* articuloNuevo)
 {
-	bool exito = articulos.replace(articuloNuevo, createSLambda(codigo));
-	if(exito) delete articuloNuevo;
-	
-	return exito;
+	// tres recorridos
+	return getArticulo(codigo) != nullptr
+		&& agregarArticulo(articuloNuevo)
+		&& eliminarArticulo(codigo);
 }
 
 /*
@@ -44,10 +44,8 @@ bool Inventario::modificarArticulo(int codigo, Articulo* articuloNuevo)
  */
 
 
-bool Inventario::agregarArticulo(int codigo, 
-	const std::string& nombre, const std::string& marca, long double precio) 
+bool Inventario::agregarArticulo(Articulo* articulo) 
 {
-	auto articulo = new Articulo(codigo, nombre, marca, precio);
 	return articulos.addAscendent(articulo);
 }
 
