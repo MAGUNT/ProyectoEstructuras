@@ -189,22 +189,11 @@ int main()
 
 	AbstractRepo<Articulo*> articulos("articulos");
 
-
-	articulos.save(&Articulo(34, "fuck youuuu","fuck face", 12.033));
-	articulos.save(&Articulo(1, "Buejajaja |buajaja hmm|", "shit shit", 66.45435));
-	articulos.save(&Articulo(42, "Buejajaja |buajaja hmm|", "shit shit", 66.45435));
-	articulos.save(&Articulo(43, "Buejajaja |buajaja hmm|", "shit shit", 66.45435));
-	articulos.save(&Articulo(44, "Buejajaja |buajaja hmm|", "shit shit", 66.45435));
-	articulos.save(&Articulo(45, "Buejajaja |buajaja hmm|", "shit shit", 66.45435));
-	articulos.save(&Articulo(46, "Buejajaja |buajaja hmm|", "shit shit", 66.45435));
-	articulos.save(&Articulo(47, "Buejajaja |buajaja hmm|", "shit shit", 66.45435));
-	articulos.save(&Articulo(48, "Buejajaja |buajaja hmm|", "shit shit", 66.45435));
-	articulos.save(&Articulo(49, "Buejajaja |buajaja hmm|", "shit shit", 66.45435));
-	articulos.save(&Articulo(10, "Buejajaja |buajaja hmm|", "shit shit", 66.45435));
-	ClinkedList<Articulo*>* list = articulos.readALL();
-
-	list->foreach([](Articulo* a){ std::cout << a << std::endl; });
-
+	ClinkedList<Articulo*> lista = {
+		new Articulo(34, "Tuncado", "fuck face buejajaj", 12.033),
+		new Articulo(1, "shiitt", "shit shit shit", 66.45435)
+	};
+	articulos.update(lista);
 	system("pause");
 }
 

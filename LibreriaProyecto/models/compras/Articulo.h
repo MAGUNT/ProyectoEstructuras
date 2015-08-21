@@ -52,6 +52,7 @@ public:
 		return os << *articulo;
 	}
 
+	//pendiente atrapar excepciones 
 	friend std::istream& operator >>(std::istream& is, Articulo& articulo) {
 
 		std::string token;

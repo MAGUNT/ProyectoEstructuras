@@ -28,7 +28,7 @@ template<typename T>
 void AbstractRepo<T>::update(const ClinkedList<T>& salvar)
 {
 	std::ofstream out(path);
-	salvar.foreach([&out, delimiter](const T&){out << e << delimiter; });
+	salvar.foreach([&out](const T& e){out << e << delimiter; });
 }
 template<typename T>
 void AbstractRepo<T>::save(const T& e)
