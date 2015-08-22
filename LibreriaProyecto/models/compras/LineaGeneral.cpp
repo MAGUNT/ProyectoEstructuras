@@ -6,11 +6,12 @@
  */
 
 #include "LineaGeneral.h"
+#include "../../repositorys/Repositorios.h"
 
 LineaGeneral::LineaGeneral(int _codigo, std::string _nombre)
 	: codigo(_codigo), nombre(_nombre) , lineasEspecificas(ClinkedList<LineaEspecifica*>()){
 }
-
+LineaGeneral::LineaGeneral(): LineaGeneral(0,"Anonimo"){}
 int LineaGeneral::getCodigo() const {
 	return codigo;
 }
@@ -63,4 +64,52 @@ bool LineaGeneral::eliminar(int codigo)
 	if (exito) delete output; 
 
 	return exito;
+}
+
+std::istream& operator >>(std::istream& is, LineaGeneral& linea)
+{
+	const char d = LineaGeneral::delimiter;
+
+	//-----------Atrapar excepcion
+	std::string token;
+	getline(is, token, d);
+	linea.codigo = std::stoi(token);
+	getline(is, linea.nombre, d);
+	//-----------Atrapar excepcion
+	
+	int codigo = 0;
+	while (is >> codigo)
+	{
+		LineaEspecifica *lineaE = Repositorios::repoLineaEspecifica.getElement(codigo);
+		linea.lineasEspecificas.addAscendent(lineaE);
+	}
+	return is;
+}
+std::istream& operator >>(std::istream& is, LineaGeneral*& linea)
+{
+	linea = new LineaGeneral();
+	return is >> *linea;
+
+}
+bool operator<(const LineaGeneral& x, const LineaGeneral& y)
+{
+	return x.nombre < y.nombre;
+}
+std::ostream& operator <<(std::ostream& os, const LineaGeneral& linea)
+{
+	const char d = LineaGeneral::delimiter;
+
+	os << linea.codigo << d
+		<< linea.nombre << d;
+
+	linea.lineasEspecificas.foreach([&os](LineaEspecifica* l)
+	{
+		os << " " << l->getCodigo(); 
+	});
+
+	return os;
+}
+std::ostream& operator <<(std::ostream& os, const LineaGeneral* linea)
+{
+	return os << *linea;
 }
