@@ -69,13 +69,13 @@
     <ClInclude Include="repositorys\FileRepo.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="repositorys\KeyRepository.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="repositorys\Repositorios.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="models\compras\Categoria.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="repositorys\KeyRepository.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

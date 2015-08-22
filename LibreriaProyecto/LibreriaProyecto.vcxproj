@@ -84,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="models\compras\Categoria.h" />
+    <ClInclude Include="repositorys\KeyRepository.h" />
     <ClInclude Include="repositorys\Repositorios.h" />
     <ClInclude Include="repositorys\IRepo.h" />
     <ClInclude Include="repositorys\FileRepo.h" />
@@ -92,7 +93,6 @@
     <ClInclude Include="lists\MultiplyList.h" />
     <ClInclude Include="models\compras\Articulo.h" />
     <ClInclude Include="models\compras\Carrito.h" />
-    <ClInclude Include="repositorys\KeyRepository.h" />
     <ClInclude Include="models\compras\LineaEspecifica.h" />
     <ClInclude Include="models\compras\LineaGeneral.h" />
     <ClInclude Include="models\compras\Local.h" />
