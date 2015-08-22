@@ -50,6 +50,14 @@ class InterfazGrafica {
 	//	Metodos para Admin
 	void ejecutarOpcionAdmin(int opcion);
 
+	//	Misc.
+	void imprimirCarrito(Carrito* carrito);
+	void imprimirArticulo(Articulo* articulo);
+	void imprimirLineaGeneral(LineaGeneral* lineaGeneral);
+	void imprimirLineaEspecifica(LineaEspecifica);
+	void imprimirPedido(Pedido* pedido);
+
+
 public:
 	InterfazGrafica(Local &local);
 	virtual ~InterfazGrafica();

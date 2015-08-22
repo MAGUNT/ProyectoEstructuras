@@ -11,6 +11,7 @@
 #include "../../lists/ClinkedList.h"
 #include "Pedido.h"
 #include <string>
+#include <memory>
 
 class Carrito {
 	ClinkedList<Pedido*> productos;

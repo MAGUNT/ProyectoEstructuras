@@ -8,7 +8,7 @@
 class Repositorios
 {
 public:
-	static KeyRepository<Articulo> repoA;
-	static KeyRepository<LineaEspecifica> repoLE;
+	//static KeyRepository<Articulo> repoA;
+	//static KeyRepository<LineaEspecifica> repoLE;
 };
 

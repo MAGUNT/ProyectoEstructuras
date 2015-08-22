@@ -365,8 +365,28 @@ void InterfazGrafica::ejecutarOpcionAdmin(int opcion) {
 }
 
 
+//	Misc.
 
+void InterfazGrafica::imprimirCarrito(Carrito* carrito) {
+	std::cout << "Carrito " << carrito->getNombre() << std::endl;
+	carrito->getProductos()->foreach(())
+}
 
+void InterfazGrafica::imprimirArticulo(Articulo* articulo) {
+
+}
+
+void InterfazGrafica::imprimirLineaGeneral(LineaGeneral* lineaGeneral) {
+
+}
+
+void InterfazGrafica::imprimirLineaEspecifica(LineaEspecifica) {
+
+}
+
+void InterfazGrafica::imprimirPedido(Pedido* pedido) {
+
+}
 
 
 
