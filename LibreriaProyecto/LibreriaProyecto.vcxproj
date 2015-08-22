@@ -83,13 +83,15 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="repositorys\AbstractRepo.h" />
+    <ClInclude Include="repositorys\Repositorios.h" />
+    <ClInclude Include="repositorys\IRepo.h" />
+    <ClInclude Include="repositorys\FileRepo.h" />
     <ClInclude Include="lists\ClinkedList.h" />
     <ClInclude Include="lists\List.h" />
     <ClInclude Include="lists\MultiplyList.h" />
     <ClInclude Include="models\compras\Articulo.h" />
     <ClInclude Include="models\compras\Carrito.h" />
-    <ClInclude Include="models\compras\Inventario.h" />
+    <ClInclude Include="repositorys\KeyRepository.h" />
     <ClInclude Include="models\compras\LineaEspecifica.h" />
     <ClInclude Include="models\compras\LineaGeneral.h" />
     <ClInclude Include="models\compras\Local.h" />
@@ -105,11 +107,11 @@
     <ClCompile Include="LibreriaProyecto.cpp" />
     <ClCompile Include="models\compras\Articulo.cpp" />
     <ClCompile Include="models\compras\Carrito.cpp" />
-    <ClCompile Include="models\compras\Inventario.cpp" />
     <ClCompile Include="models\compras\LineaEspecifica.cpp" />
     <ClCompile Include="models\compras\LineaGeneral.cpp" />
     <ClCompile Include="models\compras\Local.cpp" />
     <ClCompile Include="models\compras\Pedido.cpp" />
+    <ClCompile Include="repositorys\Repositorios.cpp" />
     <ClCompile Include="tests\UITest.cpp" />
     <ClCompile Include="ui\InterfazGrafica.cpp" />
   </ItemGroup>

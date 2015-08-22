@@ -1,16 +1,14 @@
-/*
- * LineaEspecifica.cpp
- *
- *  Created on: Aug 2, 2015
- *      Author: daniel
- */
 
 #include "LineaEspecifica.h"
+#include "../../repositorys/Repositorios.h"
+#include <iostream>
 
 LineaEspecifica::LineaEspecifica(int _codigo, std::string _nombre)
 	: codigo(_codigo), nombre(_nombre), articulos(ClinkedList<Articulo*>()) {
 
 }
+LineaEspecifica::LineaEspecifica(): LineaEspecifica(0, "anonimo") {}
+
 
 int LineaEspecifica::getCodigo() const {
 	return codigo;
@@ -76,4 +74,48 @@ bool LineaEspecifica::removerArticulo(int codigo)
 	{ 
 		return a->getCodigo() == codigo; 
 	});
+}
+std::istream& operator >>(std::istream& is, LineaEspecifica& linea)
+{
+	//-----------Atrapar excepcion
+	std::string token;
+	getline(is, token, LineaEspecifica::delimiter);
+	linea.codigo = std::stoi(token);
+	getline(is, linea.nombre,LineaEspecifica::delimiter);
+	//-----------Atrapar excepcion
+	int codigo = 0;
+	while (is >> codigo)
+	{
+		Articulo *articulo = Repositorios::repoA.getElement(codigo);
+		linea.articulos.addAscendent(articulo);
+	}
+	return is;
+
+}
+
+std::istream& operator >>(std::istream& is, LineaEspecifica*& linea)
+{
+	linea = new LineaEspecifica();
+	return is >> *linea;
+}
+
+bool operator<(const LineaEspecifica& x, const LineaEspecifica& y)
+{
+	return x.nombre < y.nombre;
+}
+std::ostream& operator <<(std::ostream& os, const LineaEspecifica& linea)
+{
+	
+	
+	os << linea.codigo << LineaEspecifica::delimiter
+		<< linea.nombre << LineaEspecifica::delimiter;
+	linea.articulos.foreach([&os](Articulo* a){ os << " " << a->getCodigo(); });
+
+	return os;
+
+}
+
+std::ostream& operator <<(std::ostream& os, const LineaEspecifica* linea)
+{
+	return os << *linea;
 }

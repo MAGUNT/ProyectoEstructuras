@@ -9,9 +9,11 @@
 #include "lists/MultiplyList.h"
 #include "models/compras/Articulo.h"
 #include "models/compras/Pedido.h"
-#include "models/compras/Inventario.h"
 #include "tests/UITest.h"
-#include "repositorys\AbstractRepo.h"
+#include "repositorys\FileRepo.h"
+#include "repositorys\Repositorios.h"
+#include "models\compras\LineaEspecifica.h"
+
 
 using str = std::tuple < int, char, std::string >;
 
@@ -187,13 +189,16 @@ int main()
 	return 0;
 	*/
 
-	AbstractRepo<Articulo*> articulos("articulos");
+	/*
+	FileRepo<Articulo*> articulos("articulos");
 
 	ClinkedList<Articulo*> lista = {
 		new Articulo(34, "Tuncado", "fuck face buejajaj", 12.033),
 		new Articulo(1, "shiitt", "shit shit shit", 66.45435)
 	};
 	articulos.update(lista);
+	*/
+	
 	system("pause");
 }
 

@@ -4,7 +4,7 @@
  *  Created on: Aug 1, 2015
  *      Author: daniel
  */
-
+#pragma once
 #ifndef LIBRERIAPROYECTO_MODELS_ARTICULO_H_
 #define LIBRERIAPROYECTO_MODELS_ARTICULO_H_
 
@@ -13,7 +13,7 @@
 /*
 	Si da tiempo agrego las sobrecargas T&& rvaluereference
 */
-
+/// seria bueno tener la difenicio de los friends en el cpp
 class Articulo {
 private:
 	int codigo;

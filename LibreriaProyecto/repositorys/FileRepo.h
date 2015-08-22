@@ -1,43 +1,45 @@
 #pragma once
 #include "..\lists\ClinkedList.h"
+#include "IRepo.h"
 #include <fstream>
 #include <sstream>
 
 template<typename T>
-class AbstractRepo
+class FileRepo : public IRepo<T>
 {
 private:
 	std::string path;
 	const static char delimiter = 30;
 public:
 
-	AbstractRepo(const std::string& path);
-	AbstractRepo(std::string&& path);
+	FileRepo(const std::string& path);
+	FileRepo(std::string&& path);
+	virtual ~FileRepo() override{}
 
-	void update(const ClinkedList<T>& salvar);
-	void save(const T&);
-	ClinkedList<T>* readALL();
+	virtual void update(const ClinkedList<T>& salvar) override;
+	virtual void save(const T&) override;
+	virtual ClinkedList<T>* readALL() override;
 };
 
 template<typename T>
-AbstractRepo<T>::AbstractRepo(const std::string& ppath):path(ppath) {}
+FileRepo<T>::FileRepo(const std::string& ppath):path(ppath) {}
 template<typename T>
-AbstractRepo<T>::AbstractRepo(std::string&& ppath) :path(std::move(ppath)) {}
+FileRepo<T>::FileRepo(std::string&& ppath) :path(std::move(ppath)) {}
 
 template<typename T>
-void AbstractRepo<T>::update(const ClinkedList<T>& salvar)
+void FileRepo<T>::update(const ClinkedList<T>& salvar)
 {
 	std::ofstream out(path);
 	salvar.foreach([&out](const T& e){out << e << delimiter; });
 }
 template<typename T>
-void AbstractRepo<T>::save(const T& e)
+void FileRepo<T>::save(const T& e)
 {
 	std::ofstream out(path, std::ofstream::app);
 	out << e << delimiter;
 }
 template<typename T>
-ClinkedList<T>* AbstractRepo<T>::readALL()
+ClinkedList<T>* FileRepo<T>::readALL()
 {
 	auto list = new ClinkedList<T>();
 	std::ifstream in(path);

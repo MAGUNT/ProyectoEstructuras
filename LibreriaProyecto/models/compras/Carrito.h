@@ -4,7 +4,7 @@
  *  Created on: Aug 10, 2015
  *      Author: daniel.hernandez
  */
-
+#pragma once
 #ifndef LIBRERIAPROYECTO_MODELS_COMPRAS_CARRITO_H_
 #define LIBRERIAPROYECTO_MODELS_COMPRAS_CARRITO_H_
 

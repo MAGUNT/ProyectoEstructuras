@@ -352,8 +352,7 @@ bool ClinkedList<T,F>::find(Predicate pre, T& out) const
 {
 	Node<T> *node = findNode(pre);
 	bool isFound = node != sentinel;
-	if (isFound)
-		out = node->data;
+	if (isFound) out = node->data;
 	
 	return isFound;
 }
