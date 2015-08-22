@@ -83,6 +83,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="models\compras\Categoria.h" />
     <ClInclude Include="repositorys\Repositorios.h" />
     <ClInclude Include="repositorys\IRepo.h" />
     <ClInclude Include="repositorys\FileRepo.h" />
@@ -104,6 +105,7 @@
     <ClInclude Include="utils\Node.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="models\compras\Categoria.cpp" />
     <ClCompile Include="LibreriaProyecto.cpp" />
     <ClCompile Include="models\compras\Articulo.cpp" />
     <ClCompile Include="models\compras\Carrito.cpp" />

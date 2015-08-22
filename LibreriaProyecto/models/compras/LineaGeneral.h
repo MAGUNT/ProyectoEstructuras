@@ -13,17 +13,26 @@
 #include "../../lists/ClinkedList.h"
 #include "LineaEspecifica.h"
 
-typedef std::vector<std::string> string_vect;
+
+class LineaGeneral;
+
+std::istream& operator >>(std::istream& is, LineaGeneral& linea);
+std::istream& operator >>(std::istream& is, LineaGeneral*& linea);
+bool operator<(const LineaGeneral& x, const LineaGeneral& y);
+std::ostream& operator <<(std::ostream& os, const LineaGeneral& linea);
+std::ostream& operator <<(std::ostream& os, const LineaGeneral* linea);
 
 class LineaGeneral {
 private:
 	int codigo;
 	std::string nombre;
 	ClinkedList<LineaEspecifica*> lineasEspecificas;
+	
+	const static char delimiter = 31;
 
 public:
 	LineaGeneral(int codigo, std::string nombre);
-
+	LineaGeneral();
 	const ClinkedList<LineaEspecifica*>& getLineasEspecificas();
 	int getCodigo() const;
 	const std::string& getNombre() const;
@@ -32,6 +41,12 @@ public:
 	LineaEspecifica* getLineaEspecifica(const std::string &) const;
 	bool agregarLineaEspecifica(LineaEspecifica*);
 	bool eliminar(int);
+
+	friend std::istream& operator >>(std::istream& is, LineaGeneral& linea);
+	friend std::istream& operator >>(std::istream& is, LineaGeneral*& linea);
+	friend bool operator<(const LineaGeneral& x, const LineaGeneral& y);
+	friend std::ostream& operator <<(std::ostream& os, const LineaGeneral& linea);
+	friend std::ostream& operator <<(std::ostream& os, const LineaGeneral* linea);
 };
 
 #endif /* LIBRERIAPROYECTO_MODELS_COMPRAS_LINEAGENERAL_H_ */

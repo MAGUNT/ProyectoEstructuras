@@ -86,7 +86,7 @@ std::istream& operator >>(std::istream& is, LineaEspecifica& linea)
 	int codigo = 0;
 	while (is >> codigo)
 	{
-		Articulo *articulo = Repositorios::repoA.getElement(codigo);
+		Articulo *articulo = Repositorios::repoArticulo.getElement(codigo);
 		linea.articulos.addAscendent(articulo);
 	}
 	return is;
@@ -105,11 +105,14 @@ bool operator<(const LineaEspecifica& x, const LineaEspecifica& y)
 }
 std::ostream& operator <<(std::ostream& os, const LineaEspecifica& linea)
 {
+	const char d = LineaEspecifica::delimiter;
 	
-	
-	os << linea.codigo << LineaEspecifica::delimiter
-		<< linea.nombre << LineaEspecifica::delimiter;
-	linea.articulos.foreach([&os](Articulo* a){ os << " " << a->getCodigo(); });
+	os << linea.codigo << d
+		<< linea.nombre << d;
+	linea.articulos.foreach([&os](Articulo* a)
+	{ 
+		os << " " << a->getCodigo(); 
+	});
 
 	return os;
 
