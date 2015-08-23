@@ -84,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="models\compras\Categoria.h" />
+    <ClInclude Include="models\usuarios\Usuario.h" />
     <ClInclude Include="repositorys\KeyRepository.h" />
     <ClInclude Include="repositorys\Repositorios.h" />
     <ClInclude Include="repositorys\IRepo.h" />
@@ -100,7 +101,6 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="tests\UITest.h" />
     <ClInclude Include="ui\InterfazGrafica.h" />
-    <ClInclude Include="models\usuarios\Usuario.h" />
     <ClInclude Include="utils\Comparators.h" />
     <ClInclude Include="utils\MultiNode.h" />
     <ClInclude Include="utils\Node.h" />
