@@ -83,7 +83,7 @@ void Categoria::imprimir() {
 	 const char d = Categoria::delimiter;
 	 
 	 os << cat.codigo << d 
-		 << cat.pasillo<< d 
+		 << cat.pasillo << d 
 		 << cat.nombre << d;
 	 
 	 cat.lineasGenerales.foreach([&os](LineaGeneral* a)

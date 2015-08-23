@@ -7,7 +7,10 @@
 template <typename T>
 class KeyRepository {
 private:
-	ClinkedList<T*>* elements;
+	using KeyComparator = std::function < int(T*, T*) > ;
+	
+
+	ClinkedList<T*, KeyComparator>* elements;
 	IRepo<T*>* repo;
 
 	std::function<bool(T*)> createSLambda(int) const;
@@ -28,7 +31,15 @@ public:
 
 template<typename T> 
 KeyRepository<T>::KeyRepository(IRepo<T*>* prepo)
-	: repo(prepo), elements(prepo->readALL()){}
+	: repo(prepo)
+{
+	auto cmp = [](T* x, T* y){return x->getCodigo() - y->getCodigo(); };
+	elements = new ClinkedList<T*, KeyComparator>(cmp);
+	prepo->readALL(*elements, [](ClinkedList<T*, KeyComparator>& list, T* e)
+	{
+		list.addAscendent(e); 
+	});
+}
 
 template<typename T>
 KeyRepository<T>::~KeyRepository()
