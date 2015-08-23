@@ -10,7 +10,7 @@ template<class T, class Func = DefaultComparator<T>>
 class ClinkedList final
 	:public List<T> 
 {
-
+	typedef const std::function<bool(const T&)>& Predicate;
 
 private:
 	typedef void(ClinkedList<T,Func>::*AddNode)(Node<T>*, Node<T>*);

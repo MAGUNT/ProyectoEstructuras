@@ -369,7 +369,7 @@ void InterfazGrafica::ejecutarOpcionAdmin(int opcion) {
 
 void InterfazGrafica::imprimirCarrito(Carrito* carrito) {
 	std::cout << "Carrito " << carrito->getNombre() << std::endl;
-	carrito->getProductos()->foreach(())
+//	carrito->getProductos()->foreach(())
 }
 
 void InterfazGrafica::imprimirArticulo(Articulo* articulo) {
