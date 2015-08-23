@@ -71,10 +71,9 @@ bool Categoria::removerLineaGeneral(int codigo)
 	});
 }
 void Categoria::imprimir() {
-	std::ostream &os;
 	std::cout << "Categoria " << codigo << ". " << nombre << " en el pasillo " << pasillo << std::endl;
 	std::cout << "Lineas Generales" << std::endl;
-	this->lineasGenerales.foreach([&os](LineaGeneral* l) {
+	this->lineasGenerales.foreach([](LineaGeneral* l) {
 		std::cout << l->getCodigo() << ". " << l->getNombre() << std::endl;
 	});
 }
@@ -84,7 +83,7 @@ void Categoria::imprimir() {
 	 const char d = Categoria::delimiter;
 	 
 	 os << cat.codigo << d 
-		 << cat.pasillo<< d 
+		 << cat.pasillo << d 
 		 << cat.nombre << d;
 	 
 	 cat.lineasGenerales.foreach([&os](LineaGeneral* a)

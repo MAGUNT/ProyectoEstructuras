@@ -76,3 +76,7 @@ std::ostream& operator <<(std::ostream& os, const Usuario* linea)
 {
 	return os << *linea;
 }
+int Usuario::getCodigo()const
+{
+	return id;
+}

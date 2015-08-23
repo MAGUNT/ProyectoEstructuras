@@ -9,10 +9,10 @@
 #include "lists/MultiplyList.h"
 #include "models/compras/Articulo.h"
 #include "models/compras/Pedido.h"
-#include "tests/UITest.h"
 #include "repositorys\FileRepo.h"
 #include "repositorys\Repositorios.h"
 #include "models\compras\LineaEspecifica.h"
+#include "MultiRepo.h"
 
 
 using str = std::tuple < int, char, std::string >;
@@ -38,14 +38,14 @@ void pruebaListaMultiply(MultiplyList<str>* list)
 	{
 		std::cout << "Criterio # " << i << std::endl;
 
-		list->foreach(i,
+		list->foreach(
 			[](str x)
 		{
 			std::cout << std::get<0>(x)
 				<< " " << std::get<1>(x)
 				<< " " << std::get<2>(x).c_str()
 				<< " " << std::endl;
-		});
+		},i);
 
 	}
 	
@@ -55,14 +55,14 @@ void pruebaListaMultiply(MultiplyList<str>* list)
 	{
 		std::cout << "Criterio # " << i << std::endl;
 
-		list->foreach(i,
+		list->foreach(
 			[](str x)
 		{
 			std::cout << std::get<0>(x)
 				<< " " << std::get<1>(x)
 				<< " " << std::get<2>(x).c_str()
 				<< " " << std::endl;
-		});
+		},i);
 
 	}
 
@@ -168,7 +168,20 @@ void pruebaListaCircular3(ClinkedList<Articulo*,F>* list)
 
 int main()
 {
+
+	
+	MultiRepo<Articulo> fuck(
+	{
+		[](Articulo* a, Articulo *b){ return 2; }
+	} 
+	, new FileRepo<Articulo*, MultiplyList<Articulo*>>("fyckk"));
+
+	fuck.addElement(new Articulo());
+	fuck.get([](Articulo*a){return a->getCodigo() == 0; });
+	
 	/*
+
+
 
 	auto func = [](Articulo* a, Articulo* b)
 	{

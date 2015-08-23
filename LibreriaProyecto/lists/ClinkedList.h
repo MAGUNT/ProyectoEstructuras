@@ -175,10 +175,13 @@ ClinkedList<T, F>::ClinkedList(const F& pcmp) : sentinel(new Node<T>()), size(0)
 	resetSentinel();
 }
 template<typename T, typename F>
-ClinkedList<T,F>::ClinkedList(const std::initializer_list<T>& list) : ClinkedList()
+ClinkedList<T, F>::ClinkedList(const std::initializer_list<T>& list) : ClinkedList()
 {
 	for (const T& e : list)
+	{
 		addLast(e);
+		++size;
+	}
 }
 
 template<typename T, typename F>

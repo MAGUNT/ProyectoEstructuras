@@ -53,7 +53,13 @@ public:
 	// Para T= int, esto imprime todos los datos en consola
 	//list.foreach(0,[](int x){std::cout << x << std::endl;});
 	template<typename Func>
-	void foreach(unsigned,Func);
+	void foreach(Func, unsigned index)const ;
+
+	template<typename Func>
+	void foreach(Func)const;
+
+	template<typename Predicate>
+	bool find(Predicate, T&);
 	
 	void clear();
 
@@ -76,17 +82,14 @@ private:
 template<typename T>
 MultiplyList<T>::MultiplyList(std::initializer_list<Comparator> cmps) 
 	:sizeCmp(cmps.size()), size(0), arrayCmp(new Comparator[cmps.size()]),
-	sentinel(new MultiNode<T>(cmps.size()))
+	sentinel(new MultiNode<T>(cmps.size()+1))
 {
 	//if (sizeCmp == 0)
 	//	throw new std::invalid_argument("there most be atleast 1 comparator");
 	unsigned index = 0;
 	for (const Comparator& e : cmps)
-	{
-		sentinel->setNext(index, sentinel);
-		sentinel->setPrev(index, sentinel);
 		arrayCmp[index++] = e;
-	}
+	resetSentinel();
 }
 
 template<typename T>
@@ -101,13 +104,15 @@ template<typename T>
 void MultiplyList<T>::add(const T & e)
 {
 	MultiNode<T> *node = nullptr, 
-		*newNode = new MultiNode<T>(sizeCmp, e);
+		*newNode = new MultiNode<T>(sizeCmp + 1, e);
 
 	for (unsigned i = 0; i < sizeCmp; ++i)
 	{	
 		node = findTightBoundary(i, e);
 		addNodeBefore(i, newNode, node);
 	}
+
+	addNodeBefore(sizeCmp, newNode, sentinel);
 
 	++size;
 }
@@ -143,7 +148,7 @@ unsigned MultiplyList<T>::length() const
 
 template<typename T>
 template<typename Func>
-void MultiplyList<T>::foreach(unsigned cmpIndex, Func func)
+void MultiplyList<T>::foreach(Func func, unsigned cmpIndex) const
 {
 	auto node = sentinel->getNext(cmpIndex);
 	while (node != sentinel)
@@ -154,6 +159,28 @@ void MultiplyList<T>::foreach(unsigned cmpIndex, Func func)
 
 }
 
+template <typename T>
+template<typename Func>
+void  MultiplyList<T>::foreach(Func f) const
+{
+	foreach(f, sizeCmp);
+}
+
+template<typename T>
+template<typename Predicate>
+bool MultiplyList<T>::find(Predicate pre, T& e)
+{
+	const unsigned index = sizeCmp;
+	
+	auto node = sentinel->getNext(index);
+
+	while (node != sentinel && !pre(node->data))	
+		node = node->getNext(index);
+	
+	if (node != sentinel) e = node->data;
+
+	return node != sentinel;
+}
 template<typename T>
 void MultiplyList<T>::addNodeBefore(unsigned cmpIndex, MultiNode<T>* newNode, MultiNode<T>* node)
 {
@@ -165,6 +192,7 @@ void MultiplyList<T>::addNodeBefore(unsigned cmpIndex, MultiNode<T>* newNode, Mu
 template<typename T>
 MultiNode<T>* MultiplyList<T>::findTightBoundary(unsigned cmpIndex, const T& e) const
 {
+
 	auto bound = sentinel->getNext(cmpIndex);
 	while (bound != sentinel && arrayCmp[cmpIndex](e, bound->data) > 0)
 		bound = bound->getNext(cmpIndex);
@@ -175,7 +203,7 @@ MultiNode<T>* MultiplyList<T>::findTightBoundary(unsigned cmpIndex, const T& e) 
 template<typename T>
 void MultiplyList<T>::deleteNode(MultiNode<T>* node)
 {
-	for (unsigned i = 0; i < sizeCmp; ++i)
+	for (unsigned i = 0; i <= sizeCmp; ++i)
 	{
 		node->getPrev(i)->setNext(i, node->getNext(i));
 		node->getNext(i)->setPrev(i, node->getPrev(i));
@@ -202,7 +230,7 @@ void MultiplyList<T>::clear()
 template <typename T>
 void  MultiplyList<T>::resetSentinel()
 {
-	for (unsigned i = 0; i<sizeCmp; ++i)
+	for (unsigned i = 0; i<=sizeCmp; ++i)
 	{
 		sentinel->setNext(i, sentinel);
 		sentinel->setPrev(i, sentinel);

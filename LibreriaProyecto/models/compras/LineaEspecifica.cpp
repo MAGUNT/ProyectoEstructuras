@@ -76,10 +76,10 @@ bool LineaEspecifica::removerArticulo(int codigo)
 	});
 }
 void LineaEspecifica::imprimir() {
-	std::iostream &os;
+
 	std::cout << "Linea Especifica " << codigo << ". " << nombre << std::endl;
 	std::cout << "Articulos: " << std::endl;
-	articulos.foreach([&os](Articulo* a) {
+	articulos.foreach([](Articulo* a) {
 		a->imprimir();
 	});
 }
