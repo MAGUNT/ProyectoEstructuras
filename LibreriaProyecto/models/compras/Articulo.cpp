@@ -6,6 +6,7 @@
  */
 
 #include "Articulo.h"
+#include <iostream>
 
 Articulo::Articulo() :Articulo(0, "Anonimo"){}
 
@@ -48,5 +49,10 @@ void Articulo::setMarca(const std::string& marca) {
 	this->marca = marca;
 }
 
+void Articulo::imprimir() {
+	std::ostream &os;
+	std::cout << "Articulo " << codigo << ". " << nombre <<
+			", " << marca << " CRC" << precio << std::endl;
+}
 
 

@@ -6,134 +6,15 @@
  */
 
 #include "Local.h"
-
+#include "../../repositorys/Repositorios.h"
 
 
 Local::Local() {
-	this->lineasGenerales = new ClinkedList<LineaGeneral*>();
-	this->categorias = {
-			"1. Abarrotes",
-			"2. Bebidas Alcoholicas",
-			"3. Comida Preparada"
-	};
-
-	this->armarLineas();
+	this->categorias = Repositorios::repoCategoria;
 }
 
 Local::~Local() {
-	delete this->lineasGenerales;
-}
-
-const std::vector<std::string> Local::getCategorias() {
-	return this->categorias;
-}
-
-/*
- * 	Esto esta pesimo, tengo que buscar la manera de como proveer una
- * 	interfaz para construir todas las estructuras apartir de datos en strings
- */
-
-void Local::armarLineas() {
-	Articulo* articulo;
-	LineaEspecifica* lineaEspecifica;
-
-	//	Abarrotes
-	string_vect lineasGeneralesAbarrotes = {"Aderezos, Salsas y Dips", "Cereales y Pastas", "Cigarros Puros y Tabaco"};
-
-	//	Lineas especificas de Aderezos, Salsa y Dips
-	string_vect lineaE1Abarrotes = {"Aderezos para Ensalada", "Antipasto", "Vinagres"};
-
-	//	Articulos de Aderezos para Ensalada
-	string_vect lineaE1Articulos1 = {"Imitacion de Tocino", "Aderezo Vinagreta", "Aderezo Chipotle"};
-
-	//	Articulos de Antipasto
-	string_vect lineaE1Articulos2 = {"Antipasto Chile Rojo"};
-
-	//	Articulos de Vinagres
-	string_vect lineaE1Articulos3 = {"Vinagre Balsamico", "Vinagre Blanco"};
-
-	LineaGeneral* lineaG1 = new LineaGeneral(1, lineasGeneralesAbarrotes[0]);
-
-	ClinkedList<Articulo*>* listArticulos1 = crearArticulos(lineaE1Articulos1);
-	ClinkedList<Articulo*>* listArticulos2 = crearArticulos(lineaE1Articulos2);
-	ClinkedList<Articulo*>* listArticulos3 = crearArticulos(lineaE1Articulos3);
-
-	ClinkedList<LineaEspecifica*>* listLineasEspecificas = crearLineasEspecificas(lineaE1Abarrotes);
-
-	/*
-	lineaEspecifica = (*listLineasEspecificas)[0];
-	articulo = (*listArticulos1)[0];
-	lineaEspecifica->getArticulos().addLast(articulo);
-	articulo = (*listArticulos1)[1];
-	lineaEspecifica->getArticulos()->addLast(articulo);
-	articulo = (*listArticulos1)[2];
-	lineaEspecifica->getArticulos()->addLast(articulo);
-	lineaG1->getLineasEspecificas()->addLast(lineaEspecifica);
-
-
-
-	lineaEspecifica = (*listLineasEspecificas)[1];
-	articulo = (*listArticulos2)[0];
-	lineaEspecifica->getArticulos()->addLast(articulo);
-	lineaG1->getLineasEspecificas()->addLast(lineaEspecifica);
-
-
-
-	lineaEspecifica = (*listLineasEspecificas)[2];
-	articulo = (*listArticulos3)[0];
-	lineaEspecifica->getArticulos()->addLast(articulo);
-	articulo = (*listArticulos3)[1];
-	lineaEspecifica->getArticulos()->addLast(articulo);
-	lineaG1->getLineasEspecificas()->addLast(lineaEspecifica);
-
-	*/
-	this->lineasGenerales->addLast(lineaG1);
-
-/*
- *
-	string_vect lineaE2Abarrotes = {
-			"Cereales con fruta", "Lasagna y Gnochi", "Pastas Largas"
-	};
-
-	string_vect lineaE3Abarrotes = {
-			"Cigarros", "Puros", "Encendedores"
-	};
- *
- *
- * Bebidas Alcoholicas
-	string_vect lineasGeneralesAlcohol = {
-			"Cerveza", "Licores y Destilados", "Otros Vinos"
-	};
-
-
-	//	Comida Preparada
-	string_vect lineasGeneralesComidaPrep = {
-			"Postres", "Cafeteria", "Congelados"
-	};
-*/
-
-}
-
-ClinkedList<LineaEspecifica*>* Local::crearLineasEspecificas(string_vect nombres) {
-	ClinkedList<LineaEspecifica*>* lineasEspecificas = new ClinkedList<LineaEspecifica*>();
-
-	for(unsigned i = 0; i < nombres.size(); i++) {
-		LineaEspecifica* x = new LineaEspecifica(i, nombres[i]);
-		lineasEspecificas->addLast(x);
-	}
-
-	return lineasEspecificas;
-}
-
-ClinkedList<Articulo*>* Local::crearArticulos(string_vect nombres) {
-	ClinkedList<Articulo*>* listaArticulos = new ClinkedList<Articulo*>();
-
-	for (unsigned i = 0; i < nombres.size(); i++) {
-		Articulo* x = new Articulo(i, nombres[i]);
-		listaArticulos->addLast(x);
-	}
-
-	return listaArticulos;
+	delete this->categorias;
 }
 
 void Local::imprimirEstructura() {
@@ -162,6 +43,8 @@ void Local::imprimirEstructura() {
 	}
 
 }
+
+
 
 /*
  * 	Codigo en realidad es el indice de la posicion de la LineaGeneral en la lista
@@ -200,16 +83,8 @@ Articulo* Local::getArticulo(LineaEspecifica* lineaEspecifica, int codigo) {
 /*
  * 	Retorna una lista con las lineas generales de una categoria (pasillo)
  */
-ClinkedList<LineaGeneral*>* Local::getLineasGenerales(int categoria) {
-	ClinkedList<LineaGeneral*>* lineas = new ClinkedList<LineaGeneral*>();
-
-	for(unsigned i = 0; i < lineasGenerales->length(); i++) {
-		if((*lineasGenerales)[i]->getCodigo() == categoria) {
-			lineas->addLast((*lineasGenerales)[i]);
-		}
-	}
-
-	return lineas;
+const ClinkedList<LineaGeneral*>& Local::getLineasGenerales(int categoria) {
+	return &getCategoria(categoria)->getLineaGenerals();
 }
 
 const ClinkedList<LineaEspecifica*>& Local::getLineasEspecificas(LineaGeneral* lineaGeneral) {

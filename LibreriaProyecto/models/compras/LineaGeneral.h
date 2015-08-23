@@ -41,6 +41,7 @@ public:
 	LineaEspecifica* getLineaEspecifica(const std::string &) const;
 	bool agregarLineaEspecifica(LineaEspecifica*);
 	bool eliminar(int);
+	void imprimir();
 
 	friend std::istream& operator >>(std::istream& is, LineaGeneral& linea);
 	friend std::istream& operator >>(std::istream& is, LineaGeneral*& linea);

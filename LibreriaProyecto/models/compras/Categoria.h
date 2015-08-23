@@ -33,6 +33,7 @@ public:
 	LineaGeneral* buscarPorCodigo(int) const;
 	LineaGeneral* buscarPorNombre(const std::string&) const;
 	bool removerLineaGeneral(int);
+	void imprimir();
 
 	friend std::ostream& operator <<(std::ostream& os, const Categoria& linea);
 	friend std::ostream& operator <<(std::ostream& os, const Categoria* linea);

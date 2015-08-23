@@ -75,6 +75,15 @@ bool LineaEspecifica::removerArticulo(int codigo)
 		return a->getCodigo() == codigo; 
 	});
 }
+void LineaEspecifica::imprimir() {
+	std::iostream &os;
+	std::cout << "Linea Especifica " << codigo << ". " << nombre << std::endl;
+	std::cout << "Articulos: " << std::endl;
+	articulos.foreach([&os](Articulo* a) {
+		a->imprimir();
+	});
+}
+
 std::istream& operator >>(std::istream& is, LineaEspecifica& linea)
 {
 	//-----------Atrapar excepcion

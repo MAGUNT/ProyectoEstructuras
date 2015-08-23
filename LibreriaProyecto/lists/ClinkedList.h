@@ -14,7 +14,7 @@ class ClinkedList final
 
 private:
 	typedef void(ClinkedList<T,Func>::*AddNode)(Node<T>*, Node<T>*);
-
+	typedef const std::function<bool(const T&)>& Predicate;
 
 	unsigned size;
 	Node<T> *sentinel;

@@ -14,26 +14,26 @@
 #include "LineaGeneral.h"
 #include "LineaEspecifica.h"
 #include "Articulo.h"
+#include "Categoria.h"
 
 
 typedef std::vector<std::string> string_vect;
 
 class Local {
 private:
-	ClinkedList<LineaGeneral*>* lineasGenerales;
-	ClinkedList<LineaEspecifica*>* crearLineasEspecificas(string_vect nombres);
-	ClinkedList<Articulo*>* crearArticulos(string_vect nombres);
-	void armarLineas();
-	std::vector<std::string> categorias;
+	ClinkedList<Categoria*> categorias;
+
 public:
 	Local();
 	virtual ~Local();
 
-	const std::vector<std::string> getCategorias();
+	Categoria* getCategoria(int codigo);
 	LineaGeneral* getLineaGeneral(int codigo, int categoria);
 	LineaEspecifica* getLineaEspecifica(LineaGeneral* lineaGeneral, int codigo);
 	Articulo* getArticulo(LineaEspecifica* lineaEspecifica, int codigo);
-	ClinkedList<LineaGeneral*>* getLineasGenerales(int categoria);
+
+	const ClinkedList<Categoria*>& getCategorias();
+	const ClinkedList<LineaGeneral*>& getLineasGenerales(int categoria);
 	const ClinkedList<LineaEspecifica*>& getLineasEspecificas(LineaGeneral* lineaGeneral);
 	const ClinkedList<Articulo*>& getArticulos(LineaEspecifica* lineaEspecifica);
 	void imprimirEstructura();

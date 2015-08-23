@@ -38,6 +38,7 @@ public:
 	void setNombre(const std::string& nombre);
 	std::string getMarca() const;
 	void setMarca(const std::string& marca);
+	void imprimir();
 
 	// Esto es para uso del sistema de archivos
 	friend std::ostream& operator <<(std::ostream& os,  const Articulo& articulo) {
@@ -77,7 +78,7 @@ public:
 	}
 
 	friend bool operator<(const Articulo& x, const Articulo& y) {
-		return x.getCodigo() < y.getCodigo();
+		return x.getNombre() < y.getNombre();
 	}
 
 };

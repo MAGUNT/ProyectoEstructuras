@@ -268,9 +268,13 @@ LineaGeneral* InterfazGrafica::seleccionarLineaGeneral(int categoria) {
 	int opcion = 0;
 
 	std::cout << "Lineas Generales en esta categoria: " << std::endl;
-	for (unsigned i = 0; i < local.getLineasGenerales(categoria)->length(); i++) {
-		std::cout << i+1 << ". " << (*local.getLineasGenerales(categoria))[i]->getNombre() << std::endl;
-	}
+	std::cout << local.getLineasGenerales(categoria) << std::endl;
+
+//	MARKED FOR DELETION
+//	for (unsigned i = 0; i < local.getLineasGenerales(categoria)->length(); i++) {
+//		std::cout << i+1 << ". " << (*local.getLineasGenerales(categoria))[i]->getNombre() << std::endl;
+//	}
+
 	opcion = capturarOpcion();
 
 	return local.getLineaGeneral(opcion, categoria);
@@ -282,9 +286,13 @@ LineaEspecifica* InterfazGrafica::seleccionarLineaEspecifica(LineaGeneral* linea
 	int opcion = 0;
 
 	std::cout << "Lineas Especificas en esta Linea General: " << std::endl;
-	for(unsigned i = 0; i < lineaGeneral->getLineasEspecificas().length(); i++) {
-		std::cout << i+1 << ". " << (lineaGeneral->getLineasEspecificas())[i]->getNombre() << std::endl;
-	}
+	std::cout << lineaGeneral->getLineasEspecificas() << std::endl;
+
+//	MARKED FOR DELETION
+//	for(unsigned i = 0; i < lineaGeneral->getLineasEspecificas().length(); i++) {
+//		std::cout << i+1 << ". " << (lineaGeneral->getLineasEspecificas())[i]->getNombre() << std::endl;
+//	}
+
 	opcion = capturarOpcion();
 
 	return local.getLineaEspecifica(lineaGeneral, opcion);
@@ -294,9 +302,13 @@ Articulo* InterfazGrafica::seleccionarArticulo(LineaEspecifica* lineaEspecifica)
 	int opcion = 0;
 
 	std::cout << "Articulos en esta Linea Especifica: " << std::endl;
-	for(unsigned i = 0; i < lineaEspecifica->getArticulos().length(); i++) {
-		std::cout << i+1 << ". " << *(lineaEspecifica->getArticulos())[i] << std::endl;
-	}
+	std::cout << lineaEspecifica->getArticulos() << std::endl;
+
+//	MARKED FOR DELETION
+//	for(unsigned i = 0; i < lineaEspecifica->getArticulos().length(); i++) {
+//		std::cout << i+1 << ". " << *(lineaEspecifica->getArticulos())[i] << std::endl;
+//	}
+
 	opcion = capturarOpcion();
 
 	return local.getArticulo(lineaEspecifica, opcion);
@@ -365,28 +377,6 @@ void InterfazGrafica::ejecutarOpcionAdmin(int opcion) {
 }
 
 
-//	Misc.
-
-void InterfazGrafica::imprimirCarrito(Carrito* carrito) {
-	std::cout << "Carrito " << carrito->getNombre() << std::endl;
-	carrito->getProductos()->foreach(())
-}
-
-void InterfazGrafica::imprimirArticulo(Articulo* articulo) {
-
-}
-
-void InterfazGrafica::imprimirLineaGeneral(LineaGeneral* lineaGeneral) {
-
-}
-
-void InterfazGrafica::imprimirLineaEspecifica(LineaEspecifica) {
-
-}
-
-void InterfazGrafica::imprimirPedido(Pedido* pedido) {
-
-}
 
 
 
