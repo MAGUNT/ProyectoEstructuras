@@ -8,20 +8,25 @@ KeyRepository<Categoria> Repositorios::repoCategoria = new FileRepo<Categoria*>(
 KeyRepository<Usuario> Repositorios::repoUsuario = new FileRepo<Usuario*>("filesystem/usuarios/usuarios");
 Session Repositorios::session = Session();
 
-MultiRepo<Carrito> Repositorios::repoCompras({
-	nameComparator,
-	idUsuarioComparator,
-	cantidadComparator,
-	precioComparator
+MultiRepo<Carrito> Repositorios::repoCompras([](){
+
+	return new MultiplyList < Carrito* > {
+		Repositorios::nameComparator,
+		Repositorios::idUsuarioComparator,
+		Repositorios::cantidadComparator,
+		Repositorios::precioComparator
+	};
 }, 
 new FileRepo<Carrito*, MultiplyList<Carrito*>>("filesystem/usuarios/compras"));
-MultiRepo<Carrito> Repositorios::repoCarritos(
-{
-	nameComparator,
-	idUsuarioComparator,
-	cantidadComparator,
-	precioComparator
-}, 
+MultiRepo<Carrito> Repositorios::repoCarritos([](){
+
+	return new MultiplyList < Carrito* >{ 
+		Repositorios::nameComparator,
+		Repositorios::idUsuarioComparator,
+		Repositorios::cantidadComparator,
+		Repositorios::precioComparator
+	};
+},
 new FileRepo<Carrito*, MultiplyList<Carrito*>>("filesystem/usuarios/carritos"));
 
 int Repositorios::nameComparator(Carrito* p1, Carrito *p2)

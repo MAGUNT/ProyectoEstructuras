@@ -25,11 +25,12 @@ void GestorUsuarios::cerrarSession()
 }
 bool GestorUsuarios::crearUsuario(Usuario* usuario) const
 {
-	Repositorios::repoUsuario.addElement(usuario);
+	return Repositorios::repoUsuario.addElement(usuario);
 }
 
-bool GestorUsuarios::crearCarrito(Carrito* carrito) const
+void GestorUsuarios::crearCarrito(Carrito* carrito) const
 {
+
 	Repositorios::repoCarritos.addElement(carrito);
 }
 //cambiar por un enum
@@ -39,15 +40,17 @@ std::string GestorUsuarios::consultarCarritos( int criterio) const
 	Repositorios::repoCarritos.getAll().foreach([&os](Carrito *c)
 	{
 		os << "Nombre de usuario:" << Repositorios::repoUsuario.getElement(c->getIdUsuario())->getNombre()
-			<< "Id de usuario: " << c->getIdUsuario << "Carrito: " << c->getNombre()<<std::endl;
+			<< "Id de usuario: " << c->getIdUsuario() << "Carrito: " << c->getNombre()<<std::endl;
 
 	}, criterio);
+
+	return os.str();
 }
 std::string GestorUsuarios::consultarUsuarios() const
 {
 	return "";
 }
-bool GestorUsuarios::crearCompra(Carrito*carrito) const
+void GestorUsuarios::crearCompra(Carrito*carrito) const
 {
 	Repositorios::repoCompras.addElement(carrito);
 }

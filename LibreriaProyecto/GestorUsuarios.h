@@ -13,11 +13,11 @@ public:
 	Usuario* getUsuarioActual();
 	void cerrarSession();
 	bool crearUsuario(Usuario*) const ;
-	bool crearCarrito(Carrito*) const;
+	void crearCarrito(Carrito*) const;
 
 	std::string consultarCarritos(int criterio) const;
 	std::string consultarUsuarios() const;
-	bool crearCompra(Carrito*) const;
+	void crearCompra(Carrito*) const;
 	void imprimirCarritosPorCriterio() const;
 	void imprimirComprasPorCriterio() const;
 	MultiplyList<Carrito*>*getCarritosDeCliente(int idCliente) const;

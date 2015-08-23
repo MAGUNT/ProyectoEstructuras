@@ -12,7 +12,7 @@
 #include "repositorys\FileRepo.h"
 #include "repositorys\Repositorios.h"
 #include "models\compras\LineaEspecifica.h"
-
+#include "GestorUsuarios.h"
 
 using str = std::tuple < int, char, std::string >;
 
@@ -167,8 +167,14 @@ void pruebaListaCircular3(ClinkedList<Articulo*,F>* list)
 
 int main()
 {
-
+	GestorUsuarios e;
+	e.crearUsuario(new Usuario(1, "melvin", "43243", "porahi", "34243", Rol::CLIENTE));
+	e.crearCarrito(new Carrito(3, 1, "Compras de la abuela"));
 	
+	MultiplyList<Carrito*>* list= e.getCarritosDeCliente(1);
+
+	list->foreach([](Carrito* c){ std::cout << c; });
+	/*
 	MultiRepo<Articulo> fuck(
 	{
 		[](Articulo* a, Articulo *b){ return 2; }
@@ -177,7 +183,7 @@ int main()
 
 	fuck.addElement(new Articulo());
 	fuck.get([](Articulo*a){return a->getCodigo() == 0; });
-	
+	**/
 	/*
 
 

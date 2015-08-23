@@ -7,12 +7,13 @@ class MultiRepo
 {
 	public:
 	using init_list = std::initializer_list < typename MultiplyList<T*>::Comparator > ;
+	using MultiplyListFactory = std::function < MultiplyList<T*>*() > ;
 private:
-	MultiplyList<T*> elements;
+	MultiplyList<T*>* elements;
 	IRepo<T*, MultiplyList<T*>>* repo;
-	init_list cmp;
+	MultiplyListFactory factory;
 public:
-	MultiRepo(init_list list, IRepo<T*, MultiplyList<T*>>*);
+	MultiRepo(MultiplyListFactory, IRepo<T*, MultiplyList<T*>>*);
 	~MultiRepo();
 
 	const MultiplyList<T*>& getAll();
@@ -29,10 +30,10 @@ public:
 
 
 template<typename T>
-MultiRepo<T>::MultiRepo(init_list list, IRepo<T*, MultiplyList<T*>>* prepo)
-	: cmp(list), elements(MultiplyList<T*>(list)), repo(prepo)
+MultiRepo<T>::MultiRepo(MultiplyListFactory pfactory, IRepo<T*, MultiplyList<T*>>* prepo)
+	: factory(pfactory), elements(pfactory()), repo(prepo)
 {
-	prepo->readALL(elements, []( MultiplyList<T*> &list, T* e)
+	prepo->readALL(*elements, []( MultiplyList<T*> &list, T* e)
 	{
 		list.add(e);
 	});
@@ -40,28 +41,29 @@ MultiRepo<T>::MultiRepo(init_list list, IRepo<T*, MultiplyList<T*>>* prepo)
 template<typename T>
 MultiRepo<T>::~MultiRepo()
 {
-	elements.foreach([](T* e){delete e; });
+	elements->foreach([](T* e){delete e; });
 	delete repo;
 }
 template<typename T>
 const MultiplyList<T*>& MultiRepo<T>::getAll()
 {
-	return elements;
+	return *elements;
 }
 
 template<typename T>
 template<typename Predicate>
 MultiplyList<T*>* MultiRepo<T>::getALL(Predicate p)
 {
-	auto mutiL = new MultiplyList<T*>(cmp);
-	elements.foreach([&p, mutiL](T* e){if (p(e)) mutiL->add(e); });
+	auto mutiL = factory();
+	elements->foreach([&p, mutiL](T* e){if (p(e)) mutiL->add(e); });
+	return mutiL;
 }
 template<typename T>
 template<typename Predicate>
 T* MultiRepo<T>::get(Predicate p)
 {
 	T* element = nullptr;
-	elements.find(p, element);
+	elements->find(p, element);
 	return element;
 }
 template<typename T>
@@ -72,6 +74,6 @@ void MultiRepo<T>::saveALL()
 template<typename T>
 void MultiRepo<T>::addElement(T*e)
 {
-	elements.add(e);
+	elements->add(e);
 	repo->save(e);
 }
