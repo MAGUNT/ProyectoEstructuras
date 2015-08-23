@@ -14,7 +14,7 @@ class ClinkedList final
 
 private:
 	typedef void(ClinkedList<T,Func>::*AddNode)(Node<T>*, Node<T>*);
-
+	
 
 	unsigned size;
 	Node<T> *sentinel;

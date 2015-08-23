@@ -7,6 +7,7 @@
 
 #include "LineaGeneral.h"
 #include "../../repositorys/Repositorios.h"
+#include <iostream>
 
 LineaGeneral::LineaGeneral(int _codigo, std::string _nombre)
 	: codigo(_codigo), nombre(_nombre) , lineasEspecificas(ClinkedList<LineaEspecifica*>()){
@@ -64,6 +65,15 @@ bool LineaGeneral::eliminar(int codigo)
 	if (exito) delete output; 
 
 	return exito;
+}
+void LineaGeneral::imprimir() {
+	std::ostream &os;
+	std::cout << "LineaGeneral " << codigo << ". " << nombre << std::endl;
+	std::cout << "Lineas Especificas:" << std::endl;
+	this->lineasEspecificas.foreach([&os](LineaEspecifica* l) {
+		std::cout << l->getCodigo() << ". " << l->getNombre() << std::endl;
+	});
+
 }
 
 std::istream& operator >>(std::istream& is, LineaGeneral& linea)

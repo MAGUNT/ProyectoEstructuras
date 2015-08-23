@@ -1,5 +1,6 @@
 #include "Categoria.h"
 #include "../../repositorys/Repositorios.h"
+#include <iostream>
 
 Categoria::Categoria(int pcodigo, int ppasillo, std::string pnombre)
 	:codigo(pcodigo), pasillo(ppasillo), nombre(pnombre), lineasGenerales(ClinkedList<LineaGeneral*>()){}
@@ -67,6 +68,14 @@ bool Categoria::removerLineaGeneral(int codigo)
 	return lineasGenerales.remove([=](LineaGeneral* a)
 	{
 		return a->getCodigo() == codigo;
+	});
+}
+void Categoria::imprimir() {
+	std::ostream &os;
+	std::cout << "Categoria " << codigo << ". " << nombre << " en el pasillo " << pasillo << std::endl;
+	std::cout << "Lineas Generales" << std::endl;
+	this->lineasGenerales.foreach([&os](LineaGeneral* l) {
+		std::cout << l->getCodigo() << ". " << l->getNombre() << std::endl;
 	});
 }
 

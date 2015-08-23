@@ -33,6 +33,7 @@ public:
 	Articulo* buscarPorMarca(const std::string&) const;
 	Articulo* buscarPorNombre(const std::string&) const;
 	bool removerArticulo(int);
+	void imprimir();
 
 	friend std::ostream& operator <<(std::ostream& os, const LineaEspecifica& linea);
 	friend std::ostream& operator <<(std::ostream& os, const LineaEspecifica* linea);
