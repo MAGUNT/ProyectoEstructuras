@@ -65,11 +65,11 @@ std::ostream& operator <<(std::ostream& os, const Usuario& usuario)
 {
 	const char d = Usuario::delimiter;
 
-	return os << usuario.id 
-		<< d << usuario.nombre 
-		<< d << usuario.telefono 
-		<< d << usuario.direccion 
-		<< d << usuario.password 
+	return os << usuario.id
+		<< d << usuario.nombre
+		<< d << usuario.telefono
+		<< d << usuario.direccion
+		<< d << usuario.password
 		<< d << static_cast<char>(usuario.tipo);
 }
 std::ostream& operator <<(std::ostream& os, const Usuario* linea)

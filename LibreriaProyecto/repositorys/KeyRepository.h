@@ -22,6 +22,7 @@ public:
 	bool updateElement(int codigo, T* articuloNuevo);
 	bool addElement(T*);
 	T* getElement(int codigo) const;
+	ClinkedList<T*>* getElements();
 };
 
 
@@ -66,6 +67,7 @@ bool KeyRepository<T>::addElement(T* articulo)
 	if (added) repo->save(articulo);
 	return added;
 }
+
 template <typename T>
 T* KeyRepository<T>::getElement(int codigo) const{
 
@@ -74,6 +76,12 @@ T* KeyRepository<T>::getElement(int codigo) const{
 
 	return  element;
 }
+
+template <typename T>
+ClinkedList<T*>* KeyRepository<T>::getElements(){
+	return  elements;
+}
+
 template <typename T>
 std::function<bool(T*)> KeyRepository<T>::createSLambda(int codigo) const
 {

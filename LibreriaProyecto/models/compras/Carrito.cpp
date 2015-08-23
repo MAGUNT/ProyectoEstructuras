@@ -84,9 +84,9 @@ std::istream& operator >>(std::istream& is, Carrito& carrito)
 	//-----------Atrapar excepcion
 	std::string token;
 	getline(is, token, d);
-	carrito.id = std::stoi(token);
+	//carrito.id = std::stoi(token);
 	getline(is, token, d);
-	carrito.idUsuario = std::stoi(token);
+	//carrito.idUsuario = std::stoi(token);
 	//-----------Atrapar excepcion
 	getline(is, carrito.nombre, d);
 

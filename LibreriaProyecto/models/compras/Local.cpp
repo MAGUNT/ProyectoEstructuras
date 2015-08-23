@@ -10,7 +10,7 @@
 
 
 Local::Local() {
-	this->categorias = Repositorios::repoCategoria;
+	this->categorias = Repositorios::repoCategoria.getElements();
 }
 
 Local::~Local() {
