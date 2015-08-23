@@ -89,6 +89,7 @@ MultiplyList<T>::MultiplyList(std::initializer_list<Comparator> cmps)
 	unsigned index = 0;
 	for (const Comparator& e : cmps)
 		arrayCmp[index++] = e;
+	
 	resetSentinel();
 }
 

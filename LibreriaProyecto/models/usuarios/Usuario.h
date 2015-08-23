@@ -10,6 +10,7 @@ enum class Rol : char {
 
 class Usuario;
 
+
 std::istream& operator >>(std::istream& is, Usuario& linea);
 std::istream& operator >>(std::istream& is, Usuario*& linea);
 bool operator<(const Usuario& x, const Usuario& y);
@@ -48,5 +49,9 @@ public:
 	friend bool operator<(const Usuario& x, const Usuario& y);
 	friend std::ostream& operator <<(std::ostream& os, const Usuario& linea);
 	friend std::ostream& operator <<(std::ostream& os, const Usuario* linea);
+
+	friend class Session;
+	template <typename T>
+	friend class KeyRepository;
 };
 

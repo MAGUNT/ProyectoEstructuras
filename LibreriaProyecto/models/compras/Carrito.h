@@ -20,7 +20,7 @@ std::ostream& operator <<(std::ostream& os, const Carrito& linea);
 std::ostream& operator <<(std::ostream& os, const Carrito* linea);
 class Carrito {
 
-	int id;
+
 	int idUsuario;
 	ClinkedList<Pedido*> productos;
 	std::string nombre;
@@ -39,7 +39,9 @@ public:
 	Pedido* buscarPorCodigo(int) const;
 	Pedido* buscarPorMarca(const std::string&) const;
 	Pedido* buscarPorNombre(const std::string&) const;
-
+	
+	int getIdUsuario() const;
+	int getCantidad() const;
 	friend std::istream& operator >>(std::istream& is, Carrito& linea);
 	friend std::istream& operator >>(std::istream& is, Carrito*& linea);
 	friend bool operator<(const Carrito& x, const Carrito& y);

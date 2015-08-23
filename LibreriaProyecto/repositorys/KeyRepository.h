@@ -24,6 +24,8 @@ public:
 	bool deleteElement(int codigo);
 	bool updateElement(int codigo, T* articuloNuevo);
 	bool addElement(T*);
+	template<typename Predicate>
+	T* find(Predicate pre);
 	T* getElement(int codigo) const;
 	ClinkedList<T*>* getElements();
 };
@@ -103,5 +105,13 @@ KeyRepository<T>& KeyRepository<T>::saveUpdates()
 {
 	repo->update(*elements);
 	return *this;
+}
+template <typename T>
+template<typename Predicate>
+T* KeyRepository<T>::find(Predicate pre)
+{
+	T* element = nullptr;
+	elements->find(pre, element);
+	return element;
 }
 

@@ -12,7 +12,6 @@
 #include "repositorys\FileRepo.h"
 #include "repositorys\Repositorios.h"
 #include "models\compras\LineaEspecifica.h"
-#include "MultiRepo.h"
 
 
 using str = std::tuple < int, char, std::string >;
@@ -211,6 +210,7 @@ int main()
 	};
 	articulos.update(lista);
 	*/
+//	MultiplyList<Carrito*> carrito = Repositorios::getCarritosCriterio();
 	
 	system("pause");
 }

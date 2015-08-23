@@ -16,7 +16,7 @@ Carrito::Carrito(std::string _nombre) : Carrito(0,0, _nombre)
 	  {
 }
 Carrito::Carrito(int pid, int pidUsuario, std::string _nombre)
-	:id(pid), idUsuario(pidUsuario), nombre(_nombre), productos(ClinkedList<Pedido*>())
+	:idUsuario(pidUsuario), nombre(_nombre), productos(ClinkedList<Pedido*>())
 {
 
 }
@@ -84,9 +84,7 @@ std::istream& operator >>(std::istream& is, Carrito& carrito)
 	//-----------Atrapar excepcion
 	std::string token;
 	getline(is, token, d);
-	//carrito.id = std::stoi(token);
-	getline(is, token, d);
-	//carrito.idUsuario = std::stoi(token);
+	carrito.idUsuario = std::stoi(token);
 	//-----------Atrapar excepcion
 	getline(is, carrito.nombre, d);
 
@@ -109,8 +107,7 @@ std::ostream& operator <<(std::ostream& os, const Carrito& carrito)
 {
 	const char d = Carrito::delimiter;
 
-	 os << carrito.id << d
-		<< carrito.idUsuario << d
+	 os << carrito.idUsuario << d
 		<< carrito.nombre << d;
 
 	 carrito.productos.foreach([&os](Pedido* p){ os << " " << p; });
@@ -120,4 +117,14 @@ std::ostream& operator <<(std::ostream& os, const Carrito& carrito)
 std::ostream& operator <<(std::ostream& os, const Carrito* linea)
 {
 	return os << *linea;
+}
+
+int Carrito::getIdUsuario() const
+{
+	return idUsuario;
+}
+
+int Carrito::getCantidad() const
+{
+	return productos.length();
 }

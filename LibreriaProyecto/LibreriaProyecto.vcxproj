@@ -83,9 +83,10 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GestorUsuarios.h" />
     <ClInclude Include="models\compras\Categoria.h" />
     <ClInclude Include="models\usuarios\Usuario.h" />
-    <ClInclude Include="MultiRepo.h" />
+    <ClInclude Include="repositorys\MultiRepo.h" />
     <ClInclude Include="repositorys\KeyRepository.h" />
     <ClInclude Include="repositorys\Repositorios.h" />
     <ClInclude Include="repositorys\IRepo.h" />
@@ -98,12 +99,14 @@
     <ClInclude Include="models\compras\LineaEspecifica.h" />
     <ClInclude Include="models\compras\LineaGeneral.h" />
     <ClInclude Include="models\compras\Pedido.h" />
+    <ClInclude Include="repositorys\Session.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="utils\Comparators.h" />
     <ClInclude Include="utils\MultiNode.h" />
     <ClInclude Include="utils\Node.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GestorUsuarios.cpp" />
     <ClCompile Include="models\compras\Categoria.cpp" />
     <ClCompile Include="LibreriaProyecto.cpp" />
     <ClCompile Include="models\compras\Articulo.cpp" />
@@ -113,6 +116,7 @@
     <ClCompile Include="models\compras\Pedido.cpp" />
     <ClCompile Include="repositorys\Repositorios.cpp" />
     <ClCompile Include="models\usuarios\Usuario.cpp" />
+    <ClCompile Include="repositorys\Session.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,6 +1,6 @@
 #pragma once
-#include "lists\MultiplyList.h"
-#include "repositorys\IRepo.h"
+#include "..\lists\MultiplyList.h"
+#include "IRepo.h"
 
 template <typename T>
 class MultiRepo
@@ -32,7 +32,10 @@ template<typename T>
 MultiRepo<T>::MultiRepo(init_list list, IRepo<T*, MultiplyList<T*>>* prepo)
 	: cmp(list), elements(MultiplyList<T*>(list)), repo(prepo)
 {
-
+	prepo->readALL(elements, []( MultiplyList<T*> &list, T* e)
+	{
+		list.add(e);
+	});
 }
 template<typename T>
 MultiRepo<T>::~MultiRepo()
