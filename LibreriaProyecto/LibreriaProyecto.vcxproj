@@ -84,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="models\compras\Categoria.h" />
+    <ClInclude Include="models\compras\Local.h" />
     <ClInclude Include="models\usuarios\Usuario.h" />
     <ClInclude Include="repositorys\KeyRepository.h" />
     <ClInclude Include="repositorys\Repositorios.h" />
@@ -96,7 +97,6 @@
     <ClInclude Include="models\compras\Carrito.h" />
     <ClInclude Include="models\compras\LineaEspecifica.h" />
     <ClInclude Include="models\compras\LineaGeneral.h" />
-    <ClInclude Include="models\compras\Local.h" />
     <ClInclude Include="models\compras\Pedido.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="tests\UITest.h" />
@@ -115,9 +115,9 @@
     <ClCompile Include="models\compras\Local.cpp" />
     <ClCompile Include="models\compras\Pedido.cpp" />
     <ClCompile Include="repositorys\Repositorios.cpp" />
+    <ClCompile Include="models\usuarios\Usuario.cpp" />
     <ClCompile Include="tests\UITest.cpp" />
     <ClCompile Include="ui\InterfazGrafica.cpp" />
-    <ClCompile Include="models\usuarios\Usuario.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

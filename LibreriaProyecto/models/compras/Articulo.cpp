@@ -50,7 +50,6 @@ void Articulo::setMarca(const std::string& marca) {
 }
 
 void Articulo::imprimir() {
-	std::ostream &os;
 	std::cout << "Articulo " << codigo << ". " << nombre <<
 			", " << marca << " CRC" << precio << std::endl;
 }

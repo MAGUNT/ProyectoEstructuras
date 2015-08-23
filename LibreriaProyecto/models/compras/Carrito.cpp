@@ -7,15 +7,23 @@
 
 #include <iostream>
 #include "Carrito.h"
-
+#include "../../repositorys/Repositorios.h"
 Carrito::Carrito() 
 	: Carrito("")  {
 }
 
-Carrito::Carrito(std::string _nombre) 
-	: nombre(_nombre), productos(ClinkedList<Pedido*>())  {
+Carrito::Carrito(std::string _nombre) : Carrito(0,0, _nombre)
+	  {
 }
+Carrito::Carrito(int pid, int pidUsuario, std::string _nombre)
+	:id(pid), idUsuario(pidUsuario), nombre(_nombre), productos(ClinkedList<Pedido*>())
+{
 
+}
+Carrito::~Carrito()
+{
+	productos.foreach([](Pedido* p){delete p; });
+}
 const std::string& Carrito::getNombre() const {
 	return nombre;
 }
@@ -68,3 +76,48 @@ Pedido* Carrito::buscarPorNombre(const std::string& nombre) const
 	return p;
 }
 
+
+
+std::istream& operator >>(std::istream& is, Carrito& carrito)
+{
+	const char d = Carrito::delimiter;
+	//-----------Atrapar excepcion
+	std::string token;
+	getline(is, token, d);
+	carrito.id = std::stoi(token);
+	getline(is, token, d);
+	carrito.idUsuario = std::stoi(token);
+	//-----------Atrapar excepcion
+	getline(is, carrito.nombre, d);
+
+	Pedido *pedido;
+	while (is >> pedido)
+		carrito.productos.addLast(pedido);
+	
+	return is;
+}
+std::istream& operator >>(std::istream& is, Carrito*& carrito)
+{
+	carrito = new Carrito();
+	return is >> *carrito;
+}
+bool operator<(const Carrito& x, const Carrito& y)
+{
+	return x.nombre < y.nombre;
+}
+std::ostream& operator <<(std::ostream& os, const Carrito& carrito)
+{
+	const char d = Carrito::delimiter;
+
+	 os << carrito.id << d
+		<< carrito.idUsuario << d
+		<< carrito.nombre << d;
+
+	 carrito.productos.foreach([&os](Pedido* p){ os << " " << p; });
+
+	 return os;
+}
+std::ostream& operator <<(std::ostream& os, const Carrito* linea)
+{
+	return os << *linea;
+}

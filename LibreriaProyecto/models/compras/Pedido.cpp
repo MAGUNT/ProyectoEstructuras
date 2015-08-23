@@ -8,8 +8,10 @@
 #include "Pedido.h"
 #include <iostream>
 #include <typeinfo>
+#include "../../repositorys/Repositorios.h"
 
 Pedido::Pedido(Articulo* _articulo, int _cantidad): articulo(_articulo), cantidad(_cantidad) {}
+Pedido::Pedido(): Pedido(nullptr, 0){}
 
 
 const Articulo* Pedido::getArticulo() const {
@@ -30,4 +32,35 @@ void Pedido::setCantidad(int cantidad) {
 
 long double Pedido::precio() const {
 	return articulo->getPrecio() * cantidad;
+}
+
+std::istream& operator >>(std::istream& is, Pedido& linea)
+{
+	int codigo, cantidad;
+	if (is >> codigo >> cantidad)
+	{
+		Articulo* articulo = Repositorios::repoArticulo.getElement(codigo);
+		linea.cantidad = cantidad;
+		linea.articulo = articulo;
+	}
+	return is;
+}
+std::istream& operator >>(std::istream& is, Pedido*& linea)
+{
+	Pedido p;
+	if (is >> p)
+	{
+		linea = new Pedido();
+		*linea = p;
+	}
+	return is;
+}
+bool operator<(const Pedido& x, const Pedido& y)
+{
+	return x.articulo < y.articulo;
+}
+std::ostream& operator <<(std::ostream& os, const Pedido& linea)
+{
+	
+	return os << linea.articulo->getCodigo() << " " << linea.cantidad;
 }

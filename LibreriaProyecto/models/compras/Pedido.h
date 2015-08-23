@@ -12,7 +12,11 @@
 #include "../../lists/ClinkedList.h"
 #include "Articulo.h"
 
-
+class Pedido;
+std::istream& operator >>(std::istream& is, Pedido& linea);
+bool operator<(const Pedido& x, const Pedido& y);
+std::ostream& operator <<(std::ostream& os, const Pedido& linea);
+std::istream& operator >>(std::istream& is, Pedido*& linea);
 class Pedido {
 
 private:
@@ -21,11 +25,17 @@ private:
 
 public:
 	Pedido(Articulo* _articulo, int _cantidad);
+	Pedido();
 	const Articulo* getArticulo() const;
 	void setArticulo(Articulo* articulo);
 	int getCantidad() const;
 	void setCantidad(int cantidad);
 	long double precio() const;
+
+	friend std::istream& operator >>(std::istream& is, Pedido& linea);
+	friend bool operator<(const Pedido& x, const Pedido& y);
+	friend std::ostream& operator <<(std::ostream& os, const Pedido& linea);
+	friend std::istream& operator >>(std::istream& is, Pedido*& linea);
 };
 
 
