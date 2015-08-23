@@ -25,6 +25,7 @@ private:
 
 public:
 	Articulo();
+	//	Porque const?????? esas propiedades son modificables
 	Articulo(int _codigo, const std::string& _nombre); 
 	Articulo(int _codigo, const std::string& _nombre, 
 		const std::string& _marca, long double _precio);

@@ -27,11 +27,14 @@ class InterfazGrafica {
 	// 	Metodos Miscelaneos
 	int capturarOpcion();
 	void mostrarMenu(string_vect menu);
+	void verArticulos();
+	void mostrarCategorias();
+	void mostrarLineasGenerales(const ClinkedList<LineaGeneral*>* lgs);
+	void mostrarLineasEspecificas(const ClinkedList<LineaEspecifica*>* les);
+	void mostrarArticulos(const ClinkedList<Articulo*>* as);
 
 	//	Metodos para Cliente
 	void ejecutarOpcionCliente(int opcion);
-	void verArticulos();
-	void mostrarCategorias();
 	void comprar();
 	void comprarArticulo(Articulo* articulo);
 	void mostrarCarritos();
@@ -49,6 +52,9 @@ class InterfazGrafica {
 
 	//	Metodos para Admin
 	void ejecutarOpcionAdmin(int opcion);
+	void verTodosArticulos();
+	void agregarArticulo();
+	void modificarArticulo();
 
 
 public:

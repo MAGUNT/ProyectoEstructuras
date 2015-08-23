@@ -70,6 +70,47 @@ void InterfazGrafica::mostrarMenu(string_vect menu) {
 	std::cout << " " << std::endl;
 }
 
+void InterfazGrafica::verArticulos() {
+	local.imprimirEstructura();
+}
+
+void InterfazGrafica::mostrarCategorias() {
+	local.getCategorias().foreach([](Categoria* c) {
+		c->imprimir();
+	});
+}
+
+void InterfazGrafica::mostrarLineasGenerales(const ClinkedList<LineaGeneral*>* lgs) {
+	if(lgs != nullptr) {
+		lgs->foreach([](LineaGeneral* lg) {
+			lg->imprimir();
+		});
+	} else {
+		std::cout << "{InterfazGrafica::mostrarLineasGenerales} lista vacia" << std::endl;
+	}
+
+}
+
+void InterfazGrafica::mostrarLineasEspecificas(const ClinkedList<LineaEspecifica*>* les) {
+	if(les != nullptr) {
+		les->foreach([](LineaEspecifica* le) {
+			le->imprimir();
+		});
+	} else {
+		std::cout << "{InterfazGrafica::mostrarLineasEspecificas} lista vacia" << std::endl;
+	}
+}
+
+void InterfazGrafica::mostrarArticulos(const ClinkedList<Articulo*>* as) {
+	if(as != nullptr) {
+		as->foreach([](Articulo* a) {
+			a->imprimir();
+		});
+	} else {
+		std::cout << "{InterfazGrafica::mostrarArticulos} lista vacia" << std::endl;
+	}
+}
+
 //	Metodos Clientes
 
 void InterfazGrafica::ejecutarOpcionCliente(int opcion) {
@@ -109,10 +150,6 @@ void InterfazGrafica::ejecutarOpcionCliente(int opcion) {
 	inicializar();
 }
 
-void InterfazGrafica::verArticulos() {
-	local.imprimirEstructura();
-}
-
 void InterfazGrafica::comprar() {
 	Categoria* categoria = seleccionarCategoria();
 
@@ -124,7 +161,7 @@ void InterfazGrafica::comprar() {
 			if(lineaE != nullptr) {
 				std::cout << "Linea Especifica seleccionada: " << lineaE->getNombre() << std::endl;
 				Articulo* articulo = seleccionarArticulo(lineaE);
-				if(articulo != 0) {
+				if(articulo != nullptr) {
 					comprarArticulo(articulo);
 				}else {
 					std::cout << "****Linea Especifica invalida****" << std::endl;
@@ -149,18 +186,19 @@ void InterfazGrafica::comprarArticulo(Articulo* articulo) {
 	std::cout << "Comprar este articulo? 1. Si / 2. No" << std::endl;
 
 	opcion = capturarOpcion();
-	if(opcion == 1 || opcion == 0) {
+	if(opcion == 1) {
 		if(opcion == 1) {
 			std::cout << "Introduzca la cantidad que desea de este producto" << std::endl;
 			cantidad = capturarOpcion();
-			if(cantidad == 1) {
-				// getCarrito()
-				carrito->agregarArticulo(articulo, cantidad);
+			if(cantidad < 1) {
+				Carrito* carr = getCarrito();
+				carr->agregarArticulo(articulo, cantidad);
 				std::cout << cantidad << " " << articulo->getNombre() <<
-						" agregado a " << carrito->getNombre() << std::endl;
-			} else if(cantidad == 2) {
-				std::cout << "Volviendo al menu inicial" << std::endl;
+						" agregado a " << carr->getNombre() << std::endl;
+
 			}
+		} else {
+			std::cout << "Volviendo al menu inicial" << std::endl;
 		}
 	} else {
 		std::cout << "Opcion invalida" << std::endl;
@@ -180,7 +218,7 @@ Carrito* InterfazGrafica::getCarrito() {
 		return nuevoCarrito;
 	} else if(opcion == 2){
 		std::cout << "Mis carritos:" << std::endl;
-		//Imprimir carritos y elejir el fucking carrito
+		//Imprimir carritos y elegir el fucking carrito
 		// return carrito;
 	}
 
@@ -217,7 +255,7 @@ void InterfazGrafica::modificarCarrito() {
  * 	Este metodo debe interactuar con el usuario directamente
  */
 void InterfazGrafica::mostrarCarritos() {
-	
+
 	/*
 	for(unsigned i = 0; i < carrito->getProductos()->length(); i++) {
 		std::cout << (*carrito->getProductos())[i]->getCantidad() <<
@@ -242,11 +280,6 @@ void InterfazGrafica::inicializar() {
 	this->ejecutarOpcionCliente(opcion);
 }
 
-void InterfazGrafica::mostrarCategorias() {
-	local.getCategorias().foreach([](Categoria* c) {
-		c->imprimir();
-	});
-}
 
 Categoria* InterfazGrafica::seleccionarCategoria() {
 	int categoria = 0;
@@ -266,10 +299,7 @@ LineaGeneral* InterfazGrafica::seleccionarLineaGeneral(int categoria) {
 	int opcion = 0;
 
 	std::cout << "Lineas Generales en esta categoria: " << std::endl;
-	local.getLineasGenerales(categoria).foreach([](LineaGeneral* lg) {
-		lg->imprimir();
-	});
-
+	mostrarLineasGenerales(&local.getLineasGenerales(categoria));
 	opcion = capturarOpcion();
 
 	return &local.getLineaGeneral(opcion, categoria);
@@ -279,9 +309,7 @@ LineaEspecifica* InterfazGrafica::seleccionarLineaEspecifica(LineaGeneral* linea
 	int opcion = 0;
 
 	std::cout << "Lineas Especificas en esta Linea General: " << std::endl;
-	local.getLineasEspecificas(lineaGeneral).foreach([](LineaEspecifica* le) {
-		le->imprimir();
-	});
+	mostrarLineasEspecificas(&local.getLineasEspecificas(lineaGeneral));
 
 	opcion = capturarOpcion();
 
@@ -292,9 +320,7 @@ Articulo* InterfazGrafica::seleccionarArticulo(LineaEspecifica* lineaEspecifica)
 	int opcion = 0;
 
 	std::cout << "Articulos en esta Linea Especifica: " << std::endl;
-	local.getArticulos(lineaEspecifica).foreach([](Articulo* a) {
-		a->imprimir();
-	});
+	mostrarArticulos(&local.getArticulos(lineaEspecifica));
 	opcion = capturarOpcion();
 
 	return &local.getArticulo(lineaEspecifica, opcion);
@@ -322,6 +348,7 @@ void InterfazGrafica::ejecutarOpcionDependiente(int opcion) {
 
 void InterfazGrafica::entregarCarrito() {
 	std::cout << "Elija el carrito que desea entregar" << std::endl;
+
 	/*
 	 *  Mostrar pedidos pendientes.
 	 */
@@ -357,10 +384,65 @@ void InterfazGrafica::ejecutarOpcionAdmin(int opcion) {
 			std::cout << "----->Opcion invalida. Volviendo al menu inicial" << std::endl;
 			break;
 	}
-
-
-
 }
+
+void InterfazGrafica::verTodosArticulos() {
+	std::cout << "Todos los articulos disponibles: " << std::endl;
+	local.getCategorias().foreach([](Categoria* c) {
+		c->getLineaGenerals().foreach([](LineaGeneral* lg) {
+			lg->getLineasEspecificas().foreach([](LineaEspecifica* le) {
+				le->getArticulos().foreach([](Articulo* a) {
+					a->imprimir();
+				});
+			});
+		});
+	});
+}
+
+void InterfazGrafica::agregarArticulo() {
+	Categoria* categoria = 0;
+	LineaGeneral* lineaG = 0;
+	LineaEspecifica* lineaE = 0;
+	int codigo = 0;
+	long double precio = 0.0;
+	std::string nombre;
+	std::string marca;
+
+	std::cout << "Seleccione la categoria donde va a agregar el articulo" << std::endl;
+	mostrarCategorias();
+	categoria = &local.getCategoria(capturarOpcion());
+
+	std::cout << "Seleccione la linea general donde va a agregar el articulo" << std::endl;
+	mostrarLineasGenerales(&local.getLineasGenerales(categoria->getCodigo()));
+	lineaG = &local.getLineaGeneral(capturarOpcion(), categoria->getCodigo());
+
+	std::cout << "Seleccione la linea especifica donde va a agregar el articulo" << std::endl;
+	mostrarLineasEspecificas(&local.getLineasEspecificas(lineaG));
+	lineaE = &local.getLineaEspecifica(lineaG, capturarOpcion());
+
+	//	El Codigo no deberia generarse solo?
+	std::cout << "Ingrese el codigo del nuevo articulo" << std::endl;
+	codigo = capturarOpcion();
+	std::cout << "Ingrese el nombre del nuevo articulo" << std::endl;
+	std::cin >> nombre;
+	std::cout << "Ingrese la marca del nuevo articulo" << std::endl;
+	std::cin >> marca;
+	std::cout << "Ingrese el precio " << std::endl;
+	precio = (double) capturarOpcion();
+
+	std::cout << "Agregando articulo" << std::endl;
+	lineaE->agregarArticulo(new Articulo(codigo, nombre, marca, precio));
+}
+
+void InterfazGrafica::modificarArticulo() {
+	int opcion = 0;
+	Articulo* articulo = 0;
+	std::cout << "Elija el articulo que desea modificar" << std::endl;
+	verTodosArticulos();
+	opcion = capturarOpcion();
+	//articulo = local.getArticulo
+}
+
 
 
 

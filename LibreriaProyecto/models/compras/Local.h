@@ -30,6 +30,7 @@ public:
 	Categoria& getCategoria(int codigo);
 	LineaGeneral& getLineaGeneral(int codigo, int categoria);
 	LineaEspecifica& getLineaEspecifica(LineaGeneral* lineaGeneral, int codigo);
+	Articulo& getArticulo(int codigo);
 	Articulo& getArticulo(LineaEspecifica* lineaEspecifica, int codigo);
 
 	const ClinkedList<Categoria*>& getCategorias();

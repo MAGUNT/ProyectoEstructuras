@@ -63,6 +63,12 @@ LineaEspecifica& Local::getLineaEspecifica(LineaGeneral* lineaGeneral, int codig
 	return nullptr;
 }
 
+Articulo& Local::getArticulo(int codigo) {
+
+
+	return 0;
+}
+
 Articulo& Local::getArticulo(LineaEspecifica* lineaEspecifica, int codigo) {
 	ClinkedList<Articulo*> articulos = getArticulos(lineaEspecifica);
 
