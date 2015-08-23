@@ -76,10 +76,9 @@ bool LineaEspecifica::removerArticulo(int codigo)
 	});
 }
 void LineaEspecifica::imprimir() {
-	std::iostream &os;
 	std::cout << "Linea Especifica " << codigo << ". " << nombre << std::endl;
 	std::cout << "Articulos: " << std::endl;
-	articulos.foreach([&os](Articulo* a) {
+	articulos.foreach([](Articulo* a) {
 		a->imprimir();
 	});
 }
@@ -89,7 +88,7 @@ std::istream& operator >>(std::istream& is, LineaEspecifica& linea)
 	//-----------Atrapar excepcion
 	std::string token;
 	getline(is, token, LineaEspecifica::delimiter);
-	linea.codigo = std::stoi(token);
+	//linea.codigo = std::stoi(token);
 	getline(is, linea.nombre,LineaEspecifica::delimiter);
 	//-----------Atrapar excepcion
 	int codigo = 0;

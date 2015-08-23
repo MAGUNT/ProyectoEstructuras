@@ -67,10 +67,9 @@ bool LineaGeneral::eliminar(int codigo)
 	return exito;
 }
 void LineaGeneral::imprimir() {
-	std::ostream &os;
 	std::cout << "LineaGeneral " << codigo << ". " << nombre << std::endl;
 	std::cout << "Lineas Especificas:" << std::endl;
-	this->lineasEspecificas.foreach([&os](LineaEspecifica* l) {
+	this->lineasEspecificas.foreach([](LineaEspecifica* l) {
 		std::cout << l->getCodigo() << ". " << l->getNombre() << std::endl;
 	});
 
@@ -83,7 +82,7 @@ std::istream& operator >>(std::istream& is, LineaGeneral& linea)
 	//-----------Atrapar excepcion
 	std::string token;
 	getline(is, token, d);
-	linea.codigo = std::stoi(token);
+	//linea.codigo = std::stoi(token);
 	getline(is, linea.nombre, d);
 	//-----------Atrapar excepcion
 	

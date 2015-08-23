@@ -38,7 +38,7 @@ class InterfazGrafica {
 	void pagarCarrito();
 	Carrito* getCarrito();
 	void modificarCarrito();
-	int seleccionarCategoria();
+	Categoria* seleccionarCategoria();
 	LineaGeneral* seleccionarLineaGeneral(int categoria);
 	LineaEspecifica* seleccionarLineaEspecifica(LineaGeneral* lineaGeneral);
 	Articulo* seleccionarArticulo(LineaEspecifica* lineaEspecifica);

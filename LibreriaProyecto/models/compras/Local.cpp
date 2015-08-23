@@ -18,73 +18,66 @@ Local::~Local() {
 }
 
 void Local::imprimirEstructura() {
-	LineaGeneral* lineaGeneralTemp = 0;
-	LineaEspecifica* lineaEspecificaTemp = 0;
-	Articulo* articuloTemp = 0;
+	std::ostream os;
 
-	std::cout << "Lineas Generales = {" << std::endl;
-	for (unsigned i = 0; i < this->lineasGenerales->length(); i++) {
-		lineaGeneralTemp = (*lineasGenerales)[i];
-		std::cout << "	*Categoria " << this->categorias[i] << "*:  " << lineaGeneralTemp->getNombre() << " = { " << std::endl;
+	categorias.foreach([os](Categoria* c) {
+		os << c->getCodigo() << ". " << c->getNombre() << " [";
+		c->getLineaGenerals().foreach([os](LineaGeneral* lg) {
+			os<< "   " << lg->getCodigo() << ". " << lg->getNombre();
+			lg->getLineasEspecificas().foreach([os](LineaEspecifica* le) {
+				os << "      " << lg->getCodigo() << ". " << lg->getNombre();
+				le->getArticulos().foreach([os](Articulo* a) {
+					os << "          " << a->getCodigo() << ". " << a->getNombre();
+				});
+			});
+		});
+		os << "]";
+	});
+}
 
-		for (unsigned j = 0; j < lineaGeneralTemp->getLineasEspecificas().length(); ++j) 
-		{
-			lineaEspecificaTemp = (lineaGeneralTemp->getLineasEspecificas())[j];
-			std::cout << "		" << lineaEspecificaTemp->getNombre() << " = { " << std::endl;
+Categoria& Local::getCategoria(int codigo) {
+	return categorias[codigo];
+}
 
-			for (unsigned k = 0; k < lineaEspecificaTemp->getArticulos().length(); ++k) 
-			{
-				articuloTemp = (lineaEspecificaTemp->getArticulos())[k];
-				std::cout << "			" << *articuloTemp << std::endl;
-			}
-			std::cout << "		}" << std::endl;
+LineaGeneral& Local::getLineaGeneral(int codigo, int categoria) {
+	ClinkedList<LineaGeneral*> lineas = getLineasGenerales(categoria);
+
+	lineas.foreach([](LineaGeneral* l) {
+		if(l->getCodigo() == codigo) {
+			return l;
 		}
-		std::cout << "	}" << std::endl;
-	}
+	});
+
+	return nullptr;
+}
+
+LineaEspecifica& Local::getLineaEspecifica(LineaGeneral* lineaGeneral, int codigo) {
+	ClinkedList<LineaEspecifica*> lineas = getLineasEspecificas(lineaGeneral);
+
+	lineas.foreach([](LineaEspecifica* l) {
+		if(l->getCodigo() == codigo) {
+			return l;
+		}
+	});
+
+	return nullptr;
+}
+
+Articulo& Local::getArticulo(LineaEspecifica* lineaEspecifica, int codigo) {
+	ClinkedList<Articulo*> articulos = getArticulos(lineaEspecifica);
+
+	articulos.foreach([](Articulo* a) {
+		if(a->getCodigo() == codigo) {
+			return a;
+		}
+	});
+
+	return nullptr;
 
 }
 
-
-
-/*
- * 	Codigo en realidad es el indice de la posicion de la LineaGeneral en la lista
- */
-LineaGeneral* Local::getLineaGeneral(int codigo, int categoria) {
-	ClinkedList<LineaGeneral*>* lineas = getLineasGenerales(categoria);
-
-
-	if(codigo > 0 && codigo <= lineas->length()) {
-		return (*lineasGenerales)[codigo-1];
-	} else {
-		return 0;
-	}
-}
-
-/*
- * 	Codigo en realidad es el indice de la posicion de la LineaEspecifica en la lista
- */
-LineaEspecifica* Local::getLineaEspecifica(LineaGeneral* lineaGeneral, int codigo) {
-	if(codigo > 0 && codigo <= lineaGeneral->getLineasEspecificas().length()) {
-		return (lineaGeneral->getLineasEspecificas())[codigo-1];
-	} else {
-		return 0;
-	}
-}
-
-Articulo* Local::getArticulo(LineaEspecifica* lineaEspecifica, int codigo) {
-	if(codigo > 0 && codigo <= lineaEspecifica->getArticulos().length()) {
-		return (lineaEspecifica->getArticulos())[codigo-1];
-	} else {
-		return 0;
-	}
-
-}
-
-/*
- * 	Retorna una lista con las lineas generales de una categoria (pasillo)
- */
 const ClinkedList<LineaGeneral*>& Local::getLineasGenerales(int categoria) {
-	return &getCategoria(categoria)->getLineaGenerals();
+	return &getCategoria(categoria).getLineaGenerals();
 }
 
 const ClinkedList<LineaEspecifica*>& Local::getLineasEspecificas(LineaGeneral* lineaGeneral) {
