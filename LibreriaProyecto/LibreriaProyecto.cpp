@@ -144,8 +144,8 @@ template<typename F>
 void pruebaListaCircular2(ClinkedList<Articulo*, F>* lista)
 {
 
-	for (int i = 0; i < 20; ++i)
-		lista->addDescendent(new Articulo(i, std::to_string(i)));
+//	for (int i = 0; i < 20; ++i)
+//		lista->addDescendent(new Articulo(i, std::to_string(i)));
 
 	bool existe = lista->addDescendent(new Articulo(10, "20"));
 

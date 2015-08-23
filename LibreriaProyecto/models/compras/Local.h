@@ -27,10 +27,10 @@ public:
 	Local();
 	virtual ~Local();
 
-	Categoria* getCategoria(int codigo);
-	LineaGeneral* getLineaGeneral(int codigo, int categoria);
-	LineaEspecifica* getLineaEspecifica(LineaGeneral* lineaGeneral, int codigo);
-	Articulo* getArticulo(LineaEspecifica* lineaEspecifica, int codigo);
+	Categoria& getCategoria(int codigo);
+	LineaGeneral& getLineaGeneral(int codigo, int categoria);
+	LineaEspecifica& getLineaEspecifica(LineaGeneral* lineaGeneral, int codigo);
+	Articulo& getArticulo(LineaEspecifica* lineaEspecifica, int codigo);
 
 	const ClinkedList<Categoria*>& getCategorias();
 	const ClinkedList<LineaGeneral*>& getLineasGenerales(int categoria);

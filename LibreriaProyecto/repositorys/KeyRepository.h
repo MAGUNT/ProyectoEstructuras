@@ -2,6 +2,7 @@
 
 #include "../lists/ClinkedList.h"
 #include "IRepo.h"
+#include "../models/compras/Articulo.h"
 
 template <typename T>
 class KeyRepository {
