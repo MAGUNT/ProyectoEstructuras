@@ -21,13 +21,8 @@ public:
 	static MultiRepo<Carrito> repoCompras;
     static MultiRepo<Carrito> repoCarritos;
 	static Session session;
-	static MultiRepo<Carrito>::init_list getCarritosCriterio();
+	static MultiplyList<Carrito*>* fabricaMultiListaCarrito();
 
-	
-	static int nameComparator(Carrito* a, Carrito *b);
-	static int idUsuarioComparator(Carrito* a, Carrito *b);
 
-	static int cantidadComparator(Carrito* a, Carrito *b);
-	static int precioComparator(Carrito* a, Carrito *b);
 };
 
