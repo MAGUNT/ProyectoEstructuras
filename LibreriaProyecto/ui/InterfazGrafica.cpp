@@ -76,7 +76,8 @@ void InterfazGrafica::mostrarMenu(Usuario* usuario) {
 
 	std::cout << " " << std::endl;
 	std::cout << "*-----------------------------------------*" << std::endl;
-	switch (usuario->getRol()) {
+	if (usuario != nullptr) {
+		switch (usuario->getRol()) {
 		case Rol::ADMIN:
 			menu = this->opcionesAdmin;
 			break;
@@ -88,7 +89,11 @@ void InterfazGrafica::mostrarMenu(Usuario* usuario) {
 			break;
 		default:
 			break;
+		}
+	} else {
+		std::cout << "usuario es null" << std::endl;
 	}
+	
 	std::cout << "*-----------------------------------------*" << std::endl;
 	std::cout << " " << std::endl;
 

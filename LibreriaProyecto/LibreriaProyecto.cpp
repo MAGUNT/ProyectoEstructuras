@@ -169,6 +169,7 @@ int main()
 {
 	Local* local = new Local();
 	InterfazGrafica* ui = new InterfazGrafica(*local);
+	ui->inicializar();
 
 
 	/*
