@@ -7,7 +7,9 @@ void GestorLineasDeAriculos::eliminarArticulo(int codigo) const
 {
 	auto le = Repositorios::repoLineaEspecifica.getElements();
 	le->foreach([codigo](LineaEspecifica* e){e->removerArticulo(codigo); });
+	Repositorios::repoLineaEspecifica.saveUpdates();
 	Repositorios::repoArticulo.deleteElement(codigo);
+	Repositorios::repoArticulo.saveUpdates();
 
 	delete le;
 
@@ -17,7 +19,9 @@ void GestorLineasDeAriculos::eliminarLineaEspecifica(int codigo) const
 {
 	auto lg = Repositorios::repoLineaGeneral.getElements();
 	lg->foreach([codigo](LineaGeneral* e){e->eliminar(codigo); });
+	Repositorios::repoLineaGeneral.saveUpdates();
 	Repositorios::repoLineaEspecifica.deleteElement(codigo);
+	Repositorios::repoLineaEspecifica.saveUpdates();
 
 	delete lg;
 }
@@ -26,8 +30,9 @@ void GestorLineasDeAriculos::eliminarLineaGeneral(int codigo) const
 {
 	auto c = Repositorios::repoCategoria.getElements();
 	c->foreach([codigo](Categoria* e){e->removerLineaGeneral(codigo); });
+	Repositorios::repoCategoria.saveUpdates();
 	Repositorios::repoLineaGeneral.deleteElement(codigo);
-
+	Repositorios::repoLineaGeneral.saveUpdates();
 	delete c;
 }
 
@@ -35,4 +40,5 @@ void GestorLineasDeAriculos::eliminarLineaGeneral(int codigo) const
 void GestorLineasDeAriculos::eliminarCategoria(int codigo) const
 {
 	Repositorios::repoCategoria.deleteElement(codigo);
+	Repositorios::repoCategoria.saveUpdates();
 }

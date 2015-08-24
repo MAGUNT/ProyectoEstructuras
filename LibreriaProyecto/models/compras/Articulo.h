@@ -59,13 +59,13 @@ public:
 
 		std::string token;
 		getline(is, token, delimiter);
-		//articulo.codigo = std::stoi(token);
+		articulo.codigo = std::stoi(token);
 
 		getline(is, articulo.nombre, delimiter);
 		getline(is, articulo.marca, delimiter);
 		
 		getline(is, token, delimiter);
-		//articulo.precio = std::stold(token);
+		articulo.precio = std::stold(token);
 		
 		if (!is) articulo = Articulo();
 

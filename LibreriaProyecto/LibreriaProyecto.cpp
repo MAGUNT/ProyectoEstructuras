@@ -13,6 +13,7 @@
 #include "repositorys\Repositorios.h"
 #include "models\compras\LineaEspecifica.h"
 #include "Gestores\GestorUsuarios.h"
+#include "Gestores\GestorLineasDeAriculos.h"
 
 using str = std::tuple < int, char, std::string >;
 
@@ -163,6 +164,7 @@ void pruebaListaCircular3(ClinkedList<Articulo*,F>* list)
 
 int main()
 {
+	/*
 	GestorUsuarios e;
 	e.crearUsuario(new Usuario(1, "melvin", "43243", "porahi", "34243", Rol::CLIENTE));
 	e.crearCarrito(new Carrito(3, 1, "Compras de la abuela"));
@@ -170,6 +172,7 @@ int main()
 	MultiplyList<Carrito*>* list= e.getCarritosDeCliente(1);
 
 	list->foreach([](Carrito* c){ std::cout << c; });
+	*/
 	/*
 	MultiRepo<Articulo> fuck(
 	{
@@ -214,16 +217,42 @@ int main()
 	*/
 //	MultiplyList<Carrito*> carrito = Repositorios::getCarritosCriterio();
 	
-	GestorUsuarios g;
+	//GestorLineasDeAriculos g;
 
-	//g.crearUsuario(new Usuario(2,"Melvin", "Telefono", "Direccion", "22348054", Rol::CLIENTE));
+	//g.eliminarArticulo(4);
+	
+	/*
+	Articulo *s1, *s2, *s3, *s4, *s5;
+	Repositorios::repoArticulo.addElement(s1=new Articulo(2, "Sopa", "Nodules", 1000.8));
+	Repositorios::repoArticulo.addElement(s2=new Articulo(3, "Risoto", "BAMBINO", 1000.8));
+	Repositorios::repoArticulo.addElement(s3=new Articulo(4, "Cervesa", "IMPERIAL", 1000.8));
+	Repositorios::repoArticulo.addElement(s4=new Articulo(5, "Cervesa", "PILSEN", 1000.8));
+	Repositorios::repoArticulo.addElement(s5=new Articulo(6, "Cervesa", "QUILMES", 1000.8));
 
-	g.iniciarSession(2, "22348054");
 
-	e.getUsuarioActual()->setNombre("Culiolo");
-	e.guardarCambiosDeUsuarios();
+	LineaEspecifica *linea1 = new LineaEspecifica(44, "Cervesas");
+	LineaEspecifica *linea2 = new LineaEspecifica(43, "Comidas");
 
+	linea2->agregarArticulo(s1);
+	linea2->agregarArticulo(s2);
+	linea1->agregarArticulo(s3);
+	linea1->agregarArticulo(s4);
+	linea1->agregarArticulo(s5);
 
+	Repositorios::repoLineaEspecifica.addElement(linea1);
+	Repositorios::repoLineaEspecifica.addElement(linea2);
+
+	
+	LineaGeneral *genral = new LineaGeneral(22,"Alimentos");
+	Categoria *cat = new Categoria(23, 1,"Comestibles");
+
+	genral->agregarLineaEspecifica(linea1);
+	genral->agregarLineaEspecifica(linea2);
+
+	Repositorios::repoLineaGeneral.addElement(genral);
+	cat->agregarLineaGeneral(genral);
+	Repositorios::repoCategoria.addElement(cat);
+	*/
 	system("pause");
 }
 

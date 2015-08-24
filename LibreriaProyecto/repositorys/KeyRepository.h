@@ -38,7 +38,8 @@ KeyRepository<T>::KeyRepository(IRepo<T*>* prepo)
 	elements = new ClinkedList<T*, KeyComparator>(cmp);
 	prepo->readALL(*elements, [](ClinkedList<T*, KeyComparator>& list, T* e)
 	{
-		list.addAscendent(e); 
+		list.addAscendent(e);
+		std::cout << e<<std::endl;
 	});
 }
 
