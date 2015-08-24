@@ -14,6 +14,8 @@
 #include "models\compras\LineaEspecifica.h"
 #include "Gestores\GestorUsuarios.h"
 #include "Gestores\GestorLineasDeAriculos.h"
+#include "ui/InterfazGrafica.h"
+#include "models/compras/Local.h"
 
 using str = std::tuple < int, char, std::string >;
 
@@ -165,8 +167,12 @@ void pruebaListaCircular3(ClinkedList<Articulo*,F>* list)
 
 int main()
 {
-	testClear();
+	Local* local = new Local();
+	InterfazGrafica* ui = new InterfazGrafica(*local);
+
+
 	/*
+	 * 	testClear();
 	GestorUsuarios e;
 	e.crearUsuario(new Usuario(1, "melvin", "43243", "porahi", "34243", Rol::CLIENTE));
 	e.crearCarrito(new Carrito(3, 1, "Compras de la abuela"));
@@ -186,8 +192,6 @@ int main()
 	fuck.get([](Articulo*a){return a->getCodigo() == 0; });
 	**/
 	/*
-
-
 
 	auto func = [](Articulo* a, Articulo* b)
 	{

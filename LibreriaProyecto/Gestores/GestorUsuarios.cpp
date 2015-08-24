@@ -2,7 +2,7 @@
 #include "..\repositorys\Repositorios.h"
 #include <exception>
 
-
+GestorUsuarios::GestorUsuarios() {}
 
 bool GestorUsuarios::iniciarSession(int id, const std::string& password) const
 {

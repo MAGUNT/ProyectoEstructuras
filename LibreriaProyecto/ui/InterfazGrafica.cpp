@@ -6,13 +6,14 @@
  */
 
 #include "InterfazGrafica.h"
+#include "../repositorys/Repositorios.h"
 #include <iostream>
 #include <sstream>
 
 InterfazGrafica::InterfazGrafica(Local& local) {
 	this->local = local;
-	this->carrito = new Carrito();
-	carrito->setNombre("Carrito para testear");
+	this->gUsuarios = new GestorUsuarios();
+	this->gArticulos = new GestorLineasDeAriculos();
 
 	this->opcionesCliente = {
 			"1. Ver articulos.",
@@ -55,7 +56,7 @@ int InterfazGrafica::capturarOpcion(){
 	int numero;
 
 	while (!esNumero) {
-	   std::cout << "Ingrese el numero de opcion: ";
+	   std::cout << "Ingrese un numero: ";
 	   std::getline(std::cin, opcion);
 
 	   // Convierte de string a numero de forma segura.
@@ -70,14 +71,30 @@ int InterfazGrafica::capturarOpcion(){
 	return numero;
 }
 
-void InterfazGrafica::mostrarMenu(string_vect menu) {
+void InterfazGrafica::mostrarMenu(Usuario* usuario) {
+	string_vect menu;
+
 	std::cout << " " << std::endl;
 	std::cout << "*-----------------------------------------*" << std::endl;
-	for (unsigned i = 0; i < menu.size(); i++) {
-		std::cout << menu[i] << std::endl;
+	switch (usuario->getRol()) {
+		case Rol::ADMIN:
+			menu = this->opcionesAdmin;
+			break;
+		case Rol::DEPENDIENTE:
+			menu = this->opcionesDependiente;
+			break;
+		case Rol::CLIENTE:
+			menu = this->opcionesCliente;
+			break;
+		default:
+			break;
 	}
 	std::cout << "*-----------------------------------------*" << std::endl;
 	std::cout << " " << std::endl;
+
+	for (unsigned i = 0; i < menu.size(); i++) {
+		std::cout << menu[i] << std::endl;
+	}
 }
 
 void InterfazGrafica::verArticulos() {
@@ -136,6 +153,14 @@ void InterfazGrafica::mostrarLineasEspecificas() {
 				le->imprimir();
 			});
 		});
+	});
+}
+
+void InterfazGrafica::mostrarCarritos(int codigoCliente) {
+	Repositorios::repoCarritos.getAll().foreach([codigoCliente](Carrito* c){
+		if(c->getIdUsuario() == codigoCliente) {
+			std::cout << c->getCodigo() << ". " << c->getNombre() << std::endl;
+		}
 	});
 }
 
@@ -255,17 +280,13 @@ Carrito* InterfazGrafica::getCarrito() {
 
 void InterfazGrafica::pagarCarrito() {
 	std::cout << "Elija el carrito que desea pagar" << std::endl;
-
-	/*
-	 *  Mostrar los carritos del cliente que no hayan sido comprados
-	 *  int opcion = obtenerOpcion();
-	 */
+	int opcion = capturarOpcion();
+	Carrito* carrito = Repositorios::repoCarritos.get(opcion);
 
 	std::cout << "El carrito que usd va a pagar es: " << carrito->getNombre() << std::endl;
-//	carrito->setEstaPago(true);
+	Repositorios::repoCompras.addElement(carrito);
 	std::cout << "La transaccion ha sido realizada exitosamente" << std::endl;
 }
-
 void InterfazGrafica::modificarCarrito() {
 	std::cout << "Elija el carrito:" << std::endl;
 	 //Mostrar los carritos y verificar que no este pago
@@ -301,11 +322,22 @@ void InterfazGrafica::mostrarCarritos() {
  * 	de cada tipo de usuario.
  */
 void InterfazGrafica::inicializar() {
-	int opcion;
+	int opcion = 0;
+	int id = 0;
+	std::string psswrd;
 
-	this->mostrarMenu(this->opcionesCliente);
-	opcion = this->capturarOpcion();
-	this->ejecutarOpcionCliente(opcion);
+	std::cout << "Ingrese su numero de ID" << std::endl;
+	id = capturarOpcion();
+	std::cout << "Ingrese su contraseña" << std::endl;
+	std::getline(std::cin, psswrd);
+
+	this->gUsuarios->iniciarSession(id, psswrd);
+
+	do {
+		this->mostrarMenu(this->gUsuarios->getUsuarioActual());
+		opcion = this->capturarOpcion();
+		this->ejecutarOpcionCliente(opcion);
+	} while(opcion != 0);
 }
 
 
@@ -376,6 +408,12 @@ void InterfazGrafica::ejecutarOpcionDependiente(int opcion) {
 
 void InterfazGrafica::entregarCarrito() {
 	std::cout << "Elija el carrito que desea entregar" << std::endl;
+	int opcion;
+	int codigoCliente = gUsuarios->getUsuarioActual()->getCodigo();
+	mostrarCarritos(codigoCliente);
+
+	opcion = capturarOpcion();
+	//Repositorios::repoCarritos.get(opcion)->;
 
 	/*
 	 *  Mostrar pedidos pendientes.
@@ -395,17 +433,62 @@ void InterfazGrafica::ejecutarOpcionAdmin(int opcion) {
 		case 2:
 			std::cout << " " << std::endl;
 			std::cout << "----->Agregando Articulo" << std::endl;
-			comprar();
+			agregarArticulo();
 			break;
 		case 3:
 			std::cout << " " << std::endl;
 			std::cout << "----->Modificando Articulo" << std::endl;
-			mostrarCarritos();
+			modificarArticulo();
 			break;
 		case 4:
 			std::cout << " " << std::endl;
 			std::cout << "----->Eliminando Articulo" << std::endl;
-			modificarCarrito();
+			eliminarArticulo();
+			break;
+		case 5:
+			std::cout << " " << std::endl;
+			std::cout << "----->Agregando Categoria" << std::endl;
+			agregarCategoria();
+			break;
+		case 6:
+			std::cout << " " << std::endl;
+			std::cout << "----->Modificando Categoria" << std::endl;
+			modificarCategoria();
+			break;
+		case 7:
+			std::cout << " " << std::endl;
+			std::cout << "----->Eliminando Categoria" << std::endl;
+			eliminarCategoria();
+			break;
+		case 8:
+			std::cout << " " << std::endl;
+			std::cout << "----->Agregando Linea General" << std::endl;
+			agregarLineaGeneral();
+			break;
+		case 9:
+			std::cout << " " << std::endl;
+			std::cout << "----->Modificando Linea General" << std::endl;
+			modificarLineaGeneral();
+			break;
+		case 10:
+			std::cout << " " << std::endl;
+			std::cout << "----->Eliminando Linea General" << std::endl;
+			eliminarLineaGeneral();
+			break;
+		case 11:
+			std::cout << " " << std::endl;
+			std::cout << "----->Agregando Linea Especifica" << std::endl;
+			agregarLineaEspecifica();
+			break;
+		case 12:
+			std::cout << " " << std::endl;
+			std::cout << "----->Modificando Linea Especifica" << std::endl;
+			modificarLineaEspecifica();
+			break;
+		case 13:
+			std::cout << " " << std::endl;
+			std::cout << "----->Eliminando Linea Especifica" << std::endl;
+			elimnarLineaEspecifica();
 			break;
 		default:
 			std::cout << " " << std::endl;
@@ -667,3 +750,4 @@ void InterfazGrafica::modificarLineaEspecifica() {
 	le->imprimir();
 }
 
+void InterfazGrafica::elimnarLineaEspecifica() {}

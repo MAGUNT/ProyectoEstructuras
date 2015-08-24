@@ -12,6 +12,9 @@
 #include <string>
 #include "../models/compras/Local.h"
 #include "../models/compras/Carrito.h"
+#include "../models/usuarios/Usuario.h"
+#include "../Gestores/GestorLineasDeAriculos.h"
+#include "../Gestores/GestorUsuarios.h"
 
 typedef std::vector<std::string> string_vect;
 
@@ -20,13 +23,12 @@ class InterfazGrafica {
 	string_vect opcionesDependiente;
 	string_vect opcionesCliente;
 	string_vect opcionesAdmin;
-	//Solo para testear, pero no deberia estar aqui
-	Carrito* carrito;
-	//Usuario* usuario.
+	GestorLineasDeAriculos* gArticulos;
+	GestorUsuarios* gUsuarios;
 
 	// 	Metodos Miscelaneos
 	int capturarOpcion();
-	void mostrarMenu(string_vect menu);
+	void mostrarMenu(Usuario* usuario);
 	void verArticulos();
 	void mostrarCategorias();
 	void mostrarLineasGenerales(const ClinkedList<LineaGeneral*>* lgs);
@@ -34,6 +36,7 @@ class InterfazGrafica {
 	void mostrarLineasEspecificas(const ClinkedList<LineaEspecifica*>* les);
 	void mostrarLineasEspecificas();
 	void mostrarArticulos(const ClinkedList<Articulo*>* as);
+	void mostrarCarritos(int codigoUsuario);
 
 	//	Metodos para Cliente
 	void ejecutarOpcionCliente(int opcion);

@@ -3,7 +3,7 @@ class GestorLineasDeAriculos
 {
 public:
 	
-	
+	GestorLineasDeAriculos();
 
 	//------------------>Eliminar
 	void eliminarArticulo(int codigo) const;

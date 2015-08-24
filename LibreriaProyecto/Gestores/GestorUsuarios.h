@@ -7,10 +7,12 @@
 class GestorUsuarios
 {
 public:
+	GestorUsuarios();
+
 	bool iniciarSession(int id, const std::string& password) const;
 	Usuario* getUsuarioActual()const;
 	void cerrarSession()const;
-	bool crearUsuario(Usuario*) const ;
+	bool crearUsuario(Usuario*) const;
 	void crearCarrito(Carrito*) const;
 
 	void imprimirCarritoPorCriterio(ListFactories::CriteriosCarritos c)const;

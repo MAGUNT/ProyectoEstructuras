@@ -3,6 +3,8 @@
 
 //etc etc etc
 
+GestorLineasDeAriculos::GestorLineasDeAriculos(){}
+
 void GestorLineasDeAriculos::eliminarArticulo(int codigo) const
 {
 	auto le = Repositorios::repoLineaEspecifica.getElements();
