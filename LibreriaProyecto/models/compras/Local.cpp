@@ -104,4 +104,8 @@ const ClinkedList<Articulo*>& Local::getArticulos(LineaEspecifica* lineaEspecifi
 
 
 
-
+//implementar
+const ClinkedList<Categoria*>& Local::getCategorias()
+{
+	return ClinkedList<Categoria*>();
+}

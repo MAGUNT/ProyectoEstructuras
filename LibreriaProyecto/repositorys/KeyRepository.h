@@ -92,7 +92,11 @@ T* KeyRepository<T>::getElement(int codigo) const{
 
 template <typename T>
 ClinkedList<T*>* KeyRepository<T>::getElements(){
-	return  elements;
+	
+	auto copy = new ClinkedList<T*>();
+	elements->foreach([=](T* e){copy->addAscendent(e); });
+
+	return copy;
 }
 
 template <typename T>
