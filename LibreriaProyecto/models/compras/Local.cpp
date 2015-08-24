@@ -102,8 +102,6 @@ const ClinkedList<Articulo*>& Local::getArticulos(LineaEspecifica* lineaEspecifi
 	return lineaEspecifica->getArticulos();
 }
 
-
-
 //implementar
 const ClinkedList<Categoria*>& Local::getCategorias()
 {
