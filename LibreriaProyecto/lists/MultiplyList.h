@@ -118,23 +118,17 @@ MultiplyList<T>::~MultiplyList()
 template<typename T>
 bool MultiplyList<T>::add(const T & e)
 {
-	MultiNode<T> *newNode = new MultiNode<T>(sizeCmp + 1, e), 
-		*node = nullptr;
+	MultiNode<T> *node = nullptr;
+	bool isUnique = findTightBoundary(0, e, node);
+	if (hasKey() && !isUnique) return false;
+	
+	auto newNode = new MultiNode<T>(sizeCmp + 1, e);
+	addNodeBefore(0, newNode, node);
 
-	unsigned index = 0;
-
-	if (hasKey())
+	for (unsigned i = 1; i < sizeCmp; ++i)
 	{
-		if (!findTightBoundary(0, e, node))
-			return false;
-
-		addNodeBefore(0, newNode, node);
-		index = 1;
-	}
-	while (index < sizeCmp)
-	{
-		findTightBoundary(index, e, node);
-		addNodeBefore(index++, newNode, node);
+		findTightBoundary(i, e, node);
+		addNodeBefore(i, newNode, node);
 	}
 	addNodeBefore(sizeCmp, newNode, sentinel);
 
