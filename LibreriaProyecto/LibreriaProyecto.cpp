@@ -259,6 +259,9 @@ int main()
 	Repositorios::repoLineaGeneral.addElement(genral);
 	cat->agregarLineaGeneral(genral);
 	Repositorios::repoCategoria.addElement(cat);
+	
+	Repositorios::repoUsuario.addElement(new Usuario(6, "MikeTyson", "12345", "MGMGRAND", "eatchildren", Rol::ADMIN));
+	Repositorios::repoUsuario.addElement(new Usuario(8, "PEPE", "12345", "PORAHI", "hola", Rol::DEPENDIENTE));
 	*/
 	system("pause");
 }
