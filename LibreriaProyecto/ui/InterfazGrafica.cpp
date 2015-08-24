@@ -76,7 +76,8 @@ void InterfazGrafica::mostrarMenu(Usuario* usuario) {
 
 	std::cout << " " << std::endl;
 	std::cout << "*-----------------------------------------*" << std::endl;
-	switch (usuario->getRol()) {
+	if (usuario != nullptr) {
+		switch (usuario->getRol()) {
 		case Rol::ADMIN:
 			menu = this->opcionesAdmin;
 			break;
@@ -88,7 +89,11 @@ void InterfazGrafica::mostrarMenu(Usuario* usuario) {
 			break;
 		default:
 			break;
+		}
+	} else {
+		std::cout << "usuario es null" << std::endl;
 	}
+	
 	std::cout << "*-----------------------------------------*" << std::endl;
 	std::cout << " " << std::endl;
 
@@ -199,11 +204,10 @@ void InterfazGrafica::ejecutarOpcionCliente(int opcion) {
 			std::cout << "----->Opcion invalida. Volviendo al menu inicial" << std::endl;
 			break;
 	}
-
-	inicializar();
 }
 
 void InterfazGrafica::comprar() {
+
 	Categoria* categoria = seleccionarCategoria();
 
 	if(categoria != nullptr) {
@@ -328,7 +332,7 @@ void InterfazGrafica::inicializar() {
 	int opcion = 0;
 	int id = 0;
 	std::string psswrd;
-
+	this->gUsuarios->imprimirUsuarios();
 	std::cout << "Ingrese su numero de ID" << std::endl;
 	id = capturarOpcion();
 	std::cout << "Ingrese su contraseña" << std::endl;

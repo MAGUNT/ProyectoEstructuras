@@ -67,7 +67,7 @@ void pruebaListaMultiply(MultiplyList<str>* list)
 		},i);
 
 	}
-	std::cout <<(list->add(str(2, 'f', "fuckkkkkkkk"))? "Siiiiii":"NOoooooooooo");
+
 
 	
 
@@ -167,15 +167,10 @@ void pruebaListaCircular3(ClinkedList<Articulo*,F>* list)
 
 int main()
 {
-	testClear();
+	Local* local = new Local();
+	InterfazGrafica* ui = new InterfazGrafica(*local);
+	ui->inicializar();
 
-	/*
-	GestorUsuarios g;
-
-	g.iniciarSession(1, "22348054");
-
-	std::cout<<g.getUsuarioActual()->getNombre();
-	*/
 
 	/*
 	 * 	testClear();
