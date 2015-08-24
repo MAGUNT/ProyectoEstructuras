@@ -30,7 +30,9 @@ class InterfazGrafica {
 	void verArticulos();
 	void mostrarCategorias();
 	void mostrarLineasGenerales(const ClinkedList<LineaGeneral*>* lgs);
+	void mostrarLineasGenerales();
 	void mostrarLineasEspecificas(const ClinkedList<LineaEspecifica*>* les);
+	void mostrarLineasEspecificas();
 	void mostrarArticulos(const ClinkedList<Articulo*>* as);
 
 	//	Metodos para Cliente
@@ -55,6 +57,16 @@ class InterfazGrafica {
 	void verTodosArticulos();
 	void agregarArticulo();
 	void modificarArticulo();
+	void eliminarArticulo();
+	void agregarCategoria();
+	void modificarCategoria();
+	void eliminarCategoria();
+	void agregarLineaGeneral();
+	void modificarLineaGeneral();
+	void eliminarLineaGeneral();
+	void agregarLineaEspecifica();
+	void modificarLineaEspecifica();
+	void elimnarLineaEspecifica();
 
 
 public:
