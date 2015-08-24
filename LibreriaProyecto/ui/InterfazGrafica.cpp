@@ -281,7 +281,10 @@ Carrito* InterfazGrafica::getCarrito() {
 void InterfazGrafica::pagarCarrito() {
 	std::cout << "Elija el carrito que desea pagar" << std::endl;
 	int opcion = capturarOpcion();
-	Carrito* carrito = Repositorios::repoCarritos.get(opcion);
+	Carrito* carrito = Repositorios::repoCarritos.get([=](Carrito* c)
+	{
+		return c->getCodigo() == opcion; 
+	});
 
 	std::cout << "El carrito que usd va a pagar es: " << carrito->getNombre() << std::endl;
 	Repositorios::repoCompras.addElement(carrito);
@@ -413,7 +416,11 @@ void InterfazGrafica::entregarCarrito() {
 	mostrarCarritos(codigoCliente);
 
 	opcion = capturarOpcion();
-	//Repositorios::repoCarritos.get(opcion)->;
+	
+	Carrito* carrito=Repositorios::repoCarritos.get([=](Carrito* c)
+	{
+		return c->getCodigo() == opcion;
+	});
 
 	/*
 	 *  Mostrar pedidos pendientes.
