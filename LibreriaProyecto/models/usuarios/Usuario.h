@@ -43,6 +43,10 @@ public:
 	virtual void setDireccion(const std::string&);
 	virtual const std::string& getDireccion();
 	int getCodigo()const;
+	std::ostream& prettyPrint(std::ostream&);
+
+	Rol getRol()const;
+	void setRol(Rol);
 
 	friend std::istream& operator >>(std::istream& is, Usuario& linea);
 	friend std::istream& operator >>(std::istream& is, Usuario*& linea);

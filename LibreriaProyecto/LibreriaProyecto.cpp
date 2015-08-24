@@ -81,13 +81,13 @@ void testClear()
 			if (std::get<0>(x) < std::get<0>(y))return -1;
 			return 0;
 		},
-			[](str x, str y)
+		[](str x, str y)
 		{
 			if (std::get<1>(y) < std::get<1>(x))return 1;
 			if (std::get<1>(x) < std::get<1>(y))return -1;
 			return 0;
 		},
-			[](str x, str y)
+		[](str x, str y)
 		{
 			if (std::get<2>(y) < std::get<2>(x))return 1;
 			if (std::get<2>(x) < std::get<2>(y))return -1;
@@ -147,14 +147,10 @@ void pruebaListaCircular2(ClinkedList<Articulo*, F>* lista)
 //		lista->addDescendent(new Articulo(i, std::to_string(i)));
 
 	bool existe = lista->addDescendent(new Articulo(10, "20"));
-
 	std::cout << "Se inserto? " << (existe ? "si" : "no") << std::endl;
-
 	Articulo* a = new Articulo(2, "nuevo");
 	bool remplasado = lista->replace(a, [](Articulo* a){return a->getNombre() == "4"; });
-
 	std::cout << a->getNombre() << "Se remplaso? " << (remplasado ? "si" : "no") << std::endl;
-
 	imprimirLista(lista);
 
 }
@@ -218,6 +214,16 @@ int main()
 	*/
 //	MultiplyList<Carrito*> carrito = Repositorios::getCarritosCriterio();
 	
+	GestorUsuarios g;
+
+	//g.crearUsuario(new Usuario(2,"Melvin", "Telefono", "Direccion", "22348054", Rol::CLIENTE));
+
+	g.iniciarSession(2, "22348054");
+
+	e.getUsuarioActual()->setNombre("Culiolo");
+	e.guardarCambiosDeUsuarios();
+
+
 	system("pause");
 }
 

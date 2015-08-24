@@ -84,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GestorUsuarios.h" />
+    <ClInclude Include="utils\ListFactories.h" />
     <ClInclude Include="models\compras\Categoria.h" />
     <ClInclude Include="models\compras\Local.h" />
     <ClInclude Include="models\usuarios\Usuario.h" />
@@ -110,6 +111,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GestorUsuarios.cpp" />
+    <ClCompile Include="utils\ListFactories.cpp" />
     <ClCompile Include="models\compras\Categoria.cpp" />
     <ClCompile Include="LibreriaProyecto.cpp" />
     <ClCompile Include="models\compras\Articulo.cpp" />

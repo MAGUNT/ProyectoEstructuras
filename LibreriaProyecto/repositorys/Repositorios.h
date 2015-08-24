@@ -21,7 +21,6 @@ public:
 	static MultiRepo<Carrito> repoCompras;
     static MultiRepo<Carrito> repoCarritos;
 	static Session session;
-	static MultiplyList<Carrito*>* fabricaMultiListaCarrito();
 
 
 };

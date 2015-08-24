@@ -13,14 +13,16 @@
 #include <string>
 #include <memory>
 class Carrito;
+
 std::istream& operator >>(std::istream& is, Carrito& linea);
 std::istream& operator >>(std::istream& is, Carrito*& linea);
 bool operator<(const Carrito& x, const Carrito& y);
 std::ostream& operator <<(std::ostream& os, const Carrito& linea);
 std::ostream& operator <<(std::ostream& os, const Carrito* linea);
+
 class Carrito {
 
-
+	int codigo;
 	int idUsuario;
 	ClinkedList<Pedido*> productos;
 	std::string nombre;
@@ -42,6 +44,8 @@ public:
 	
 	int getIdUsuario() const;
 	int getCantidad() const;
+	int getCodigo() const;
+	std::ostream& printPretty(std::ostream&) const;
 	friend std::istream& operator >>(std::istream& is, Carrito& linea);
 	friend std::istream& operator >>(std::istream& is, Carrito*& linea);
 	friend bool operator<(const Carrito& x, const Carrito& y);

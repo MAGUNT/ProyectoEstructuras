@@ -65,19 +65,42 @@ std::ostream& operator <<(std::ostream& os, const Usuario& usuario)
 {
 	const char d = Usuario::delimiter;
 
-	return os << (usuario.id)
-		<< d << (usuario.nombre)
-		<< d << (usuario.telefono)
-		<< d << (usuario.direccion)
-		<< d << (usuario.password)
-		<< d << (static_cast<char>(usuario.tipo));
+	return os << usuario.id
+		<< d << usuario.nombre
+		<< d << usuario.telefono
+		<< d << usuario.direccion
+		<< d << usuario.password
+		<< d << static_cast<char>(usuario.tipo);
 }
 std::ostream& operator <<(std::ostream& os, const Usuario* linea)
 {
+	if (!linea) return os;
 	return os << *linea;
 }
 
 int Usuario::getCodigo()const
 {
 	return id;
+}
+std::ostream& Usuario::prettyPrint(std::ostream& os)
+{
+	os << "Id: " << getCodigo()
+		<< " Nombre: " << getNombre()
+		<< " Telefono: " << getTelefono()
+		<< " Direccion: " << getDireccion()
+		<< " Rol: ";
+
+	if (Rol::ADMIN == tipo) return os << "Admin";
+	if (Rol::CLIENTE == tipo) return os << "Cliente";
+	if (Rol::DEPENDIENTE == tipo) return os << "Dependiente";
+}
+
+
+Rol Usuario::getRol()const
+{
+	return tipo;
+}
+void Usuario::setRol(Rol rol)
+{
+	tipo = rol;
 }

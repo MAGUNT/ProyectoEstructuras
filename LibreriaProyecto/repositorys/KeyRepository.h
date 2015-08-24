@@ -12,7 +12,6 @@ private:
 
 	ClinkedList<T*, KeyComparator>* elements;
 	IRepo<T*>* repo;
-
 	std::function<bool(T*)> createSLambda(int) const;
 
 public:
@@ -94,7 +93,7 @@ template <typename T>
 ClinkedList<T*>* KeyRepository<T>::getElements(){
 	
 	auto copy = new ClinkedList<T*>();
-	elements->foreach([=](T* e){copy->addAscendent(e); });
+	elements->foreach([copy](T* e){copy->addAscendent(e); });
 
 	return copy;
 }

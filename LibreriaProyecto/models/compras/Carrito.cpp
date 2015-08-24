@@ -8,6 +8,7 @@
 #include <iostream>
 #include "Carrito.h"
 #include "../../repositorys/Repositorios.h"
+
 Carrito::Carrito() 
 	: Carrito("")  {
 }
@@ -84,6 +85,8 @@ std::istream& operator >>(std::istream& is, Carrito& carrito)
 	//-----------Atrapar excepcion
 	std::string token;
 	getline(is, token, d);
+	carrito.codigo = std::stoi(token);
+	getline(is, token, d);
 	carrito.idUsuario = std::stoi(token);
 	//-----------Atrapar excepcion
 	getline(is, carrito.nombre, d);
@@ -107,7 +110,8 @@ std::ostream& operator <<(std::ostream& os, const Carrito& carrito)
 {
 	const char d = Carrito::delimiter;
 
-	 os << carrito.idUsuario << d
+	 os << carrito.codigo <<d
+		 << carrito.idUsuario << d
 		<< carrito.nombre << d;
 
 	 carrito.productos.foreach([&os](Pedido* p){ os << " " << p; });
@@ -127,4 +131,18 @@ int Carrito::getIdUsuario() const
 int Carrito::getCantidad() const
 {
 	return productos.length();
+}
+int Carrito::getCodigo() const
+{
+	return codigo;
+}
+
+std::ostream& Carrito::printPretty(std::ostream& os) const
+{
+	auto usuario = Repositorios::repoUsuario.getElement(idUsuario);
+	return os << "Codigo: "<< codigo
+		<< " Cantidad: " << getCantidad()
+		<< " Precio: " << precio()
+		<< " Usuario: " << std::endl
+		<< idUsuario << " " << usuario->getNombre();
 }

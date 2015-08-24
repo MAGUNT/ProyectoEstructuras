@@ -5,9 +5,10 @@
 template <typename T>
 class MultiRepo
 {
-	public:
+public:
 	using init_list = std::initializer_list < typename MultiplyList<T*>::Comparator > ;
 	using MultiplyListFactory = std::function < MultiplyList<T*>*() > ;
+
 private:
 	MultiplyList<T*>* elements;
 	IRepo<T*, MultiplyList<T*>>* repo;
@@ -23,9 +24,12 @@ public:
 
 	template<typename Predicate>
 	T* get(Predicate p);
+	
+	template <typename Predicate>
+	bool remove(Predicate);
 
 	void saveALL();
-	void addElement(T*);
+	bool addElement(T*);
 };
 
 
@@ -72,8 +76,19 @@ void MultiRepo<T>::saveALL()
 	repo->update(elements);
 }
 template<typename T>
-void MultiRepo<T>::addElement(T*e)
+bool MultiRepo<T>::addElement(T*e)
 {
-	elements->add(e);
-	repo->save(e);
+	bool added =elements->add(e);
+	if(added) repo->save(e);
+	return added;
+}
+
+template<typename T>
+template <typename Predicate>
+bool MultiRepo<T>::remove(Predicate pre)
+{
+	T* element= nullptr;
+	bool removed = elements->remove(pre, element);
+	if(removed) delete element;
+	return removed;
 }
