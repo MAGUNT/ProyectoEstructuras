@@ -10,13 +10,15 @@
 
 
 Local::Local() {
-	this->categorias = *Repositorios::repoCategoria.getElements();
+	this->categorias = Repositorios::repoCategoria.getElements();
 }
 
-Local::~Local() {}
+Local::~Local() {
+	delete categorias;
+}
 
 void Local::imprimirEstructura() {
-	categorias.foreach([](Categoria* c) {
+	categorias->foreach([](Categoria* c) {
 		std::cout << c->getCodigo() << ". " << c->getNombre() << " [";
 		c->getLineaGenerals().foreach([](LineaGeneral* lg) {
 			std::cout<< "   " << lg->getCodigo() << ". " << lg->getNombre();
@@ -74,7 +76,7 @@ Articulo& Local::getArticulo(int codigo) {
 }
 
 void Local::agregarCategoria(Categoria* categoria) {
-	this->categorias.addLast(categoria);
+	this->categorias->addLast(categoria);
 }
 
 Articulo& Local::getArticulo(LineaEspecifica* lineaEspecifica, int codigo) {
