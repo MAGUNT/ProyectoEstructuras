@@ -34,7 +34,7 @@ void Local::imprimirEstructura() {
 }
 
 Categoria& Local::getCategoria(int codigo) {
-	return *categorias[codigo];
+	return *(*categorias)[codigo];
 }
 
 LineaGeneral& Local::getLineaGeneral(int codigo) {
