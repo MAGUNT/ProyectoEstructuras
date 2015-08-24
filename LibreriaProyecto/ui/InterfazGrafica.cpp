@@ -204,11 +204,10 @@ void InterfazGrafica::ejecutarOpcionCliente(int opcion) {
 			std::cout << "----->Opcion invalida. Volviendo al menu inicial" << std::endl;
 			break;
 	}
-
-	inicializar();
 }
 
 void InterfazGrafica::comprar() {
+
 	Categoria* categoria = seleccionarCategoria();
 
 	if(categoria != nullptr) {
@@ -333,7 +332,7 @@ void InterfazGrafica::inicializar() {
 	int opcion = 0;
 	int id = 0;
 	std::string psswrd;
-
+	this->gUsuarios->imprimirUsuarios();
 	std::cout << "Ingrese su numero de ID" << std::endl;
 	id = capturarOpcion();
 	std::cout << "Ingrese su contraseña" << std::endl;
