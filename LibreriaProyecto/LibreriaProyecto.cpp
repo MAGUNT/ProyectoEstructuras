@@ -28,13 +28,13 @@ void pruebaListaMultiply(MultiplyList<str>* list)
 
 
 	unsigned min = std::min(vecS.size(), vecC.size());
-	for (unsigned i = 0; i < min; ++i)
+	for (unsigned i = min-1; i !=0; --i)
 	{
 		
 		list->add(str(i, vecC[i], vecS[i]));
 	}
 
-	for (unsigned i = 0; i < 3; ++i)
+	for (unsigned i = 0; i < 4; ++i)
 	{
 		std::cout << "Criterio # " << i << std::endl;
 
@@ -74,18 +74,19 @@ void pruebaListaMultiply(MultiplyList<str>* list)
 void testClear()
 {
 	auto list = new MultiplyList<str>
-	{
+	({
 
-		[](str x, str y)
-		{
-			if (std::get<0>(y) < std::get<0>(x))return 1;
-			if (std::get<0>(x) < std::get<0>(y))return -1;
-			return 0;
-		},
+		
 		[](str x, str y)
 		{
 			if (std::get<1>(y) < std::get<1>(x))return 1;
 			if (std::get<1>(x) < std::get<1>(y))return -1;
+			return 0;
+		},
+			[](str x, str y)
+		{
+			if (std::get<0>(y) < std::get<0>(x))return 1;
+			if (std::get<0>(x) < std::get<0>(y))return -1;
 			return 0;
 		},
 		[](str x, str y)
@@ -96,7 +97,7 @@ void testClear()
 		}
 
 
-	};
+	},1);
 
 	pruebaListaMultiply(list);
 	list->clear();
@@ -164,6 +165,7 @@ void pruebaListaCircular3(ClinkedList<Articulo*,F>* list)
 
 int main()
 {
+	testClear();
 	/*
 	GestorUsuarios e;
 	e.crearUsuario(new Usuario(1, "melvin", "43243", "porahi", "34243", Rol::CLIENTE));

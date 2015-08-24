@@ -152,5 +152,7 @@
     <None Include="filesystem\inventario\linea_especifica" />
     <None Include="filesystem\usuarios\carritos" />
     <None Include="filesystem\usuarios\usuarios" />
+    <None Include="filesystem\inventario\categoria" />
+    <None Include="filesystem\inventario\linea_general" />
   </ItemGroup>
 </Project>
