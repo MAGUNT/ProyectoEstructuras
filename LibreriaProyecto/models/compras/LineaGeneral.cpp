@@ -13,8 +13,13 @@ LineaGeneral::LineaGeneral(int _codigo, std::string _nombre)
 	: codigo(_codigo), nombre(_nombre) , lineasEspecificas(ClinkedList<LineaEspecifica*>()){
 }
 LineaGeneral::LineaGeneral(): LineaGeneral(0,"Anonimo"){}
+
 int LineaGeneral::getCodigo() const {
 	return codigo;
+}
+
+void LineaGeneral::setCodigo(int codigo) {
+	this->codigo = codigo;
 }
 
 const std::string& LineaGeneral::getNombre() const {
@@ -39,6 +44,7 @@ LineaEspecifica* LineaGeneral::getLineaEspecifica(int codigo) const
 
 	return output;
 }
+
 LineaEspecifica* LineaGeneral::getLineaEspecifica(const std::string & nombre) const
 {
 	LineaEspecifica* output = nullptr;
@@ -49,6 +55,7 @@ LineaEspecifica* LineaGeneral::getLineaEspecifica(const std::string & nombre) co
 
 	return output;
 }
+
 bool LineaGeneral::agregarLineaEspecifica(LineaEspecifica* linea)
 {
 	return lineasEspecificas.addAscendent(linea);
@@ -66,6 +73,7 @@ bool LineaGeneral::eliminar(int codigo)
 
 	return exito;
 }
+
 void LineaGeneral::imprimir() {
 	std::cout << "LineaGeneral " << codigo << ". " << nombre << std::endl;
 	std::cout << "Lineas Especificas:" << std::endl;
@@ -82,7 +90,7 @@ std::istream& operator >>(std::istream& is, LineaGeneral& linea)
 	//-----------Atrapar excepcion
 	std::string token;
 	getline(is, token, d);
-	//linea.codigo = std::stoi(token);
+	linea.codigo = std::stoi(token);
 	getline(is, linea.nombre, d);
 	//-----------Atrapar excepcion
 	

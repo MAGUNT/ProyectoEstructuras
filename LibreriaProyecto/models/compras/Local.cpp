@@ -10,80 +10,88 @@
 
 
 Local::Local() {
-	this->categorias = Repositorios::repoCategoria.getElements();
+	this->categorias = *Repositorios::repoCategoria.getElements();
 }
 
-Local::~Local() {
-	delete this->categorias;
-}
+Local::~Local() {}
 
 void Local::imprimirEstructura() {
-	std::ostream os;
-
-	categorias.foreach([os](Categoria* c) {
-		os << c->getCodigo() << ". " << c->getNombre() << " [";
-		c->getLineaGenerals().foreach([os](LineaGeneral* lg) {
-			os<< "   " << lg->getCodigo() << ". " << lg->getNombre();
-			lg->getLineasEspecificas().foreach([os](LineaEspecifica* le) {
-				os << "      " << lg->getCodigo() << ". " << lg->getNombre();
-				le->getArticulos().foreach([os](Articulo* a) {
-					os << "          " << a->getCodigo() << ". " << a->getNombre();
+	categorias.foreach([](Categoria* c) {
+		std::cout << c->getCodigo() << ". " << c->getNombre() << " [";
+		c->getLineaGenerals().foreach([](LineaGeneral* lg) {
+			std::cout<< "   " << lg->getCodigo() << ". " << lg->getNombre();
+			lg->getLineasEspecificas().foreach([](LineaEspecifica* le) {
+				std::cout << "      " << le->getCodigo() << ". " << le->getNombre();
+				le->getArticulos().foreach([](Articulo* a) {
+					std::cout << "          " << a->getCodigo() << ". " << a->getNombre();
 				});
 			});
 		});
-		os << "]";
+		std::cout << "]";
 	});
 }
 
 Categoria& Local::getCategoria(int codigo) {
-	return categorias[codigo];
+	return *categorias[codigo];
+}
+
+LineaGeneral& Local::getLineaGeneral(int codigo) {
+	return *Repositorios::repoLineaGeneral.getElement(codigo);
 }
 
 LineaGeneral& Local::getLineaGeneral(int codigo, int categoria) {
 	ClinkedList<LineaGeneral*> lineas = getLineasGenerales(categoria);
+	LineaGeneral* lg = 0;
 
-	lineas.foreach([](LineaGeneral* l) {
+	lineas.foreach([codigo, &lg](LineaGeneral* l) {
 		if(l->getCodigo() == codigo) {
-			return l;
+			lg = l;
 		}
 	});
 
-	return nullptr;
+	return *lg;
+}
+
+LineaEspecifica& Local::getLineaEspecifica(int codigo) {
+	return *Repositorios::repoLineaEspecifica.getElement(codigo);
 }
 
 LineaEspecifica& Local::getLineaEspecifica(LineaGeneral* lineaGeneral, int codigo) {
 	ClinkedList<LineaEspecifica*> lineas = getLineasEspecificas(lineaGeneral);
+	LineaEspecifica* le = 0;
 
-	lineas.foreach([](LineaEspecifica* l) {
+	lineas.foreach([codigo, &le](LineaEspecifica* l) {
 		if(l->getCodigo() == codigo) {
-			return l;
+			le = l;
 		}
 	});
 
-	return nullptr;
+	return *le;
 }
 
 Articulo& Local::getArticulo(int codigo) {
+	return *Repositorios::repoArticulo.getElement(codigo);
+}
 
-
-	return 0;
+void Local::agregarCategoria(Categoria* categoria) {
+	this->categorias.addLast(categoria);
 }
 
 Articulo& Local::getArticulo(LineaEspecifica* lineaEspecifica, int codigo) {
 	ClinkedList<Articulo*> articulos = getArticulos(lineaEspecifica);
+	Articulo* art = 0;
 
-	articulos.foreach([](Articulo* a) {
+	articulos.foreach([codigo, &art](Articulo* a) {
 		if(a->getCodigo() == codigo) {
-			return a;
+			art = a;
 		}
 	});
 
-	return nullptr;
-
+	return *art;
 }
 
 const ClinkedList<LineaGeneral*>& Local::getLineasGenerales(int categoria) {
-	return &getCategoria(categoria).getLineaGenerals();
+	return getCategoria(categoria).getLineaGenerals();
 }
 
 const ClinkedList<LineaEspecifica*>& Local::getLineasEspecificas(LineaGeneral* lineaGeneral) {

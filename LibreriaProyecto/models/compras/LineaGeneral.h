@@ -35,6 +35,7 @@ public:
 	LineaGeneral();
 	const ClinkedList<LineaEspecifica*>& getLineasEspecificas();
 	int getCodigo() const;
+	void setCodigo(int codigo);
 	const std::string& getNombre() const;
 	void setNombre(const std::string& nombre);
 	LineaEspecifica* getLineaEspecifica(int) const;

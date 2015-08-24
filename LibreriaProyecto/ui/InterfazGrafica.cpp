@@ -31,8 +31,18 @@ InterfazGrafica::InterfazGrafica(Local& local) {
 			"1. Ver articulos.",
 			"2. Agregar articulo.",
 			"3. Modificar articulo.",
-			"4. Eliminar articulo."
+			"4. Eliminar articulo.",
+			"5. Agregar Categoria",
+			"6. Modificar Categoria",
+			"7. Eliminar Categoria"
+			"8. Agregar Linea General",
+			"9. Modificar Linea General",
+			"10. Eliminar Linea General",
+			"11. Agregar Linea Especifica",
+			"12. Modificar Linea Especifica",
+			"13. Eliminar Linea Especifica"
 	};
+
 }
 
 InterfazGrafica::~InterfazGrafica() {}
@@ -109,6 +119,24 @@ void InterfazGrafica::mostrarArticulos(const ClinkedList<Articulo*>* as) {
 	} else {
 		std::cout << "{InterfazGrafica::mostrarArticulos} lista vacia" << std::endl;
 	}
+}
+
+void InterfazGrafica::mostrarLineasGenerales() {
+	local.getCategorias().foreach([](Categoria* c) {
+		c->getLineaGenerals().foreach([](LineaGeneral* lg) {
+			lg->imprimir();
+		});
+	});
+}
+
+void InterfazGrafica::mostrarLineasEspecificas() {
+	local.getCategorias().foreach([](Categoria* c) {
+		c->getLineaGenerals().foreach([](LineaGeneral* lg) {
+			lg->getLineasEspecificas().foreach([](LineaEspecifica* le) {
+				le->imprimir();
+			});
+		});
+	});
 }
 
 //	Metodos Clientes
@@ -409,18 +437,12 @@ void InterfazGrafica::agregarArticulo() {
 	std::string marca;
 
 	std::cout << "Seleccione la categoria donde va a agregar el articulo" << std::endl;
-	mostrarCategorias();
-	categoria = &local.getCategoria(capturarOpcion());
-
+	categoria = seleccionarCategoria();
 	std::cout << "Seleccione la linea general donde va a agregar el articulo" << std::endl;
-	mostrarLineasGenerales(&local.getLineasGenerales(categoria->getCodigo()));
-	lineaG = &local.getLineaGeneral(capturarOpcion(), categoria->getCodigo());
-
+	lineaG = seleccionarLineaGeneral(categoria->getCodigo());
 	std::cout << "Seleccione la linea especifica donde va a agregar el articulo" << std::endl;
-	mostrarLineasEspecificas(&local.getLineasEspecificas(lineaG));
-	lineaE = &local.getLineaEspecifica(lineaG, capturarOpcion());
+	lineaE = seleccionarLineaEspecifica(lineaG);
 
-	//	El Codigo no deberia generarse solo?
 	std::cout << "Ingrese el codigo del nuevo articulo" << std::endl;
 	codigo = capturarOpcion();
 	std::cout << "Ingrese el nombre del nuevo articulo" << std::endl;
@@ -440,16 +462,208 @@ void InterfazGrafica::modificarArticulo() {
 	std::cout << "Elija el articulo que desea modificar" << std::endl;
 	verTodosArticulos();
 	opcion = capturarOpcion();
-	//articulo = local.getArticulo
+	articulo = &local.getArticulo(opcion);
+	articulo->imprimir();
+
+	std::cout << "1. Cambiar Nombre" << std::endl;
+	std::cout << "2. Cambiar Marca" << std::endl;
+	std::cout << "3. Cambiar Precio" << std::endl;
+	opcion = capturarOpcion();
+
+	switch (opcion) {
+		case 1: {
+				std::string nombre;
+				std::cout << "Digite el nuevo nombre del articulo" << std::endl;
+				std::getline(std::cin, nombre);
+				articulo->setNombre(nombre);
+			}
+			break;
+		case 2: {
+				std::string marca;
+				std::cout << "Digite la nueva marca del articulo" << std::endl;
+				std::getline(std::cin, marca);
+				articulo->setMarca(marca);
+			}
+			break;
+		case 3: {
+				std::cout << "Digite el nuevo precio del articulo" << std::endl;
+				double precio = (double) capturarOpcion();
+				articulo->setPrecio(precio);
+			}
+			break;
+		default:
+			std::cout << "Opcion invalida" << std::endl;
+			break;
+	}
+
+	std::cout << "Resultado:" << std::endl;
+	articulo->imprimir();
 }
 
+void InterfazGrafica::eliminarArticulo() {}
 
+void InterfazGrafica::agregarCategoria() {
+	int codigo = 0;
+	int pasillo = 0;
+	std::string nombre;
 
+	std::cout << "Ingrese el numero de codigo" << std::endl;
+	codigo = capturarOpcion();
+	std::cout << "Ingrese el numero de pasillo" << std::endl;
+	pasillo = capturarOpcion();
+	std::cout << "Ingrese el nombre categoria" << std::endl;
+	std::getline(std::cin, nombre);
 
+	std::cout << "Agregando Categoria:" << std::endl;
+	local.agregarCategoria(new Categoria(codigo, pasillo, nombre));
+}
 
+void InterfazGrafica::modificarCategoria() {
+	int opcion = 0;
+	Categoria* categoria = 0;
+	std::cout << "Elija la categoria que desea modificar" << std::endl;
+	mostrarCategorias();
+	opcion = capturarOpcion();
+	categoria = &local.getCategoria(opcion);
+	categoria->imprimir();
 
+	std::cout << "1. Cambiar codigo" << std::endl;
+	std::cout << "2. Cambiar nombre" << std::endl;
+	std::cout << "3. Cambiar numero de pasillo" << std::endl;
+	opcion = capturarOpcion();
 
+	switch (opcion) {
+		case 1: {
+				std::cout << "Digite el nuevo codigo de la categoria" << std::endl;
+				int codigo = capturarOpcion();
+				categoria->setCodigo(codigo);
+			}
+			break;
+		case 2: {
+				std::string nombre;
+				std::cout << "Digite el nuevo nombre de la categoria" << std::endl;
+				std::getline(std::cin, nombre);
+				categoria->setNombre(nombre);
+			}
+			break;
+		case 3: {
+				std::cout << "Digite el nuevo numero de pasillo del categoria" << std::endl;
+				int pasillo = capturarOpcion();
+				categoria->setPasillo(pasillo);
+			}
+			break;
+		default:
+			std::cout << "Opcion invalida" << std::endl;
+			break;
+	}
 
+	std::cout << "Resultado:" << std::endl;
+	categoria->imprimir();
+}
 
+void InterfazGrafica::eliminarCategoria() {}
 
+void InterfazGrafica::agregarLineaGeneral() {
+	int codigo = 0;
+	std::string nombre;
+	Categoria* cat = 0;
+
+	std::cout << "Ingrese el codigo de la nueva linea general" << std::endl;
+	std::getline(std::cin, nombre);
+	std::cout << "Escoja la categoria a la que quiere agregarle esta nueva linea" << std::endl;
+	mostrarCategorias();
+	cat = &local.getCategoria(capturarOpcion());
+
+	std::cout << "Agregando Linea General" << std::endl;
+	cat->agregarLineaGeneral(new LineaGeneral(codigo, nombre));
+}
+
+void InterfazGrafica::modificarLineaGeneral() {
+	int opcion = 0;
+	LineaGeneral* lg = 0;
+	std::cout << "Elija la linea general que desea modificar" << std::endl;
+	mostrarLineasGenerales();
+	opcion = capturarOpcion();
+	lg = &local.getLineaGeneral(opcion);
+	lg->imprimir();
+
+	std::cout << "1. Cambiar codigo" << std::endl;
+	std::cout << "2. Cambiar nombre" << std::endl;
+	opcion = capturarOpcion();
+
+	switch (opcion) {
+		case 1: {
+				std::cout << "Digite el nuevo codigo de la linea general" << std::endl;
+				int codigo = capturarOpcion();
+				lg->setCodigo(codigo);
+			}
+			break;
+		case 2: {
+				std::string nombre;
+				std::cout << "Digite el nuevo nombre de la linea general" << std::endl;
+				std::getline(std::cin, nombre);
+				lg->setNombre(nombre);
+			}
+			break;
+		default:
+			std::cout << "Opcion invalida" << std::endl;
+			break;
+	}
+
+	std::cout << "Resultado:" << std::endl;
+	lg->imprimir();
+}
+
+void InterfazGrafica::eliminarLineaGeneral() {}
+
+void InterfazGrafica::agregarLineaEspecifica() {
+	int codigo = 0;
+	std::string nombre;
+	Categoria* cat = 0;
+
+	std::cout << "Ingrese el codigo de la nueva linea general" << std::endl;
+	std::getline(std::cin, nombre);
+	std::cout << "Escoja la categoria a la que quiere agregarle esta nueva linea" << std::endl;
+	mostrarCategorias();
+	cat = &local.getCategoria(capturarOpcion());
+
+	std::cout << "Agregando Linea General" << std::endl;
+	cat->agregarLineaGeneral(new LineaGeneral(codigo, nombre));
+}
+
+void InterfazGrafica::modificarLineaEspecifica() {
+	int opcion = 0;
+	LineaEspecifica* le = 0;
+	std::cout << "Elija la linea especifica que desea modificar" << std::endl;
+	mostrarLineasEspecificas();
+	opcion = capturarOpcion();
+	le = &local.getLineaEspecifica(opcion);
+	le->imprimir();
+
+	std::cout << "1. Cambiar codigo" << std::endl;
+	std::cout << "2. Cambiar nombre" << std::endl;
+	opcion = capturarOpcion();
+
+	switch (opcion) {
+		case 1: {
+				std::cout << "Digite el nuevo codigo de la linea especifica" << std::endl;
+				int codigo = capturarOpcion();
+				le->setCodigo(codigo);
+			}
+			break;
+		case 2: {
+				std::string nombre;
+				std::cout << "Digite el nuevo nombre de la linea especifica" << std::endl;
+				std::getline(std::cin, nombre);
+				le->setNombre(nombre);
+			}
+			break;
+		default:
+			std::cout << "Opcion invalida" << std::endl;
+			break;
+	}
+
+	std::cout << "Resultado:" << std::endl;
+	le->imprimir();
+}
 

@@ -103,9 +103,9 @@ void Categoria::imprimir() {
 		 //-----------Atrapar excepcion
 	std::string token;
 	 getline(is, token, d);
-	 //cat.codigo = std::stoi(token);
+	 cat.codigo = std::stoi(token);
 	 getline(is, token, d);
-	 //cat.pasillo = std::stoi(token);
+	 cat.pasillo = std::stoi(token);
 	 getline(is, cat.nombre, d);
 	 //-----------Atrapar excepcion
 	 int codigo = 0;
