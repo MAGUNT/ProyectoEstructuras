@@ -21,7 +21,7 @@ typedef std::vector<std::string> string_vect;
 
 class Local {
 private:
-	ClinkedList<Categoria*> categorias;
+	ClinkedList<Categoria*>* categorias;
 
 public:
 	Local();
