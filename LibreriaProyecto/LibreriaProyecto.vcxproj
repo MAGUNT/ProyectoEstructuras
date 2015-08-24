@@ -85,6 +85,7 @@
   <ItemGroup>
     <ClInclude Include="GestorUsuarios.h" />
     <ClInclude Include="models\compras\Categoria.h" />
+    <ClInclude Include="models\compras\Local.h" />
     <ClInclude Include="models\usuarios\Usuario.h" />
     <ClInclude Include="repositorys\MultiRepo.h" />
     <ClInclude Include="repositorys\KeyRepository.h" />
@@ -101,6 +102,8 @@
     <ClInclude Include="models\compras\Pedido.h" />
     <ClInclude Include="repositorys\Session.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="tests\UITest.h" />
+    <ClInclude Include="ui\InterfazGrafica.h" />
     <ClInclude Include="utils\Comparators.h" />
     <ClInclude Include="utils\MultiNode.h" />
     <ClInclude Include="utils\Node.h" />
@@ -113,10 +116,13 @@
     <ClCompile Include="models\compras\Carrito.cpp" />
     <ClCompile Include="models\compras\LineaEspecifica.cpp" />
     <ClCompile Include="models\compras\LineaGeneral.cpp" />
+    <ClCompile Include="models\compras\Local.cpp" />
     <ClCompile Include="models\compras\Pedido.cpp" />
     <ClCompile Include="repositorys\Repositorios.cpp" />
     <ClCompile Include="models\usuarios\Usuario.cpp" />
     <ClCompile Include="repositorys\Session.cpp" />
+    <ClCompile Include="tests\UITest.cpp" />
+    <ClCompile Include="ui\InterfazGrafica.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
