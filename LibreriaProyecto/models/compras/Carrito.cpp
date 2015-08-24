@@ -16,8 +16,8 @@ Carrito::Carrito()
 Carrito::Carrito(std::string _nombre) : Carrito(0,0, _nombre)
 	  {
 }
-Carrito::Carrito(int pid, int pidUsuario, std::string _nombre)
-	:idUsuario(pidUsuario), nombre(_nombre), productos(ClinkedList<Pedido*>())
+Carrito::Carrito(int pcodigo, int pidUsuario, std::string _nombre)
+	: codigo(pcodigo), idUsuario(pidUsuario), nombre(_nombre), productos(ClinkedList<Pedido*>())
 {
 
 }
@@ -140,7 +140,7 @@ int Carrito::getCodigo() const
 std::ostream& Carrito::printPretty(std::ostream& os) const
 {
 	auto usuario = Repositorios::repoUsuario.getElement(idUsuario);
-	return os << "Codigo: "<< codigo
+	return os << "Codigo: " << getCodigo()
 		<< " Cantidad: " << getCantidad()
 		<< " Precio: " << precio()
 		<< " Usuario: " << std::endl

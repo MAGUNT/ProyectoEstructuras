@@ -1,8 +1,5 @@
 #include "GestorUsuarios.h"
-#include "repositorys\Repositorios.h"
-#include <sstream>
-#include "utils\ListFactories.h"
-#include <stdexcept>
+#include "..\repositorys\Repositorios.h"
 #include <exception>
 
 
@@ -36,8 +33,8 @@ void GestorUsuarios::crearCarrito(Carrito* carrito) const
 //cambiar por un enum
 void GestorUsuarios::imprimirCarritoPorCriterio(ListFactories::CriteriosCarritos c) const
 {
-	std::ostringstream os;
-	Repositorios::repoCarritos.getAll().foreach([&os](Carrito *c)
+
+	Repositorios::repoCarritos.getAll().foreach([](Carrito *c)
 	{
 		c->printPretty(std::cout)<<std::endl;
 
@@ -50,6 +47,8 @@ void GestorUsuarios::imprimirUsuarios() const
 	auto list = Repositorios::repoUsuario.getElements();
 
 	list->foreach([](Usuario* u){ u->prettyPrint(std::cout) << std::endl; });
+
+	delete list;
 }
 void GestorUsuarios::crearCompra(Carrito*carrito) const
 {

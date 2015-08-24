@@ -1,9 +1,9 @@
 #pragma once
 #include <string>
-#include "models\usuarios\Usuario.h"
-#include "models\compras\Carrito.h"
-#include  "lists\MultiplyList.h"
-#include "utils\ListFactories.h"
+#include "..\models\usuarios\Usuario.h"
+#include "..\models\compras\Carrito.h"
+#include "..\lists\MultiplyList.h"
+#include "..\utils\ListFactories.h"
 class GestorUsuarios
 {
 public:

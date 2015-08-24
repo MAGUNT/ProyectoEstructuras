@@ -12,7 +12,7 @@
 #include "repositorys\FileRepo.h"
 #include "repositorys\Repositorios.h"
 #include "models\compras\LineaEspecifica.h"
-#include "GestorUsuarios.h"
+#include "Gestores\GestorUsuarios.h"
 
 using str = std::tuple < int, char, std::string >;
 

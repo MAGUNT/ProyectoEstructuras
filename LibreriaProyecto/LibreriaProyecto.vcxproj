@@ -83,7 +83,8 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GestorUsuarios.h" />
+    <ClInclude Include="Gestores\GestorUsuarios.h" />
+    <ClInclude Include="Gestores\GestorLineasDeAriculos.h" />
     <ClInclude Include="utils\ListFactories.h" />
     <ClInclude Include="models\compras\Categoria.h" />
     <ClInclude Include="models\compras\Local.h" />
@@ -110,7 +111,8 @@
     <ClInclude Include="utils\Node.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GestorUsuarios.cpp" />
+    <ClCompile Include="Gestores\GestorUsuarios.cpp" />
+    <ClCompile Include="Gestores\GestorLineasDeAriculos.cpp" />
     <ClCompile Include="utils\ListFactories.cpp" />
     <ClCompile Include="models\compras\Categoria.cpp" />
     <ClCompile Include="LibreriaProyecto.cpp" />
@@ -125,6 +127,12 @@
     <ClCompile Include="repositorys\Session.cpp" />
     <ClCompile Include="tests\UITest.cpp" />
     <ClCompile Include="ui\InterfazGrafica.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="filesystem\inventario\articulos" />
+    <None Include="filesystem\inventario\linea_especifica" />
+    <None Include="filesystem\usuarios\carritos" />
+    <None Include="filesystem\usuarios\usuarios" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

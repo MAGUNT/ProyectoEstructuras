@@ -52,7 +52,7 @@ KeyRepository<T>::~KeyRepository()
 template<typename T>
 bool KeyRepository<T>::deleteElement(int codigo)
 {
-	Articulo* a = nullptr;
+	T* a = nullptr;
 	bool isRemove = elements->remove(createSLambda(codigo), a);
 	if (isRemove) delete a;
 

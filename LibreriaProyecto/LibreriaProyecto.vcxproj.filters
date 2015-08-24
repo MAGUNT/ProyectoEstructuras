@@ -78,9 +78,6 @@
     <ClInclude Include="repositorys\Session.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="GestorUsuarios.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="ui\InterfazGrafica.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
@@ -91,6 +88,12 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="utils\ListFactories.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Gestores\GestorUsuarios.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Gestores\GestorLineasDeAriculos.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
@@ -125,9 +128,6 @@
     <ClCompile Include="repositorys\Session.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="GestorUsuarios.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
     <ClCompile Include="ui\InterfazGrafica.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
@@ -140,5 +140,17 @@
     <ClCompile Include="utils\ListFactories.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
+    <ClCompile Include="Gestores\GestorUsuarios.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="Gestores\GestorLineasDeAriculos.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="filesystem\inventario\articulos" />
+    <None Include="filesystem\inventario\linea_especifica" />
+    <None Include="filesystem\usuarios\carritos" />
+    <None Include="filesystem\usuarios\usuarios" />
   </ItemGroup>
 </Project>
