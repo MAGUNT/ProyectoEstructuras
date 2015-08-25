@@ -603,7 +603,7 @@ void InterfazGrafica::agregarCategoria() {
 	std::getline(std::cin, nombre);
 
 	std::cout << "Agregando Categoria:" << std::endl;
-	Repositorios::repoArticulo.addElement(new Categoria(codigo, pasillo, nombre));
+	Repositorios::repoCategoria.addElement(new Categoria(codigo, pasillo, nombre));
 }
 
 void InterfazGrafica::modificarCategoria() {
@@ -649,21 +649,31 @@ void InterfazGrafica::modificarCategoria() {
 	categoria->imprimir();
 }
 
-void InterfazGrafica::eliminarCategoria() {}
+void InterfazGrafica::eliminarCategoria() {
+	std::cout << "Ingrese el codigo de la categoria que desea eliminar" << std::endl;
+	mostrarCategorias();
+	int codigo = capturarOpcion();
+
+	gArticulos->eliminarCategoria(codigo);
+}
 
 void InterfazGrafica::agregarLineaGeneral() {
 	int codigo = 0;
 	std::string nombre;
 	Categoria* cat = 0;
+	LineaGeneral* le = 0;
 
 	std::cout << "Ingrese el codigo de la nueva linea general" << std::endl;
 	std::getline(std::cin, nombre);
 	std::cout << "Escoja la categoria a la que quiere agregarle esta nueva linea" << std::endl;
 	mostrarCategorias();
 	cat = &local.getCategoria(capturarOpcion());
+	le = new LineaGeneral(codigo, nombre);
+	cat->agregarLineaGeneral(le);
 
 	std::cout << "Agregando Linea General" << std::endl;
-	cat->agregarLineaGeneral(new LineaGeneral(codigo, nombre));
+	Repositorios::repoLineaGeneral.addElement(le);
+	Repositorios::repoCategoria.saveUpdates();
 }
 
 void InterfazGrafica::modificarLineaGeneral() {
@@ -698,25 +708,41 @@ void InterfazGrafica::modificarLineaGeneral() {
 			break;
 	}
 
+	Repositorios::repoLineaGeneral.saveUpdates();
 	std::cout << "Resultado:" << std::endl;
 	lg->imprimir();
 }
 
-void InterfazGrafica::eliminarLineaGeneral() {}
+void InterfazGrafica::eliminarLineaGeneral() {
+	std::cout << "Ingrese el codigo de la linea general que desea eliminar" << std::endl;
+	mostrarLineasGenerales();
+	int codigo = capturarOpcion();
+
+	gArticulos->eliminarLineaGeneral(codigo);
+}
 
 void InterfazGrafica::agregarLineaEspecifica() {
 	int codigo = 0;
+	int codigo2 = 0;
 	std::string nombre;
 	Categoria* cat = 0;
+	LineaGeneral* lg = 0;
+	LineaEspecifica* le = 0;
 
 	std::cout << "Ingrese el codigo de la nueva linea general" << std::endl;
 	std::getline(std::cin, nombre);
 	std::cout << "Escoja la categoria a la que quiere agregarle esta nueva linea" << std::endl;
 	mostrarCategorias();
-	cat = &local.getCategoria(capturarOpcion());
+	cat = Repositorios::repoCategoria.getElement(capturarOpcion());
+	mostrarLineasGenerales(&cat->getLineaGenerals());
+	std::cout << "Escoja la linea general a la que quiere agregarle esta nueva linea" << std::endl;
+	lg = Repositorios::repoLineaGeneral.getElement(capturarOpcion());
 
 	std::cout << "Agregando Linea General" << std::endl;
-	cat->agregarLineaGeneral(new LineaGeneral(codigo, nombre));
+	le = new LineaEspecifica(codigo, nombre);
+	lg->agregarLineaEspecifica(le);
+	Repositorios::repoLineaEspecifica.addElement(le);
+	Repositorios::repoLineaGeneral.saveUpdates();
 }
 
 void InterfazGrafica::modificarLineaEspecifica() {
@@ -751,8 +777,15 @@ void InterfazGrafica::modificarLineaEspecifica() {
 			break;
 	}
 
+	Repositorios::repoLineaEspecifica.saveUpdates();
 	std::cout << "Resultado:" << std::endl;
 	le->imprimir();
 }
 
-void InterfazGrafica::elimnarLineaEspecifica() {}
+void InterfazGrafica::elimnarLineaEspecifica() {
+	std::cout << "Ingrese el codigo de la linea especifica que desea eliminar" << std::endl;
+	mostrarLineasEspecificas();
+	int codigo = capturarOpcion();
+
+	gArticulos->eliminarLineaEspecifica(codigo);
+}
