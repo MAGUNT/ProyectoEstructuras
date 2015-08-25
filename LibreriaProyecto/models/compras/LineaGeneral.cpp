@@ -76,9 +76,9 @@ bool LineaGeneral::eliminar(int codigo)
 
 void LineaGeneral::imprimir() {
 	std::cout << "LineaGeneral " << codigo << ". " << nombre << std::endl;
-	std::cout << "Lineas Especificas:" << std::endl;
+	std::cout << "	Lineas Especificas:" << std::endl;
 	this->lineasEspecificas.foreach([](LineaEspecifica* l) {
-		std::cout << l->getCodigo() << ". " << l->getNombre() << std::endl;
+		std::cout << "	" << l->getCodigo() << ". " << l->getNombre() << std::endl;
 	});
 
 }

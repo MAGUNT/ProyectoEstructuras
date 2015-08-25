@@ -19,13 +19,13 @@ Local::~Local() {
 
 void Local::imprimirEstructura() {
 	categorias->foreach([](Categoria* c) {
-		std::cout << c->getCodigo() << ". " << c->getNombre() << " [";
+		std::cout << c->getCodigo() << ". " << c->getNombre() << " [" << std::endl;
 		c->getLineaGenerals().foreach([](LineaGeneral* lg) {
-			std::cout<< "   " << lg->getCodigo() << ". " << lg->getNombre();
+			std::cout<< "   " << lg->getCodigo() << ". " << lg->getNombre() << std::endl;
 			lg->getLineasEspecificas().foreach([](LineaEspecifica* le) {
-				std::cout << "      " << le->getCodigo() << ". " << le->getNombre();
+				std::cout << "      " << le->getCodigo() << ". " << le->getNombre() << std::endl;
 				le->getArticulos().foreach([](Articulo* a) {
-					std::cout << "          " << a->getCodigo() << ". " << a->getNombre();
+					std::cout << "          " << a->getCodigo() << ". " << a->getNombre() << std::endl;
 				});
 			});
 		});
@@ -34,7 +34,7 @@ void Local::imprimirEstructura() {
 }
 
 Categoria& Local::getCategoria(int codigo) {
-	return *(*categorias)[codigo];
+	return *Repositorios::repoCategoria.getElement(codigo);
 }
 
 LineaGeneral& Local::getLineaGeneral(int codigo) {
@@ -105,7 +105,7 @@ const ClinkedList<Articulo*>& Local::getArticulos(LineaEspecifica* lineaEspecifi
 }
 
 //implementar
-const ClinkedList<Categoria*>& Local::getCategorias()
+ClinkedList<Categoria*>& Local::getCategorias()
 {
-	return ClinkedList<Categoria*>();
+	return *this->categorias;
 }

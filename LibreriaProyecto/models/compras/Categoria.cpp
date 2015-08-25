@@ -72,9 +72,9 @@ bool Categoria::removerLineaGeneral(int codigo)
 }
 void Categoria::imprimir() {
 	std::cout << "Categoria " << codigo << ". " << nombre << " en el pasillo " << pasillo << std::endl;
-	std::cout << "Lineas Generales" << std::endl;
+	std::cout << "	Lineas Generales" << std::endl;
 	this->lineasGenerales.foreach([](LineaGeneral* l) {
-		std::cout << l->getCodigo() << ". " << l->getNombre() << std::endl;
+		std::cout << "	"	<< l->getCodigo() << ". " << l->getNombre() << std::endl;
 	});
 }
 

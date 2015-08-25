@@ -36,7 +36,7 @@ public:
 	Articulo& getArticulo(LineaEspecifica* lineaEspecifica, int codigo);
 	void agregarCategoria(Categoria* categoria);
 
-	const ClinkedList<Categoria*>& getCategorias();
+	ClinkedList<Categoria*>& getCategorias();
 	const ClinkedList<LineaGeneral*>& getLineasGenerales(int categoria);
 	const ClinkedList<LineaEspecifica*>& getLineasEspecificas(LineaGeneral* lineaGeneral);
 	const ClinkedList<Articulo*>& getArticulos(LineaEspecifica* lineaEspecifica);
