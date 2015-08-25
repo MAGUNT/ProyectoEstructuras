@@ -412,19 +412,16 @@ void InterfazGrafica::ejecutarOpcionDependiente(int opcion) {
 void InterfazGrafica::entregarCarrito() {
 	std::cout << "Elija el carrito que desea entregar" << std::endl;
 	int opcion;
-	int codigoCliente = gUsuarios->getUsuarioActual()->getCodigo();
-	mostrarCarritos(codigoCliente);
+	Repositorios::repoCompras.getAll().foreach([](Carrito* c){
+		std::cout << c->getCodigo() << ". " << c->getNombre() << std::endl;
+	});
 
 	opcion = capturarOpcion();
-	
 	Carrito* carrito=Repositorios::repoCarritos.get([=](Carrito* c)
 	{
 		return c->getCodigo() == opcion;
 	});
 
-	/*
-	 *  Mostrar pedidos pendientes.
-	 */
 }
 
 
@@ -586,6 +583,7 @@ void InterfazGrafica::modificarArticulo() {
 			break;
 	}
 
+	Repositorios::repoArticulo.saveUpdates();
 	std::cout << "Resultado:" << std::endl;
 	articulo->imprimir();
 }
@@ -605,7 +603,7 @@ void InterfazGrafica::agregarCategoria() {
 	std::getline(std::cin, nombre);
 
 	std::cout << "Agregando Categoria:" << std::endl;
-	local.agregarCategoria(new Categoria(codigo, pasillo, nombre));
+	Repositorios::repoArticulo.addElement(new Categoria(codigo, pasillo, nombre));
 }
 
 void InterfazGrafica::modificarCategoria() {
