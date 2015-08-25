@@ -146,3 +146,7 @@ std::ostream& Carrito::printPretty(std::ostream& os) const
 		<< " Usuario: " << std::endl
 		<< idUsuario << " " << usuario->getNombre();
 }
+const ClinkedList<Pedido*>& Carrito::getProductos() const
+{
+	return productos;
+}

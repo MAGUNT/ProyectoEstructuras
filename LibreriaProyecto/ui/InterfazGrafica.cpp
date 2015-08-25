@@ -165,11 +165,10 @@ void InterfazGrafica::mostrarLineasEspecificas() {
 void InterfazGrafica::mostrarCarritos(int codigoCliente) {
 		Repositorios::repoCarritos.getAll().foreach([codigoCliente](Carrito* c){
 			if(c->getIdUsuario() == codigoCliente) {
-				std::cout << c->getCodigo() << ". " << c->getNombre() << std::endl;
-				std::cout << "	Articulos: " << std::endl;
-//				c->getProductos().foreach([](Pedido* p){
-//					std::cout << p->getCantidad() << " unidades de " << p->getArticulo()->getNombre() << std::endl;
-//				});
+				c->printPretty(std::cout)<<std::endl;
+				c->getProductos().foreach([=](Pedido* p){
+					std::cout << p->getCantidad() << " unidades de " << p->getArticulo()->getNombre() << std::endl;
+				});
 			}
 		});
 }
