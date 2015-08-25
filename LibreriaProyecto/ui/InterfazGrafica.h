@@ -37,6 +37,7 @@ class InterfazGrafica {
 	void mostrarLineasEspecificas();
 	void mostrarArticulos(const ClinkedList<Articulo*>* as);
 	void mostrarCarritos(int codigoUsuario);
+	void routeOpcion(int opcion, Rol rol);
 
 	//	Metodos para Cliente
 	void ejecutarOpcionCliente(int opcion);
