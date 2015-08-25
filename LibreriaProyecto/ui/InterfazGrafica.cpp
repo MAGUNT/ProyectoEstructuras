@@ -163,15 +163,15 @@ void InterfazGrafica::mostrarLineasEspecificas() {
 }
 
 void InterfazGrafica::mostrarCarritos(int codigoCliente) {
-	Repositorios::repoCarritos.getAll().foreach([codigoCliente](Carrito* c){
-		if(c->getIdUsuario() == codigoCliente) {
-			std::cout << c->getCodigo() << ". " << c->getNombre() << std::endl;
-			std::cout << "	Articulos: " << std::endl;
-//			c->getProductos().foreach([](Articulo* a){
-//				a->imprimir();
-//			});
-		}
-	});
+		Repositorios::repoCarritos.getAll().foreach([codigoCliente](Carrito* c){
+			if(c->getIdUsuario() == codigoCliente) {
+				std::cout << c->getCodigo() << ". " << c->getNombre() << std::endl;
+				std::cout << "	Articulos: " << std::endl;
+//				c->getProductos().foreach([](Pedido* p){
+//					std::cout << p->getCantidad() << " unidades de " << p->getArticulo()->getNombre() << std::endl;
+//				});
+			}
+		});
 }
 
 //	Metodos Clientes
@@ -282,12 +282,7 @@ Carrito* InterfazGrafica::getCarrito() {
 void InterfazGrafica::pagarCarrito() {
 
 	std::cout << "Elija el carrito que desea pagar" << std::endl;
-
-	gUsuarios->getCarritosDeCliente(gUsuarios->getUsuarioActual()->getCodigo())->foreach([](Carrito* c) {
-		c->printPretty(std::cout);
-	});
-
-
+	mostrarCarritos(gUsuarios->getUsuarioActual()->getCodigo());
 	int opcion = capturarOpcion();
 	Carrito* carrito = Repositorios::repoCarritos.get([=](Carrito* c)
 	{
