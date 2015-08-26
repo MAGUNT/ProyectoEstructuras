@@ -142,11 +142,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="filesystem\usuarios\carritos" />
     <None Include="filesystem\usuarios\usuarios" />
     <None Include="filesystem\inventario\articulos" />
     <None Include="filesystem\inventario\categoria" />
     <None Include="filesystem\inventario\linea_especifica" />
     <None Include="filesystem\inventario\linea_general" />
+    <None Include="filesystem\usuarios\compras" />
+    <None Include="filesystem\usuarios\carritos" />
   </ItemGroup>
 </Project>
