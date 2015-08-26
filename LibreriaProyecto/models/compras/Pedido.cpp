@@ -64,3 +64,11 @@ std::ostream& operator <<(std::ostream& os, const Pedido& linea)
 	
 	return os << linea.articulo->getCodigo() << " " << linea.cantidad;
 }
+
+std::ostream&  Pedido::prettyPrint(std::ostream& os)
+{
+	return os << "Codigo: " << getArticulo()->getCodigo()
+		<< " Nombre: " << getArticulo()->getNombre() 
+		<< "Cantidad: " << getCantidad()
+		<< " Precio total: " << precio();
+}

@@ -31,6 +31,7 @@ public:
 	int getCantidad() const;
 	void setCantidad(int cantidad);
 	long double precio() const;
+	std::ostream& prettyPrint(std::ostream&);
 
 	friend std::istream& operator >>(std::istream& is, Pedido& linea);
 	friend bool operator<(const Pedido& x, const Pedido& y);

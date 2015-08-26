@@ -149,12 +149,23 @@ int Carrito::getCodigo() const
 
 std::ostream& Carrito::printPretty(std::ostream& os) const
 {
+	char* space = "   ";
 	auto usuario = Repositorios::repoUsuario.getElement(idUsuario);
-	return os << "Codigo: " << getCodigo()
+	os << "Codigo: " << getCodigo()
+		<< " Nombre" << getNombre()
 		<< " Cantidad: " << getCantidad()
-		<< " Precio: " << precio()
-		<< " Usuario: " << std::endl
-		<< idUsuario << " " << usuario->getNombre();
+		<< " Precio: " << precio() << std::endl
+		<< "Usuario: " << idUsuario << " " << usuario->getNombre() << std::endl
+		<< "Articulos = [" << std::endl;
+
+	productos.foreach([&os, space](Pedido* p)
+	{
+		os << space; 
+	    p->prettyPrint(os) << ","<< std::endl; 
+	});
+		
+	return os << "]";
+	
 }
 const ClinkedList<Pedido*>& Carrito::getProductos() const
 {
