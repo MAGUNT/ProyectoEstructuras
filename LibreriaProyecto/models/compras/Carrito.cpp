@@ -152,7 +152,7 @@ std::ostream& Carrito::printPretty(std::ostream& os) const
 	char* space = "   ";
 	auto usuario = Repositorios::repoUsuario.getElement(idUsuario);
 	os << "Codigo: " << getCodigo()
-		<< " Nombre" << getNombre()
+		<< " Nombre: " << getNombre()
 		<< " Cantidad: " << getCantidad()
 		<< " Precio: " << precio() << std::endl
 		<< "Usuario: " << idUsuario << " " << usuario->getNombre() << std::endl
