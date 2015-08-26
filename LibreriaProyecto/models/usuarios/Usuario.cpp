@@ -92,7 +92,7 @@ std::ostream& Usuario::prettyPrint(std::ostream& os)
 
 	if (Rol::ADMIN == tipo) return os << "Admin";
 	if (Rol::CLIENTE == tipo) return os << "Cliente";
-	if (Rol::DEPENDIENTE == tipo) return os << "Dependiente";
+	return os << "Dependiente";
 }
 
 

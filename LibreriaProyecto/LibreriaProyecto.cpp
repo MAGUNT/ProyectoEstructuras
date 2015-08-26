@@ -15,7 +15,6 @@
 #include "Gestores\GestorUsuarios.h"
 #include "Gestores\GestorLineasDeAriculos.h"
 #include "ui/InterfazGrafica.h"
-#include "models/compras/Local.h"
 
 using str = std::tuple < int, char, std::string >;
 
@@ -168,11 +167,19 @@ void pruebaListaCircular3(ClinkedList<Articulo*,F>* list)
 int main()
 {
 	
-	Local* local = new Local();
-	InterfazGrafica* ui = new InterfazGrafica(*local);
+	
+	InterfazGrafica* ui = new InterfazGrafica();
 	ui->inicializar();
 	
+	delete ui;
 
+	/*
+	GestorUsuarios g;
+
+	GestorLineasDeAriculos gA;
+
+	std::cout << gA.getCategoria(23);
+	*/
 	/*
 	 * 	testClear();
 	GestorUsuarios e;

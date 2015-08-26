@@ -6,6 +6,9 @@
 #include "..\utils\ListFactories.h"
 class GestorUsuarios
 {
+
+private:
+	void permmitEnforcer(Rol) const;
 public:
 	GestorUsuarios();
 
@@ -13,18 +16,26 @@ public:
 	Usuario* getUsuarioActual()const;
 	void cerrarSession()const;
 	bool crearUsuario(Usuario*) const;
-	void crearCarrito(Carrito*) const;
 
 	void imprimirCarritoPorCriterio(ListFactories::CriteriosCarritos c)const;
+	void imprimirComprasPorCriterio(ListFactories::CriteriosCarritos c)const;
 	void imprimirUsuarios() const;
-	void crearCompra(Carrito*) const;
 	MultiplyList<Carrito*>*getCarritosDeCliente(int idCliente) const;
 	MultiplyList<Carrito*>* getComprasDeCliente(int idCliente) const;
-	bool eliminarCompra(int idCompra) const;
+	std::string eliminarCompra(int idCompra) const;
 	bool eliminarCarrito(int idCompra) const;
 	void guardarCambiosDeUsuarios() const;
 
-	void permmitEnforcer(Rol) const;
+	
+
+	std::string agregarCarrito(Carrito*& carrito) const;
+	std::string agregarCompra(Carrito*& carrito) const;
+
+	void actualizarCarritos() const;
+
+	Carrito* getCarritoPorId(int codigo) const;
+	Carrito* getCompraPorId(int codigo) const;
+	const MultiplyList<Carrito*>& getCarritos() const;
 
 };
 

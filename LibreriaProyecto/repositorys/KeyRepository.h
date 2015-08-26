@@ -12,7 +12,7 @@ private:
 
 	ClinkedList<T*, KeyComparator>* elements;
 	IRepo<T*>* repo;
-	std::function<bool(T*)> createSLambda(int) const;
+	
 
 public:
 	KeyRepository(IRepo<T*>*);
@@ -27,6 +27,8 @@ public:
 	T* find(Predicate pre);
 	T* getElement(int codigo) const;
 	ClinkedList<T*>* getElements();
+
+	const ClinkedList<T*, KeyComparator>* getView();
 };
 
 
@@ -39,14 +41,20 @@ KeyRepository<T>::KeyRepository(IRepo<T*>* prepo)
 	prepo->readALL(*elements, [](ClinkedList<T*, KeyComparator>& list, T* e)
 	{
 		list.addAscendent(e);
-	
+		 
 	});
+}
+template <typename T>
+const ClinkedList<T*, typename KeyRepository<T>::KeyComparator>* KeyRepository<T>::getView()
+{
+	return elements;
 }
 
 template<typename T>
 KeyRepository<T>::~KeyRepository()
 {
 	elements->foreach([]( T* a){delete a; });
+	delete elements;
 	delete repo;
 }
 
@@ -54,7 +62,10 @@ template<typename T>
 bool KeyRepository<T>::deleteElement(int codigo)
 {
 	T* a = nullptr;
-	bool isRemove = elements->remove(createSLambda(codigo), a);
+	bool isRemove = elements->remove([codigo](T* e)
+	{
+		return e->getCodigo() == codigo; 
+	}, a);
 	if (isRemove) delete a;
 
 	return isRemove;
@@ -74,10 +85,11 @@ bool KeyRepository<T>::updateElement(int codigo, T* articuloNuevo)
 */
 
 template<typename T>
-bool KeyRepository<T>::addElement(T* articulo)
+bool KeyRepository<T>::addElement(T* ele)
 {
-	bool added =elements->addAscendent(articulo);
-	if (added) repo->save(articulo);
+	if (ele == nullptr) throw std::invalid_argument("null is not suported");
+	bool added = elements->addAscendent(ele);
+	if (added) repo->save(ele);
 	return added;
 }
 
@@ -85,7 +97,10 @@ template <typename T>
 T* KeyRepository<T>::getElement(int codigo) const{
 
 	T* element = nullptr;
-	elements->find(createSLambda(codigo), element);
+	elements->find([codigo](T* e)
+	{
+		return e->getCodigo() == codigo;
+	}, element);
 
 	return  element;
 }
@@ -99,11 +114,6 @@ ClinkedList<T*>* KeyRepository<T>::getElements(){
 	return copy;
 }
 
-template <typename T>
-std::function<bool(T*)> KeyRepository<T>::createSLambda(int codigo) const
-{
-	return [codigo](T* a){ return a->getCodigo() == codigo; };
-}
 template <typename T>
 KeyRepository<T>& KeyRepository<T>::saveUpdates()
 {

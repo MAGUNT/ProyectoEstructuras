@@ -46,6 +46,7 @@ template<typename T>
 MultiRepo<T>::~MultiRepo()
 {
 	elements->foreach([](T* e){delete e; });
+	delete elements;
 	delete repo;
 }
 template<typename T>
@@ -73,7 +74,7 @@ T* MultiRepo<T>::get(Predicate p)
 template<typename T>
 void MultiRepo<T>::saveALL()
 {
-	repo->update(elements);
+	repo->update(*elements);
 }
 template<typename T>
 bool MultiRepo<T>::addElement(T*e)

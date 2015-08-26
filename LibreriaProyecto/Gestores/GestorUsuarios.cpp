@@ -24,11 +24,14 @@ bool GestorUsuarios::crearUsuario(Usuario* usuario) const
 
 	return Repositorios::repoUsuario.addElement(usuario);
 }
-
-void GestorUsuarios::crearCarrito(Carrito* carrito) const
+void GestorUsuarios::imprimirComprasPorCriterio(ListFactories::CriteriosCarritos c)const
 {
-	permmitEnforcer(Rol::CLIENTE);
-	Repositorios::repoCarritos.addElement(carrito);
+	Repositorios::repoCompras.getAll().foreach([](Carrito *c)
+	{
+		c->printPretty(std::cout) << std::endl;
+
+	}, static_cast<int>(c));
+
 }
 //cambiar por un enum
 void GestorUsuarios::imprimirCarritoPorCriterio(ListFactories::CriteriosCarritos c) const
@@ -50,10 +53,7 @@ void GestorUsuarios::imprimirUsuarios() const
 
 	delete list;
 }
-void GestorUsuarios::crearCompra(Carrito*carrito) const
-{
-	Repositorios::repoCompras.addElement(carrito);
-}
+
 
 MultiplyList<Carrito*>* GestorUsuarios::getCarritosDeCliente(int idCliente) const
 {
@@ -63,13 +63,17 @@ MultiplyList<Carrito*>* GestorUsuarios::getComprasDeCliente(int idCliente) const
 {
 	return Repositorios::repoCompras.getALL([=](Carrito* c){return c->getIdUsuario() == idCliente; });
 }
-bool GestorUsuarios::eliminarCompra(int idCompra) const
+std::string GestorUsuarios::eliminarCompra(int idCompra) const
 {
 	permmitEnforcer(Rol::DEPENDIENTE);
-	return Repositorios::repoCompras.remove([=](Carrito* c)
+	bool seElimino= Repositorios::repoCompras.remove([=](Carrito* c)
 	{
 		return c->getCodigo() == idCompra; 
 	});
+
+	if (seElimino) return "Se elimino con exito";
+
+	return "El codigo no existe";
 }
 bool GestorUsuarios::eliminarCarrito(int idCarrito) const
 {
@@ -88,4 +92,51 @@ void GestorUsuarios::permmitEnforcer(Rol rol) const
 	auto u = getUsuarioActual();
 	if (u == nullptr || u->getRol() != rol)
 		throw std::invalid_argument("El usuario no tiene permiso");
+}
+
+std::string GestorUsuarios::agregarCarrito(Carrito*& carrito) const
+{
+	if (Repositorios::repoCarritos.addElement(carrito))
+		return "Se agrego con exito";
+
+	delete carrito;
+	carrito = nullptr;
+
+	return "Ya existe un carrito con ese codigo";
+}
+std::string GestorUsuarios::agregarCompra(Carrito*& carrito) const
+{
+	if (Repositorios::repoCompras.addElement(carrito))
+		return "Se agrego con exito";
+
+	delete carrito;
+	carrito = nullptr;
+
+	return "Ya existe una compra con ese codigo";
+}
+
+void GestorUsuarios::actualizarCarritos() const
+{
+	Repositorios::repoCarritos.saveALL();
+}
+
+Carrito*  GestorUsuarios::getCarritoPorId(int codigo) const
+{
+	return Repositorios::repoCarritos.get([=](Carrito* c)
+	{
+		return c->getCodigo() == codigo;
+	});
+}
+
+Carrito* GestorUsuarios::getCompraPorId(int codigo) const
+{
+	return Repositorios::repoCarritos.get([=](Carrito* c)
+	{
+		return c->getCodigo() == codigo;
+	});
+
+}
+const MultiplyList<Carrito*>& GestorUsuarios::getCarritos() const
+{
+	return Repositorios::repoCarritos.getAll();
 }

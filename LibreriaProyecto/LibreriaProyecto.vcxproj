@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -19,13 +19,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-     <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -87,7 +87,6 @@
     <ClInclude Include="Gestores\GestorLineasDeAriculos.h" />
     <ClInclude Include="utils\ListFactories.h" />
     <ClInclude Include="models\compras\Categoria.h" />
-    <ClInclude Include="models\compras\Local.h" />
     <ClInclude Include="models\usuarios\Usuario.h" />
     <ClInclude Include="repositorys\MultiRepo.h" />
     <ClInclude Include="repositorys\KeyRepository.h" />
@@ -120,7 +119,6 @@
     <ClCompile Include="models\compras\Carrito.cpp" />
     <ClCompile Include="models\compras\LineaEspecifica.cpp" />
     <ClCompile Include="models\compras\LineaGeneral.cpp" />
-    <ClCompile Include="models\compras\Local.cpp" />
     <ClCompile Include="models\compras\Pedido.cpp" />
     <ClCompile Include="repositorys\Repositorios.cpp" />
     <ClCompile Include="models\usuarios\Usuario.cpp" />

@@ -12,7 +12,8 @@ namespace ListFactories
 		NOMBRE = 1,
 		IDUSUARIO = 2,
 		CANTIDAD = 3,
-		PRECIO = 4
+		PRECIO = 4,
+		FIFO =5
 	};
 
 	MultiplyList<Carrito*>* fabricaMultiListaCarrito();

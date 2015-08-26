@@ -10,7 +10,6 @@
 
 #include <vector>
 #include <string>
-#include "../models/compras/Local.h"
 #include "../models/compras/Carrito.h"
 #include "../models/usuarios/Usuario.h"
 #include "../Gestores/GestorLineasDeAriculos.h"
@@ -19,12 +18,12 @@
 typedef std::vector<std::string> string_vect;
 
 class InterfazGrafica {
-	Local local;
+
 	string_vect opcionesDependiente;
 	string_vect opcionesCliente;
 	string_vect opcionesAdmin;
-	GestorLineasDeAriculos* gArticulos;
-	GestorUsuarios* gUsuarios;
+	GestorLineasDeAriculos gArticulos;
+	GestorUsuarios gUsuarios;
 
 	// 	Metodos Miscelaneos
 	int capturarOpcion();
@@ -48,7 +47,7 @@ class InterfazGrafica {
 	Carrito* getCarrito();
 	void modificarCarrito();
 	Categoria* seleccionarCategoria();
-	LineaGeneral* seleccionarLineaGeneral(int categoria);
+	LineaGeneral* seleccionarLineaGeneral(Categoria* );
 	LineaEspecifica* seleccionarLineaEspecifica(LineaGeneral* lineaGeneral);
 	Articulo* seleccionarArticulo(LineaEspecifica* lineaEspecifica);
 
@@ -74,7 +73,7 @@ class InterfazGrafica {
 
 
 public:
-	InterfazGrafica(Local &local);
+	InterfazGrafica();
 	virtual ~InterfazGrafica();
 
 	void iniciarSesion();
