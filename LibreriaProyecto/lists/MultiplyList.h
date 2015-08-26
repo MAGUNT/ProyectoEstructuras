@@ -1,6 +1,7 @@
 #pragma once
 #include <functional>
 #include "../utils/MultiNode.h"
+#include <stdexcept>
 
 template<typename T>
 class MultiplyList
@@ -69,6 +70,9 @@ public:
 
 	bool hasKey();
 	int paths();
+
+	T getMax(int) const;
+	T getMin(int) const;
 
 private:
 
@@ -277,4 +281,16 @@ template <typename T>
 int MultiplyList<T>::paths()
 {
 	return sizeCmp + 1;
+}
+template<typename T> 
+T MultiplyList<T>::getMax(int index) const
+{
+	if (empty()) throw std::underflow_error("underflow");
+	return sentinel->getPrev(index)->data;
+}
+template<typename T>
+T MultiplyList<T>::getMin(int index) const
+{
+	if (empty()) throw std::underflow_error("underflow");
+	return sentinel->getNext(index)->data;
 }

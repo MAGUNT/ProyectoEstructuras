@@ -31,7 +31,9 @@ class Carrito {
 public:
 	Carrito();
 	Carrito(std::string _nombre);
-	Carrito(int id, int idUsuario, std::string _nombre);
+	Carrito(int id, int idUsuario, const std::string& _nombre);
+	Carrito(int id, int idUsuario, const std::string& _nombre, const ClinkedList<Pedido*>& list);
+	Carrito(Carrito*);
 	~Carrito();
 	const std::string& getNombre() const;
 	void setNombre(const std::string& nombre);
@@ -41,6 +43,7 @@ public:
 	Pedido* buscarPorCodigo(int) const;
 	Pedido* buscarPorMarca(const std::string&) const;
 	Pedido* buscarPorNombre(const std::string&) const;
+	void setCodigo(int);
 	
 	int getIdUsuario() const;
 	int getCantidad() const;

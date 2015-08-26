@@ -58,7 +58,8 @@ ClinkedList<Categoria*>* GestorLineasDeAriculos::getCopiaCategorias() const
 
 void GestorLineasDeAriculos::imprimirEstrucutura() const
 {
-	getCategorias()->foreach([](Categoria* c) {
+	auto cat = getCopiaCategorias();
+	cat->foreach([](Categoria* c) {
 		std::cout << c->getCodigo() << ". " << c->getNombre() << " [" << std::endl;
 		c->getLineaGenerals().foreach([](LineaGeneral* lg) {
 			std::cout << "   " << lg->getCodigo() << ". " << lg->getNombre() << std::endl;
@@ -71,6 +72,8 @@ void GestorLineasDeAriculos::imprimirEstrucutura() const
 		});
 		std::cout << "]";
 	});
+
+	delete cat;
 }
 
 Categoria* GestorLineasDeAriculos::getCategoria(int categoria) const

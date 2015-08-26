@@ -17,7 +17,7 @@ public:
 	MultiRepo(MultiplyListFactory, IRepo<T*, MultiplyList<T*>>*);
 	~MultiRepo();
 
-	const MultiplyList<T*>& getAll();
+	const MultiplyList<T*>* getAll();
 	
 	template<typename Predicate>
 	MultiplyList<T*>* getALL(Predicate p);
@@ -50,9 +50,9 @@ MultiRepo<T>::~MultiRepo()
 	delete repo;
 }
 template<typename T>
-const MultiplyList<T*>& MultiRepo<T>::getAll()
+const MultiplyList<T*>* MultiRepo<T>::getAll()
 {
-	return *elements;
+	return elements;
 }
 
 template<typename T>

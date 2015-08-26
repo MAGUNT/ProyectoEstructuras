@@ -26,7 +26,7 @@ bool GestorUsuarios::crearUsuario(Usuario* usuario) const
 }
 void GestorUsuarios::imprimirComprasPorCriterio(ListFactories::CriteriosCarritos c)const
 {
-	Repositorios::repoCompras.getAll().foreach([](Carrito *c)
+	Repositorios::repoCompras.getAll()->foreach([](Carrito *c)
 	{
 		c->printPretty(std::cout) << std::endl;
 
@@ -37,7 +37,7 @@ void GestorUsuarios::imprimirComprasPorCriterio(ListFactories::CriteriosCarritos
 void GestorUsuarios::imprimirCarritoPorCriterio(ListFactories::CriteriosCarritos c) const
 {
 
-	Repositorios::repoCarritos.getAll().foreach([](Carrito *c)
+	Repositorios::repoCarritos.getAll()->foreach([](Carrito *c)
 	{
 		c->printPretty(std::cout)<<std::endl;
 
@@ -106,6 +106,11 @@ std::string GestorUsuarios::agregarCarrito(Carrito*& carrito) const
 }
 std::string GestorUsuarios::agregarCompra(Carrito*& carrito) const
 {
+	
+	auto last = Repositorios::repoCompras.getAll();
+	int codigo = last->empty() ? 0 : last->getMax(0)->getCodigo();
+	carrito->setCodigo(codigo + 1);
+
 	if (Repositorios::repoCompras.addElement(carrito))
 		return "Se agrego con exito";
 
@@ -136,7 +141,7 @@ Carrito* GestorUsuarios::getCompraPorId(int codigo) const
 	});
 
 }
-const MultiplyList<Carrito*>& GestorUsuarios::getCarritos() const
+const MultiplyList<Carrito*>* GestorUsuarios::getCarritos() const
 {
 	return Repositorios::repoCarritos.getAll();
 }

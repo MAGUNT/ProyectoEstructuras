@@ -35,7 +35,7 @@ public:
 
 	Carrito* getCarritoPorId(int codigo) const;
 	Carrito* getCompraPorId(int codigo) const;
-	const MultiplyList<Carrito*>& getCarritos() const;
+	const MultiplyList<Carrito*>* getCarritos() const;
 
 };
 

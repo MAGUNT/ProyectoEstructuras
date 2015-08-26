@@ -16,10 +16,20 @@ Carrito::Carrito()
 Carrito::Carrito(std::string _nombre) : Carrito(0,0, _nombre)
 	  {
 }
-Carrito::Carrito(int pcodigo, int pidUsuario, std::string _nombre)
-	: codigo(pcodigo), idUsuario(pidUsuario), nombre(_nombre), productos(ClinkedList<Pedido*>())
+Carrito::Carrito(int pcodigo, int pidUsuario, const std::string& _nombre) 
+	: Carrito(pcodigo, pidUsuario, nombre, ClinkedList<Pedido*>())
 {
 
+}
+Carrito::Carrito(int pcodigo, int pidUsuario, const std::string& _nombre, const ClinkedList<Pedido*>& list)
+	: codigo(pcodigo), idUsuario(pidUsuario), nombre(_nombre), productos(list)
+{
+	
+}
+Carrito::Carrito(Carrito* c)
+	: Carrito(c->codigo, c->idUsuario, c->nombre, c->getProductos())
+{
+	
 }
 Carrito::~Carrito()
 {
@@ -114,7 +124,7 @@ std::ostream& operator <<(std::ostream& os, const Carrito& carrito)
 		 << carrito.idUsuario << d
 		<< carrito.nombre << d;
 
-	 carrito.productos.foreach([&os](Pedido* p){ os << " " << p; });
+	 carrito.productos.foreach([&os](Pedido* p){ os << " " << *p; });
 
 	 return os;
 }
@@ -149,4 +159,8 @@ std::ostream& Carrito::printPretty(std::ostream& os) const
 const ClinkedList<Pedido*>& Carrito::getProductos() const
 {
 	return productos;
+}
+void Carrito::setCodigo(int pcodigo)
+{
+	codigo = pcodigo;
 }

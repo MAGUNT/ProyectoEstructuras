@@ -99,6 +99,17 @@ void InterfazGrafica::mostrarMenu(Usuario* usuario) {
 }
 
 void InterfazGrafica::verPedidos() {
+	
+	using ListFactories::CriteriosCarritos;
+	std::cout << "Elija un criterio de ordenamiento" << std::endl;
+	std::cout << "ID = 0, NOMBRE = 1, IDUSUARIO = 2, CANTIDAD = 3, PRECIO = 4, FIFO = 5" << std::endl;
+	int criterio = static_cast<unsigned>(capturarOpcion());
+	if (criterio > 5) criterio = 0;
+
+
+	std::cout << "Elija la compra que desea entregar" << std::endl;
+	gUsuarios.imprimirComprasPorCriterio(static_cast<CriteriosCarritos>(criterio));
+	/*
 	Repositorios::repoCompras.getAll().foreach([=](Carrito* c) {
 		std::cout << c->getCodigo() << ". "  << c->getNombre() ;
 		c->getProductos().foreach([=](Pedido* p){
@@ -108,6 +119,7 @@ void InterfazGrafica::verPedidos() {
 				<< std::endl;
 		});
 	});
+	*/
 }
 
 void InterfazGrafica::verArticulos() {
@@ -174,7 +186,7 @@ void InterfazGrafica::mostrarLineasEspecificas() {
 }
 
 void InterfazGrafica::mostrarCarritos(int codigoCliente) {
-		gUsuarios.getCarritos().foreach([codigoCliente](Carrito* c){
+		gUsuarios.getCarritos()->foreach([codigoCliente](Carrito* c){
 			if(c->getIdUsuario() == codigoCliente) {
 				c->printPretty(std::cout)<<std::endl;
 				c->getProductos().foreach([=](Pedido* p){
@@ -264,6 +276,11 @@ void InterfazGrafica::comprarArticulo(Articulo* articulo) {
 			if(cantidad > 0) 
 			{
 				Carrito* carr = getCarrito();
+				if (carr == nullptr) 
+				{ 
+					std::cout << "Opcion invalida" << std::endl; 
+					return; 
+				}
 				carr->agregarArticulo(articulo, cantidad);
 				gUsuarios.actualizarCarritos();
 
@@ -298,6 +315,8 @@ Carrito* InterfazGrafica::getCarrito() {
 	{
 		std::cout << "Mis carritos:" << std::endl;
 		mostrarCarritos(gUsuarios.getUsuarioActual()->getCodigo());
+		std::cout << "Ingrese el codigo del carrito" << std::endl;
+		return gUsuarios.getCarritoPorId(capturarOpcion());
 	}
 
 	return nullptr;
@@ -309,11 +328,8 @@ void InterfazGrafica::pagarCarrito() {
 	mostrarCarritos(gUsuarios.getUsuarioActual()->getCodigo());
 	int opcion = capturarOpcion();
 	Carrito* carrito = gUsuarios.getCarritoPorId(opcion);
-	
-	std::cout << "Ingrese el codigo de la compra"<<std::endl;
-	int codigo  = capturarOpcion();
-	Carrito *compra = new Carrito(codigo, carrito->getIdUsuario(), carrito->getNombre());
-	
+	if (carrito == nullptr) return;
+	Carrito *compra = new Carrito(carrito);
 	std::cout << "El carrito que ud va a pagar es: " << carrito->getNombre() << std::endl;
 	std::cout << gUsuarios.agregarCompra(compra) << std::endl;
 	
@@ -431,17 +447,9 @@ void InterfazGrafica::ejecutarOpcionDependiente(int opcion) {
 }
 
 void InterfazGrafica::entregarCarrito() {
-	
-	using ListFactories::CriteriosCarritos;
-	
-	std::cout << "Elija un criterio de ordenamiento" << std::endl;
-	std::cout << "ID = 0, NOMBRE = 1, IDUSUARIO = 2, CANTIDAD = 3, PRECIO = 4, FIFO = 5" <<std::endl;
-	int criterio = static_cast<unsigned>(capturarOpcion());
-	if (criterio > 5) criterio = 0; 
-
-
-	std::cout << "Elija la compra que desea entregar" << std::endl;
-	gUsuarios.imprimirComprasPorCriterio(static_cast<CriteriosCarritos>(criterio));
+		
+	verPedidos();
+	std::cout << "ingrese el codigo de la compra que desea entregar" << std::endl;
 	std::cout << gUsuarios.eliminarCompra(capturarOpcion()) << std::endl;
 
 }
@@ -546,10 +554,18 @@ void InterfazGrafica::agregarArticulo() {
 
 	std::cout << "Seleccione la categoria donde va a agregar el articulo" << std::endl;
 	categoria = seleccionarCategoria();
+	
+	if (categoria == nullptr) return;
+
 	std::cout << "Seleccione la linea general donde va a agregar el articulo" << std::endl;
 	lineaG = seleccionarLineaGeneral(categoria);
+	
+	if (lineaG == nullptr) return;
+	
 	std::cout << "Seleccione la linea especifica donde va a agregar el articulo" << std::endl;
 	lineaE = seleccionarLineaEspecifica(lineaG);
+
+	if (lineaG == nullptr) return;
 
 	std::cout << "Ingrese el codigo del nuevo articulo" << std::endl;
 	codigo = capturarOpcion();
@@ -575,6 +591,9 @@ void InterfazGrafica::modificarArticulo() {
 	verTodosArticulos();
 	opcion = capturarOpcion();
 	articulo = gArticulos.getArticulo(opcion);
+	
+	if (articulo == nullptr) return;
+
 	articulo->imprimir();
 
 	std::cout << "1. Cambiar Nombre" << std::endl;
@@ -769,16 +788,32 @@ void InterfazGrafica::agregarLineaEspecifica() {
 	LineaGeneral* lg = 0;
 	LineaEspecifica* le = 0;
 
-	std::cout << "Ingrese el codigo de la nueva linea general" << std::endl;
-	std::getline(std::cin, nombre);
+	std::cout << "ingrese el codigo" << std::endl;
+	codigo = capturarOpcion();
+	std::cout << "ingrese el nombre" << std::endl;
+	getline(std::cin, nombre);
+
 	std::cout << "Escoja la categoria a la que quiere agregarle esta nueva linea" << std::endl;
 	mostrarCategorias();
-	cat = Repositorios::repoCategoria.getElement(capturarOpcion());
+	cat = gArticulos.getCategoria(capturarOpcion());
+	if (cat == nullptr)
+	{
+		std::cout << "La categoria no existe" << std::endl;
+		return;
+	}
+
 	mostrarLineasGenerales(&cat->getLineaGenerals());
 	std::cout << "Escoja la linea general a la que quiere agregarle esta nueva linea" << std::endl;
-	lg = Repositorios::repoLineaGeneral.getElement(capturarOpcion());
+	
+	lg= cat->buscarPorCodigo(capturarOpcion());
 
-	std::cout << "Agregando Linea General" << std::endl;
+	if (lg == nullptr)
+	{
+		std::cout << "Esta categoria no contiene la linea general indicada"<< std::endl;
+		return;
+	}
+
+	std::cout << "Agregando Linea especifica" << std::endl;
 	le = new LineaEspecifica(codigo, nombre);
 	std::cout << gArticulos.agregarLineaEspecifica(le, lg) << std::endl;
 }

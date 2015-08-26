@@ -172,7 +172,7 @@ int main()
 	ui->inicializar();
 	
 	delete ui;
-
+	
 	/*
 	GestorUsuarios g;
 

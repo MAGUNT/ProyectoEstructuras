@@ -68,9 +68,6 @@ bool LineaGeneral::eliminar(int codigo)
 	{
 		return l->getCodigo() == codigo;
 	}, output);
-
-	if (exito) delete output; 
-
 	return exito;
 }
 
