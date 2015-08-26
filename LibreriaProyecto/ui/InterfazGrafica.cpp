@@ -598,7 +598,16 @@ void InterfazGrafica::modificarArticulo() {
 	articulo->imprimir();
 }
 
-void InterfazGrafica::eliminarArticulo() {}
+void InterfazGrafica::eliminarArticulo() 
+{
+	auto articulos = gArticulos.getCopiaArticulos();
+	mostrarArticulos(articulos);
+	std::cout << "Ingrese el numero de codigo" << std::endl;
+
+	gArticulos.eliminarArticulo(capturarOpcion());
+
+	delete articulos;
+}
 
 void InterfazGrafica::agregarCategoria() {
 	int codigo = 0;
@@ -681,6 +690,8 @@ void InterfazGrafica::agregarLineaGeneral() {
 	Categoria* cat = nullptr;
 
 	std::cout << "Ingrese el codigo de la nueva linea general" << std::endl;
+	codigo = capturarOpcion();
+	std::cout << "Ingrese el nombre" << std::endl;
 	std::getline(std::cin, nombre);
 	std::cout << "Escoja la categoria a la que quiere agregarle esta nueva linea" << std::endl;
 	mostrarCategorias();
@@ -713,28 +724,14 @@ void InterfazGrafica::modificarLineaGeneral() {
 	
 	lg->imprimir();
 
-	std::cout << "1. Cambiar codigo" << std::endl;
-	std::cout << "2. Cambiar nombre" << std::endl;
-	int opcion = capturarOpcion();
 
-	switch (opcion) {
-		case 1: {
-				std::cout << "Digite el nuevo codigo de la linea general" << std::endl;
-				int codigo = capturarOpcion();
-				lg->setCodigo(codigo);
-			}
-			break;
-		case 2: {
-				std::string nombre;
-				std::cout << "Digite el nuevo nombre de la linea general" << std::endl;
-				std::getline(std::cin, nombre);
-				lg->setNombre(nombre);
-			}
-			break;
-		default:
-			std::cout << "Opcion invalida" << std::endl;
-			break;
-	}
+
+			
+	std::string nombre;
+	std::cout << "Digite el nuevo nombre de la linea general" << std::endl;
+	std::getline(std::cin, nombre);
+	lg->setNombre(nombre);
+			
 
 	gArticulos.actualizarLineasGenerales();
 	std::cout << "Resultado:" << std::endl;

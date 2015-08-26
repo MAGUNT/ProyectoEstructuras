@@ -133,12 +133,11 @@ std::string GestorLineasDeAriculos::agregarLineaGeneral(LineaGeneral* linea, Cat
 	if (!Repositorios::repoLineaGeneral.addElement(linea))
 	{
 		delete linea;
-		linea = nullptr;
 		return "Ya existe una linea con este codigo";
 	}
 
 	a->agregarLineaGeneral(linea);
-	Repositorios::repoLineaGeneral.saveUpdates();
+	Repositorios::repoCategoria.saveUpdates();
 	return "La linea general se agrego con exito";
 
 }
