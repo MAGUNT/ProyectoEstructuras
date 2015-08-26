@@ -29,6 +29,7 @@ class InterfazGrafica {
 	int capturarOpcion();
 	void mostrarMenu(Usuario* usuario);
 	void verArticulos();
+	void verPedidos();
 	void mostrarCategorias();
 	void mostrarLineasGenerales(const ClinkedList<LineaGeneral*>* lgs);
 	void mostrarLineasGenerales();
