@@ -300,7 +300,7 @@ Carrito* InterfazGrafica::getCarrito() {
 
 	if(opcion == 1)
 	{
-		std::string nombre = "";
+		std::string nombre;
 		std::cout << "Ingrese el codigo del carrito:" << std::endl;
 		int codigo = capturarOpcion();
 		std::cout << "Ingrese el nombre del carrito:" << std::endl;

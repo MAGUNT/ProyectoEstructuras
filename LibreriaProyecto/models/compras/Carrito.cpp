@@ -17,7 +17,7 @@ Carrito::Carrito(std::string _nombre) : Carrito(0,0, _nombre)
 	  {
 }
 Carrito::Carrito(int pcodigo, int pidUsuario, const std::string& _nombre) 
-	: Carrito(pcodigo, pidUsuario, nombre, ClinkedList<Pedido*>())
+	: Carrito(pcodigo, pidUsuario, _nombre, ClinkedList<Pedido*>())
 {
 
 }
