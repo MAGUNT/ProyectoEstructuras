@@ -98,6 +98,18 @@ void InterfazGrafica::mostrarMenu(Usuario* usuario) {
 	}
 }
 
+void InterfazGrafica::verPedidos() {
+	Repositorios::repoCompras.getAll().foreach([=](Carrito* c) {
+		std::cout << c->getCodigo() << ". "  << c->getNombre() ;
+		c->getProductos().foreach([=](Pedido* p){
+			std::cout << p->getCantidad()
+				<<" unidades de "
+				<< p->getArticulo()->getNombre()
+				<< std::endl;
+		});
+	});
+}
+
 void InterfazGrafica::verArticulos() {
 	gArticulos.imprimirEstrucutura();
 }
@@ -317,7 +329,8 @@ void InterfazGrafica::modificarCarrito() {
 }
 
 /*
- * 	Este metodo tiene que modificarse para que ejecute la accion
+ * 	Este metodo tiene que modificarse
+para que ejecute la accion
  * 	de cada tipo de usuario.
  */
 void InterfazGrafica::inicializar() {
@@ -402,10 +415,12 @@ void InterfazGrafica::ejecutarOpcionDependiente(int opcion) {
 		case 1:
 			std::cout << " " << std::endl;
 			std::cout << "----->Ver Pedidos pendientes" << std::endl;
+			verPedidos();
 			break;
 		case 2:
 			std::cout << " " << std::endl;
 			std::cout << "----->Entregando Pedido" << std::endl;
+			entregarCarrito();
 			break;
 		default:
 			std::cout << " " << std::endl;
